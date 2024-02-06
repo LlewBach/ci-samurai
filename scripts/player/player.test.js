@@ -1,4 +1,4 @@
-import { Game } from './main.js';
+import { Game } from '../main/main.js';
 import { Player } from './player.js';
 
 describe('Player class', () => {
