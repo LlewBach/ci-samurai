@@ -6,6 +6,12 @@ export class Game {
     this.height = height;
     this.player = new Player(this);
   }
+  update() {
+    // this.player.update();
+  }
+  draw(context) {
+    this.player.draw(context);
+  }
 }
 
 window.addEventListener('load', function () {
@@ -15,5 +21,18 @@ window.addEventListener('load', function () {
   canvas.width = 800;
   canvas.height = 500;
 
+  const game = new Game(canvas.width, canvas.height);
+
+  // const lastTime = 0;
+
+  function animate() {
+    // const deltaTime = timestamp - lastTime;
+    // lastTime = timestamp;
+    game.update();
+    game.draw(ctx);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 
 });

@@ -14,9 +14,10 @@ export class Player {
   update() {
 
   }
-  draw() {
-
+  draw(context) {
+    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
   }
 }
 
 const playerImage = document.getElementById('player');
+
