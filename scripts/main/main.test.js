@@ -10,6 +10,7 @@ describe('Game class', () => {
     const game = new Game(800, 600);
     expect(game).toHaveProperty('width');
     expect(game).toHaveProperty('height');
+    expect(game).toHaveProperty('speed');
     expect(game).toHaveProperty('player');
   });
 
