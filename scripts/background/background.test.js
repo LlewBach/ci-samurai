@@ -27,8 +27,8 @@ describe('Layer class', () => {
 
   test('should correctly initialize with given arguments', () => {
     expect(layer.game).toBe(game);
-    expect(layer.width).toBe(3199);
-    expect(layer.height).toBe(943);
+    expect(layer.width).toBe(3199 * (game.height / 943));
+    expect(layer.height).toBe(game.height);
     expect(layer.image).toBe(mockImage);
     expect(layer.speedModifier).toBe(1);
     expect(layer.x).toBe(0);
@@ -46,11 +46,19 @@ describe('Layer class', () => {
     layer.update();
     expect(layer.x).toBe(0);
   });
+
+  test('should subtract correct amound from x', () => {
+    game.speed = 3;
+    layer.update();
+    expect(layer.x).toBe(0 - (3 * 1));
+  });
 });
+
 
 describe('Background class', () => {
   let game;
   let background;
+  let mockLayerUpdate;
 
   beforeEach(() => {
     game = new Game(800, 600);
@@ -74,5 +82,15 @@ describe('Background class', () => {
     expect(background).toHaveProperty('layer3');
     expect(background).toHaveProperty('layer4');
     expect(background).toHaveProperty('backgroundLayers');
+  });
+
+  test('update should call update on each layer', () => {
+    mockLayerUpdate = jest.fn();
+    background.layer1.update = mockLayerUpdate;
+    background.layer2.update = mockLayerUpdate;
+    background.layer3.update = mockLayerUpdate;
+    background.layer4.update = mockLayerUpdate;
+    background.update();
+    expect(mockLayerUpdate).toHaveBeenCalledTimes(4);
   });
 });

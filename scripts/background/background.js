@@ -1,8 +1,8 @@
 export class Layer {
   constructor(game, width, height, image, speedModifier) {
     this.game = game;
-    this.width = width;
-    this.height = height;
+    this.width = width * (this.game.height / 943);
+    this.height = height * (this.game.height / 943);
     this.image = image;
     this.speedModifier = speedModifier;
     this.x = 0;
