@@ -6,8 +6,8 @@ export class Game {
     this.height = height;
     this.player = new Player(this);
   }
-  update() {
-    // this.player.update();
+  update(deltaTime) {
+    this.player.update(deltaTime);
   }
   draw(context) {
     this.player.draw(context);
@@ -23,16 +23,17 @@ window.addEventListener('load', function () {
 
   const game = new Game(canvas.width, canvas.height);
 
-  // const lastTime = 0;
+  let lastTime = 0;
 
-  function animate() {
-    // const deltaTime = timestamp - lastTime;
-    // lastTime = timestamp;
-    game.update();
+  function animate(timestamp) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+    game.update(deltaTime);
     game.draw(ctx);
     requestAnimationFrame(animate);
   }
 
-  animate();
+  animate(0);
 
 });

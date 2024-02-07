@@ -11,7 +11,6 @@ describe('Player class', () => {
   });
 
   test('should create an instance of Player', () => {
-    expect(game).toBeInstanceOf(Game);
     expect(player).toBeInstanceOf(Player);
   });
 
@@ -25,7 +24,30 @@ describe('Player class', () => {
     expect(player).toHaveProperty('y');
     expect(player).toHaveProperty('frameX');
     expect(player).toHaveProperty('frameY');
+    expect(player).toHaveProperty('maxFrame');
+    expect(player).toHaveProperty('fps');
+    expect(player).toHaveProperty('frameInterval');
+    expect(player).toHaveProperty('frameTimer');
   });
 
+  test('should correctly initialize with the given game dimensions', () => {
+    expect(player.x).toBe((game.width - player.width) / 2);
+    expect(player.y).toBe(game.height - player.height);
+  });
 
+  test('should update frameX when update is called with enough deltaTime', () => {
+    player.update(100);
+    // Since 100ms is less than frameInterval, frameX should not change
+    expect(player.frameX).toBe(0);
+    // Simulate enough time passing for the frame to update
+    player.update(1000);
+    expect(player.frameX).toBe(1);
+  });
+
+  test('should reset frameX when maxFrame reached', () => {
+    player.frameX = player.maxFrame;
+    player.frameTimer = player.frameInterval;
+    player.update(1000);
+    expect(player.frameX).toBe(0);
+  });
 });
