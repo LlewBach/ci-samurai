@@ -1,3 +1,5 @@
+import { Standing } from '../playerStates/playerStates.js';
+
 export class Player {
   constructor(game) {
     this.game = game;
@@ -8,12 +10,15 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.frameX = 0;
+    this.frameX;
     this.frameY = 0;
-    this.maxFrame = 9;
+    this.maxFrame;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
+    this.states = [new Standing(this)];
+    this.currentState = this.states[0];
+    this.currentState.enter();
   }
   update(deltaTime) {
     // Sprite animation
