@@ -24,6 +24,7 @@ describe('Game class', () => {
   test('should contain necessary keys', () => {
     expect(game).toHaveProperty('width');
     expect(game).toHaveProperty('height');
+    expect(game).toHaveProperty('groundMargin');
     expect(game).toHaveProperty('speed');
     expect(game).toHaveProperty('background');
     expect(game).toHaveProperty('player');

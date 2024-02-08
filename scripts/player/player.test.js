@@ -36,7 +36,7 @@ describe('Player class', () => {
 
   test('should correctly initialize with the given game dimensions', () => {
     expect(player.x).toBe((game.width - player.width) / 2);
-    expect(player.y).toBe(game.height - player.height);
+    expect(player.y).toBe(game.height - game.groundMargin - player.height);
   });
 
   test('.update should update frameX when update is called with enough deltaTime', () => {

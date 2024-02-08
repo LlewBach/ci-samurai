@@ -7,7 +7,7 @@ export class Player {
     this.width = this.spriteWidth * 2.2;
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
-    this.y = this.game.height - this.height;
+    this.y = this.game.height - this.game.groundMargin - this.height;
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 9;
