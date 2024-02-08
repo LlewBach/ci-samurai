@@ -43,7 +43,7 @@ describe('Layer class', () => {
     expect(layer.x).toBe(0);
   });
 
-  test('.update should reset layer', () => {
+  test('.update should reset x position to 0 past -width', () => {
     layer.x = -3200;
     layer.update();
     expect(layer.x).toBe(0);
