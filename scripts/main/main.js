@@ -1,4 +1,5 @@
 import { Background } from '../background/background.js';
+import { InputHandler } from '../input/input.js';
 import { Player } from '../player/player.js';
 
 export class Game {
@@ -8,6 +9,7 @@ export class Game {
     this.groundMargin = 90;
     this.speed = 0;
     this.background = new Background(this);
+    this.input = new InputHandler();
     this.player = new Player(this);
   }
   update(deltaTime) {
