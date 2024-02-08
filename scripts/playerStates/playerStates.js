@@ -21,6 +21,24 @@ export class Standing extends State {
 
   }
   handleInput(inputKeys) {
+    if (inputKeys.includes('ArrowLeft')) {
+      this.player.setState(states.RUNNING);
+    } else if (inputKeys.includes('ArrowRight')) {
+      this.player.setState(states.RUNNING);
+    }
+  }
+}
+
+export class Running extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.maxFrame = 7;
+    this.player.frameY = 1;
+
+  }
+  handleInput(inputKeys) {
 
   }
 }

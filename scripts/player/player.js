@@ -1,4 +1,4 @@
-import { Standing } from '../playerStates/playerStates.js';
+import { Standing, Running } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -17,11 +17,12 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this)];
+    this.states = [new Standing(this), new Running(this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
+    this.currentState.handleInput(this.game.input.keys);
     // Sprite animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {
@@ -29,6 +30,10 @@ export class Player {
       if (this.frameX < this.maxFrame) this.frameX++;
       else this.frameX = 0;
     }
+  }
+  setState(state) {
+    this.currentState = this.states[state];
+    this.currentState.enter();
   }
   draw(context) {
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
