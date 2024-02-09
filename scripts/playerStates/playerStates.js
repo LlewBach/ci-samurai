@@ -54,6 +54,8 @@ export class Running extends State {
       this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
     }
+    // ArrowUp pressed
+    if (inputKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
   }
 }
 
@@ -65,6 +67,19 @@ export class Jumping extends State {
     this.player.maxFrame = 2;
     this.player.frameY = 2;
     this.player.vy = -24;
+  }
+  handleInput() {
+
+  }
+}
+
+export class Falling extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.maxFrame = 2;
+    this.player.frameY = 3;
   }
   handleInput() {
 

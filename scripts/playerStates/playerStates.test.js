@@ -1,9 +1,10 @@
-import { Standing, Running, Jumping } from './playerStates.js';
+import { Standing, Running, Jumping, Falling } from './playerStates.js';
 
 const states = {
   STANDING: 0,
   RUNNING: 1,
   JUMPING: 2,
+  FALLING: 3,
 }
 let player;
 
@@ -56,6 +57,11 @@ describe('Standing State', () => {
     standingState.handleInput(['ArrowRight']);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
+
+  test('should transition to JUMPING state on ArrowUp press', () => {
+    standingState.handleInput(['ArrowUp']);
+    expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
 });
 
 describe('Running State', () => {
@@ -87,6 +93,11 @@ describe('Running State', () => {
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
   });
+
+  test('should transition to JUMPING state on ArrowUp press', () => {
+    runningState.handleInput(['ArrowUp']);
+    expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
 });
 
 describe('Jumping State', () => {
@@ -101,6 +112,20 @@ describe('Jumping State', () => {
     expect(player.maxFrame).toBe(2);
     expect(player.frameY).toBe(2);
     expect(player.vy).toBe(-24);
+  });
+});
+
+describe('Falling State', () => {
+  let fallingState;
+
+  beforeEach(() => {
+    fallingState = new Falling(player);
+  });
+
+  test('should configure some player properties on .enter()', () => {
+    fallingState.enter();
+    expect(player.maxFrame).toBe(2);
+    expect(player.frameY).toBe(3);
   });
 });
 
