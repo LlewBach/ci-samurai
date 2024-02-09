@@ -3,6 +3,7 @@ const states = {
   RUNNING: 1,
   JUMPING: 2,
   FALLING: 3,
+  ROLLING: 4,
 }
 
 class State {
@@ -83,7 +84,30 @@ export class Falling extends State {
     this.player.frameY = 3;
   }
   handleInput(inputKeys) {
-    if (this.player.onGround() && (inputKeys.includes('ArrowRight') || inputKeys.includes('ArrowLeft'))) this.player.setState(states.RUNNING);
+    if (this.player.onGround() && inputKeys.includes('ArrowDown')) this.player.setState(states.ROLLING);
+    else if (this.player.onGround() && (inputKeys.includes('ArrowRight') || inputKeys.includes('ArrowLeft'))) this.player.setState(states.RUNNING);
     else if (this.player.onGround()) this.player.setState(states.STANDING);
+  }
+}
+
+export class Rolling extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.maxFrame = 7;
+    this.player.frameY = 6;
+  }
+  handleInput(inputKeys) {
+    if (this.player.speed === 0) {
+      if (inputKeys.includes('ArrowLeft')) {
+        this.player.facingRight = -1;
+        this.player.speed = -this.player.maxSpeed;
+      } else {
+        this.player.speed = this.player.maxSpeed;
+      }
+    }
+    if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
+    else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
   }
 }

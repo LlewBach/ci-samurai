@@ -35,11 +35,8 @@ describe('InputHandler', () => {
     expect(inputHandler.keys.filter(key => key === 'ArrowLeft').length).toBe(1);
   });
 
-  it('ignores keys other than ArrowLeft and ArrowRight', () => {
+  it('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown', () => {
     simulateEvent('keydown', 'p');
     expect(inputHandler.keys).toEqual([]);
   });
 });
-
-// Pretty much all of above directly from GPT-4
-

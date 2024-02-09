@@ -6,7 +6,8 @@ export class InputHandler {
       if ((
         e.key === 'ArrowLeft' ||
         e.key === 'ArrowRight' ||
-        e.key === 'ArrowUp'
+        e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown'
       ) && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
       }
@@ -17,7 +18,8 @@ export class InputHandler {
       if (
         e.key === 'ArrowLeft' ||
         e.key === 'ArrowRight' ||
-        e.key === 'ArrowUp'
+        e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown'
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
       }
