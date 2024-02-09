@@ -36,6 +36,7 @@ describe('Player class', () => {
     expect(player).toHaveProperty('facingRight');
     expect(player).toHaveProperty('speed');
     expect(player).toHaveProperty('maxSpeed');
+    expect(player).toHaveProperty('vy');
     expect(player).toHaveProperty('frameX');
     expect(player).toHaveProperty('frameY');
     expect(player).toHaveProperty('maxFrame');

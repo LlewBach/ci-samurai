@@ -1,4 +1,4 @@
-import { Standing, Running } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -13,13 +13,14 @@ export class Player {
     this.facingRight;
     this.speed;
     this.maxSpeed = 7;
+    this.vy = 0;
     this.frameX;
     this.frameY;
     this.maxFrame;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -28,6 +29,8 @@ export class Player {
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves
     this.game.speed = this.speed;
+    // Update vertical position
+    this.y += this.vy;
     // Sprite animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {

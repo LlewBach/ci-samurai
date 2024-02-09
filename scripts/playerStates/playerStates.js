@@ -1,6 +1,7 @@
 const states = {
   STANDING: 0,
   RUNNING: 1,
+  JUMPING: 2,
 }
 
 class State {
@@ -23,9 +24,10 @@ export class Standing extends State {
   handleInput(inputKeys) {
     if (inputKeys.includes('ArrowLeft')) {
       this.player.setState(states.RUNNING);
-
     } else if (inputKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
+    } else if (inputKeys.includes('ArrowUp')) {
+      this.player.setState(states.JUMPING);
     }
   }
 }
@@ -52,5 +54,19 @@ export class Running extends State {
       this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
     }
+  }
+}
+
+export class Jumping extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.maxFrame = 2;
+    this.player.frameY = 2;
+    this.player.vy = -24;
+  }
+  handleInput() {
+
   }
 }
