@@ -18,6 +18,7 @@ export class Layer {
   }
   draw(context) {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    // This line makes background seem continuous
     context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
   }
 }

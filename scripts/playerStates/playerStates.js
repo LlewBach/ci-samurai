@@ -18,11 +18,11 @@ export class Standing extends State {
     this.player.maxFrame = 9;
     this.player.frameY = 0;
     this.player.speed = 0;
-
   }
   handleInput(inputKeys) {
     if (inputKeys.includes('ArrowLeft')) {
       this.player.setState(states.RUNNING);
+
     } else if (inputKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
     }
@@ -39,6 +39,15 @@ export class Running extends State {
 
   }
   handleInput(inputKeys) {
-
+    // No horizontal arrow pressed
+    if (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight')) {
+      this.player.setState(states.STANDING);
+    }
+    // One horizontal arrow pressed
+    if (inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight')) {
+      this.player.speed = -this.player.maxSpeed;
+    } else if (inputKeys.includes('ArrowRight') && !inputKeys.includes('ArrowLeft')) {
+      this.player.speed = this.player.maxSpeed;
+    }
   }
 }

@@ -10,7 +10,8 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.speed;
+    this.speed; // test key
+    this.maxSpeed = 7; // test key
     this.frameX;
     this.frameY;
     this.maxFrame;
@@ -22,7 +23,10 @@ export class Player {
     this.currentState.enter();
   }
   update(deltaTime) {
+    // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
+    // Update game.speed based on player moves
+    this.game.speed = this.speed;
     // Sprite animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {
