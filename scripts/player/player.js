@@ -14,6 +14,7 @@ export class Player {
     this.speed;
     this.maxSpeed = 7;
     this.vy = 0;
+    this.gravity = 1;
     this.frameX;
     this.frameY;
     this.maxFrame;
@@ -31,6 +32,13 @@ export class Player {
     this.game.speed = this.speed;
     // Update vertical position
     this.y += this.vy;
+    // Update vy
+    if (!this.onGround()) this.vy += this.gravity;
+    // Ground boundary
+    if (this.onGround()) {
+      this.vy = 0;
+      // this.y = this.game.height - this.game.groundMargin - this.height;
+    }
     // Sprite animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {
@@ -42,6 +50,9 @@ export class Player {
   setState(state) {
     this.currentState = this.states[state];
     this.currentState.enter();
+  }
+  onGround() {
+    return this.y >= this.game.height - this.game.groundMargin - this.height;
   }
   draw(context) {
     context.save();

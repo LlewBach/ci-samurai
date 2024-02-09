@@ -1,22 +1,38 @@
-import { Standing, Running } from './playerStates.js';
+import { Standing, Running, Jumping } from './playerStates.js';
 
 const states = {
   STANDING: 0,
   RUNNING: 1,
+  JUMPING: 2,
 }
+let player;
+
+beforeEach(() => {
+  player = {
+    frameX: undefined,
+    maxFrame: undefined,
+    frameY: undefined,
+    speed: undefined,
+    maxSpeed: 7,
+    setState: jest.fn(),
+  };
+});
+
+afterEach(() => {
+  player = {
+    frameX: undefined,
+    maxFrame: undefined,
+    frameY: undefined,
+    speed: undefined,
+    maxSpeed: 7,
+    setState: jest.fn(),
+  };
+});
 
 describe('Standing State', () => {
-  let player;
   let standingState;
 
   beforeEach(() => {
-    player = {
-      frameX: undefined,
-      maxFrame: undefined,
-      frameY: undefined,
-      speed: undefined,
-      setState: jest.fn(),
-    };
     standingState = new Standing(player);
   });
 
@@ -24,7 +40,7 @@ describe('Standing State', () => {
     expect(player.frameX).toBe(0);
   });
 
-  test('should configure player properties on .enter()', () => {
+  test('should configure some player properties on .enter()', () => {
     standingState.enter();
     expect(player.maxFrame).toBe(9);
     expect(player.frameY).toBe(0);
@@ -43,22 +59,13 @@ describe('Standing State', () => {
 });
 
 describe('Running State', () => {
-  let player;
   let runningState;
 
   beforeEach(() => {
-    player = {
-      frameX: undefined,
-      maxFrame: undefined,
-      frameY: undefined,
-      speed: undefined,
-      maxSpeed: 7,
-      setState: jest.fn(),
-    };
     runningState = new Running(player);
   });
 
-  test('should update maxFrame value on .enter()', () => {
+  test('should configure some player properties on .enter()', () => {
     runningState.enter();
     expect(player.maxFrame).toBe(7);
     expect(player.frameY).toBe(1);
@@ -79,6 +86,21 @@ describe('Running State', () => {
     runningState.handleInput(['ArrowRight']);
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
+  });
+});
+
+describe('Jumping State', () => {
+  let jumpingState;
+
+  beforeEach(() => {
+    jumpingState = new Jumping(player);
+  });
+
+  test('should configure some player properties on .enter()', () => {
+    jumpingState.enter();
+    expect(player.maxFrame).toBe(2);
+    expect(player.frameY).toBe(2);
+    expect(player.vy).toBe(-24);
   });
 });
 

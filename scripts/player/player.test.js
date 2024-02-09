@@ -37,6 +37,7 @@ describe('Player class', () => {
     expect(player).toHaveProperty('speed');
     expect(player).toHaveProperty('maxSpeed');
     expect(player).toHaveProperty('vy');
+    expect(player).toHaveProperty('gravity');
     expect(player).toHaveProperty('frameX');
     expect(player).toHaveProperty('frameY');
     expect(player).toHaveProperty('maxFrame');
@@ -57,6 +58,38 @@ describe('Player class', () => {
     expect(player.currentState).toBe(player.states[0]);
     expect(player.frameY).toBe(0);
     expect(player.speed).toBe(0);
+  });
+
+  test('.update should enact currentState.handleInput()', () => {
+    player.currentState.handleInput = jest.fn();
+    player.update(100);
+    expect(player.currentState.handleInput).toHaveBeenCalled();
+  });
+
+  test('.update should set game.speed to current player.speed', () => {
+    player.speed = player.maxSpeed;
+    player.update(100);
+    expect(game.speed).toBe(player.speed);
+  });
+
+  test('.update should update player.y based on player.vy', () => {
+    player.y = 100;
+    player.vy = -24;
+    player.update(100);
+    expect(player.y).toBe(76);
+  });
+
+  test('.update should update player.vy based on player.gravity', () => {
+    player.vy = -24;
+    player.update(100);
+    expect(player.vy).toBe(-24 + player.gravity);
+  });
+
+  test('.update should enforce the ground boundary', () => {
+    player.vy = 20;
+    player.y = game.height - game.groundMargin - player.height;
+    player.update(100);
+    expect(player.vy).toBe(0);
   });
 
   test('.update should update frameX when update is called with enough deltaTime', () => {
@@ -80,6 +113,12 @@ describe('Player class', () => {
     expect(player.currentState).toBeInstanceOf(Running);
     expect(player.currentState).toBe(player.states[1]);
     expect(player.frameY).toBe(1);
+  });
+
+  test('.onGround should return true if player onGround and false if player in the air', () => {
+    expect(player.onGround()).toBe(true);
+    player.y = game.height - game.groundMargin - player.height - 20;
+    expect(player.onGround()).toBe(false);
   });
 
   test('.draw should call context.drawImage correctly', () => {
