@@ -69,13 +69,15 @@ describe('Running State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 
-  test('should set speed to -maxSpeed on ArrowLeft press', () => {
+  test('should set facingRight to -1 and speed to -maxSpeed on ArrowLeft press', () => {
     runningState.handleInput(['ArrowLeft']);
+    expect(player.facingRight).toBe(-1);
     expect(player.speed).toBe(-player.maxSpeed);
   });
 
-  test('should set speed to maxSpeed on ArrowRight press', () => {
+  test('should set facingRight to 1 and speed to +maxSpeed on ArrowRight press', () => {
     runningState.handleInput(['ArrowRight']);
+    expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
   });
 });

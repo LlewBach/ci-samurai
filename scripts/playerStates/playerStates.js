@@ -15,9 +15,10 @@ export class Standing extends State {
     super(player);
   }
   enter() {
+    this.player.facingRight = 1;
+    this.player.speed = 0;
     this.player.maxFrame = 9;
     this.player.frameY = 0;
-    this.player.speed = 0;
   }
   handleInput(inputKeys) {
     if (inputKeys.includes('ArrowLeft')) {
@@ -45,8 +46,10 @@ export class Running extends State {
     }
     // One horizontal arrow pressed
     if (inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight')) {
+      this.player.facingRight = -1;
       this.player.speed = -this.player.maxSpeed;
     } else if (inputKeys.includes('ArrowRight') && !inputKeys.includes('ArrowLeft')) {
+      this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
     }
   }

@@ -10,7 +10,7 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.facingRight = 1;
+    this.facingRight;
     this.speed;
     this.maxSpeed = 7;
     this.frameX;

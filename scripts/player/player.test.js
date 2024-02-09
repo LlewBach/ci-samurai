@@ -11,7 +11,12 @@ describe('Player class', () => {
   beforeEach(() => {
     game = new Game(800, 600);
     player = new Player(game);
-    mockContext = { drawImage: jest.fn() };
+    mockContext = {
+      drawImage: jest.fn(),
+      save: jest.fn(),
+      scale: jest.fn(),
+      restore: jest.fn()
+    };
 
   });
 
@@ -80,6 +85,6 @@ describe('Player class', () => {
     player.image = mockImage;
     player.draw(mockContext);
     expect(mockContext.drawImage).toHaveBeenCalled();
-    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, player.frameX * player.spriteWidth, player.frameY * player.spriteHeight, player.spriteWidth, player.spriteHeight, player.x, player.y, player.width, player.height);
+    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, player.frameX * player.spriteWidth, player.frameY * player.spriteHeight, player.spriteWidth, player.spriteHeight, player.x * player.facingRight, player.y, player.width * player.facingRight, player.height);
   });
 });
