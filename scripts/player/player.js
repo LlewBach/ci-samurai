@@ -10,8 +10,8 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.speed; // test key
-    this.maxSpeed = 7; // test key
+    this.speed;
+    this.maxSpeed = 7;
     this.frameX;
     this.frameY;
     this.maxFrame;
