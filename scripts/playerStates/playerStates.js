@@ -2,6 +2,7 @@ const states = {
   STANDING: 0,
   RUNNING: 1,
   JUMPING: 2,
+  FALLING: 3,
 }
 
 class State {
@@ -69,7 +70,7 @@ export class Jumping extends State {
     this.player.vy = -24;
   }
   handleInput() {
-
+    if (this.player.vy >= 0) this.player.setState(states.FALLING);
   }
 }
 

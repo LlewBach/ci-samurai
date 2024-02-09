@@ -113,6 +113,17 @@ describe('Jumping State', () => {
     expect(player.frameY).toBe(2);
     expect(player.vy).toBe(-24);
   });
+
+  test('should transition to FALLING state at jump peak', () => {
+    jumpingState.enter();
+    player.vy = -1;
+    jumpingState.handleInput();
+    expect(player.setState).not.toHaveBeenCalledWith(states.FALLING);
+    expect(player.frameY).toBe(2);
+    player.vy = 0;
+    jumpingState.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.FALLING);
+  });
 });
 
 describe('Falling State', () => {
