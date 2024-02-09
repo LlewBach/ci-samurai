@@ -10,6 +10,7 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
+    this.facingRight = 1;
     this.speed;
     this.maxSpeed = 7;
     this.frameX;
@@ -40,7 +41,10 @@ export class Player {
     this.currentState.enter();
   }
   draw(context) {
-    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+    context.save();
+    context.scale(this.facingRight, 1);
+    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
+    context.restore();
   }
 }
 

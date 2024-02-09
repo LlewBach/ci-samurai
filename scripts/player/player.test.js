@@ -28,6 +28,7 @@ describe('Player class', () => {
     expect(player).toHaveProperty('height');
     expect(player).toHaveProperty('x');
     expect(player).toHaveProperty('y');
+    expect(player).toHaveProperty('facingRight');
     expect(player).toHaveProperty('speed');
     expect(player).toHaveProperty('maxSpeed');
     expect(player).toHaveProperty('frameX');
