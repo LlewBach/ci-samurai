@@ -82,7 +82,8 @@ export class Falling extends State {
     this.player.maxFrame = 2;
     this.player.frameY = 3;
   }
-  handleInput() {
-
+  handleInput(inputKeys) {
+    if (this.player.onGround() && (inputKeys.includes('ArrowRight') || inputKeys.includes('ArrowLeft'))) this.player.setState(states.RUNNING);
+    else if (this.player.onGround()) this.player.setState(states.STANDING);
   }
 }

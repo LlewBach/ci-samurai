@@ -16,6 +16,7 @@ beforeEach(() => {
     speed: undefined,
     maxSpeed: 7,
     setState: jest.fn(),
+    onGround: jest.fn(),
   };
 });
 
@@ -137,6 +138,20 @@ describe('Falling State', () => {
     fallingState.enter();
     expect(player.maxFrame).toBe(2);
     expect(player.frameY).toBe(3);
+  });
+
+  test('should transition to STANDING if player.onGround() and no horizontal arrow pressed', () => {
+    fallingState.enter();
+    player.onGround.mockReturnValue(true);
+    fallingState.handleInput([]);
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+
+  test('should transition to RUNNING if player.onGround() and a horizontal arrow pressed', () => {
+    fallingState.enter();
+    player.onGround.mockReturnValue(true);
+    fallingState.handleInput(['ArrowRight']);
+    expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 });
 
