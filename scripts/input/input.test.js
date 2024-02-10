@@ -35,7 +35,7 @@ describe('InputHandler', () => {
     expect(inputHandler.keys.filter(key => key === 'ArrowLeft').length).toBe(1);
   });
 
-  it('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown', () => {
+  it('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a', () => {
     simulateEvent('keydown', 'p');
     expect(inputHandler.keys).toEqual([]);
   });

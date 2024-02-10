@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Attack1 } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -6,6 +6,7 @@ const states = {
   JUMPING: 2,
   FALLING: 3,
   ROLLING: 4,
+  ATTACK1: 5,
 }
 let player;
 
@@ -39,12 +40,9 @@ describe('Standing State', () => {
     standingState = new Standing(player);
   });
 
-  test('should set initial frameX to 0 on state instantiation', () => {
-    expect(player.frameX).toBe(0);
-  });
-
   test('should configure some player properties on .enter()', () => {
     standingState.enter();
+    expect(player.frameX).toBe(0);
     expect(player.maxFrame).toBe(9);
     expect(player.frameY).toBe(0);
     expect(player.speed).toBe(0);
@@ -63,6 +61,16 @@ describe('Standing State', () => {
   test('should transition to JUMPING state on ArrowUp press', () => {
     standingState.handleInput(['ArrowUp']);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
+
+  test('should correctly transition to ATTACK1 on "a" press or "shift + A"', () => {
+    player.facingRight = 1;
+    standingState.handleInput(['a']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+    expect(player.facingRight).toBe(1);
+    standingState.handleInput(['Shift', 'A']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+    expect(player.facingRight).toBe(-1);
   });
 });
 
@@ -99,6 +107,11 @@ describe('Running State', () => {
   test('should transition to JUMPING state on ArrowUp press', () => {
     runningState.handleInput(['ArrowUp']);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
+
+  test('should transition to ATTACK1 on "a" key press', () => {
+    runningState.handleInput(['a']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 });
 
@@ -200,3 +213,26 @@ describe('Rolling State', () => {
   });
 });
 
+describe('Attack1 State', () => {
+  let attack1State;
+
+  beforeEach(() => {
+    attack1State = new Attack1(player);
+    attack1State.enter();
+  });
+
+  test('should configure some player properties on .enter()', () => {
+    player.facingRight = 1;
+    expect(player.maxFrame).toBe(7);
+    expect(player.frameY).toBe(9);
+  });
+
+  test('should transition to STANDING if frameX === maxFrame', () => {
+    player.frameX = 6;
+    attack1State.handleInput();
+    expect(player.setState).not.toHaveBeenCalled();
+    player.frameX = 7;
+    attack1State.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+});

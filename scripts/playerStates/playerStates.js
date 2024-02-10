@@ -4,12 +4,12 @@ const states = {
   JUMPING: 2,
   FALLING: 3,
   ROLLING: 4,
+  ATTACK1: 5,
 }
 
 class State {
   constructor(player) {
     this.player = player;
-    this.player.frameX = 0;
   }
 }
 
@@ -18,10 +18,11 @@ export class Standing extends State {
     super(player);
   }
   enter() {
-    this.player.facingRight = 1;
-    this.player.speed = 0;
+    this.player.frameX = 0;
     this.player.maxFrame = 9;
     this.player.frameY = 0;
+    this.player.facingRight = 1;
+    this.player.speed = 0;
   }
   handleInput(inputKeys) {
     if (inputKeys.includes('ArrowLeft')) {
@@ -30,6 +31,9 @@ export class Standing extends State {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
+    } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
+      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      this.player.setState(states.ATTACK1);
     }
   }
 }
@@ -39,6 +43,7 @@ export class Running extends State {
     super(player);
   }
   enter() {
+    this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 1;
 
@@ -58,6 +63,7 @@ export class Running extends State {
     }
     // ArrowUp pressed
     if (inputKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
+    else if (inputKeys.includes('a')) this.player.setState(states.ATTACK1);
   }
 }
 
@@ -66,6 +72,7 @@ export class Jumping extends State {
     super(player);
   }
   enter() {
+    this.player.frameX = 0;
     this.player.maxFrame = 2;
     this.player.frameY = 2;
     this.player.vy = -24;
@@ -80,6 +87,7 @@ export class Falling extends State {
     super(player);
   }
   enter() {
+    this.player.frameX = 0;
     this.player.maxFrame = 2;
     this.player.frameY = 3;
   }
@@ -95,6 +103,7 @@ export class Rolling extends State {
     super(player);
   }
   enter() {
+    this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 6;
   }
@@ -109,5 +118,19 @@ export class Rolling extends State {
     }
     if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
     else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
+  }
+}
+
+export class Attack1 extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 7;
+    this.player.frameY = 9;
+  }
+  handleInput(inputKeys) {
+    if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);
   }
 }
