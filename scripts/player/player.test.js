@@ -62,49 +62,63 @@ describe('Player class', () => {
 
   test('.update should enact currentState.handleInput()', () => {
     player.currentState.handleInput = jest.fn();
-    player.update(100);
+    player.update(16);
     expect(player.currentState.handleInput).toHaveBeenCalled();
   });
 
   test('.update should set game.speed to current player.speed', () => {
     player.speed = player.maxSpeed;
-    player.update(100);
+    player.update(16);
     expect(game.speed).toBe(player.speed);
   });
 
   test('.update should update player.y based on player.vy', () => {
     player.y = 100;
     player.vy = -24;
-    player.update(100);
+    player.update(16);
     expect(player.y).toBe(76);
   });
 
   test('.update should update player.vy based on player.gravity', () => {
     player.vy = -24;
-    player.update(100);
+    player.update(16);
     expect(player.vy).toBe(-24 + player.gravity);
   });
 
   test('.update should enforce the ground boundary', () => {
     player.vy = 20;
     player.y = game.height - game.groundMargin - player.height;
-    player.update(100);
+    player.update(16);
     expect(player.vy).toBe(0);
   });
 
+  test('.update should increment frameTimer if less than frameInterval', () => {
+    player.frameTimer = 16;
+    player.update(16);
+    expect(player.frameTimer).toBe(32);
+  });
+
+  test('.update should reset frameTimer if more than frameInterval', () => {
+    player.frameTimer = 60;
+    player.update(16);
+    expect(player.frameTimer).toBe(0);
+  });
+
   test('.update should update frameX when update is called with enough deltaTime', () => {
-    player.update(100);
+    player.frameTimer = 0;
+    player.update(16);
     // Since 100ms is less than frameInterval, frameX should not change
     expect(player.frameX).toBe(0);
     // Simulate enough time passing for the frame to update
-    player.update(1000);
+    player.frameTimer = 50;
+    player.update(16);
     expect(player.frameX).toBe(1);
   });
 
   test('.update should reset frameX when maxFrame reached', () => {
     player.frameX = player.maxFrame;
     player.frameTimer = player.frameInterval;
-    player.update(1000);
+    player.update(16);
     expect(player.frameX).toBe(0);
   });
 
@@ -124,7 +138,6 @@ describe('Player class', () => {
   test('.draw should call context.drawImage correctly', () => {
     player.image = mockImage;
     player.draw(mockContext);
-    expect(mockContext.drawImage).toHaveBeenCalled();
     expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, player.frameX * player.spriteWidth, player.frameY * player.spriteHeight, player.spriteWidth, player.spriteHeight, player.x * player.facingRight, player.y, player.width * player.facingRight, player.height);
   });
 });

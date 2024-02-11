@@ -1,5 +1,6 @@
 import { Background } from '../background/background.js';
 import { InputHandler } from '../input/input.js';
+import { Zombie1 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
 
 export class Game {
@@ -11,14 +12,23 @@ export class Game {
     this.background = new Background(this);
     this.input = new InputHandler();
     this.player = new Player(this);
+    this.enemies = [];
   }
   update(deltaTime) {
     this.background.update();
     this.player.update(deltaTime);
+    this.addEnemy();
+    this.enemies.forEach(enemy => enemy.update(deltaTime));
   }
   draw(context) {
     this.background.draw(context);
     this.player.draw(context);
+    this.enemies.forEach(enemy => enemy.draw(context));
+  }
+  addEnemy() {
+    if (this.enemies.length === 0) {
+      this.enemies.push(new Zombie1(this));
+    }
   }
 }
 

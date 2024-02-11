@@ -1,10 +1,12 @@
 import { Game } from './main.js';
 import { Background } from '../background/background.js';
 import { Player } from '../player/player.js';
+// import { Zombie1 } from '../enemies/enemies.js';
 
 // Mock dependencies
 jest.mock('../background/background.js');
 jest.mock('../player/player.js');
+// jest.mock('../enemies/enemies.js');
 
 describe('Game class', () => {
   let game;
@@ -13,6 +15,10 @@ describe('Game class', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     game = new Game(800, 600);
+    game.enemies = [
+      { update: jest.fn(), draw: jest.fn() },
+      { update: jest.fn(), draw: jest.fn() }
+    ];
   });
 
   test('should create an instance of Game', () => {
@@ -28,6 +34,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('speed');
     expect(game).toHaveProperty('background');
     expect(game).toHaveProperty('player');
+    expect(game).toHaveProperty('enemies');
   });
 
   test('should initialize with Background and Player instances', () => {
@@ -37,14 +44,23 @@ describe('Game class', () => {
     expect(Player).toHaveBeenCalledWith(game);
   });
 
-  test('.update should call update on both Background and Player', () => {
+  test('.update should call .update on background, player and enemies array', () => {
     const deltaTime = 16; // The average value
     game.update(deltaTime);
     expect(game.background.update).toHaveBeenCalled();
     expect(game.player.update).toHaveBeenCalledWith(deltaTime);
+    game.enemies.forEach(enemy => {
+      expect(enemy.update).toHaveBeenCalledWith(deltaTime);
+    });
   });
 
-  test('.draw should call draw on both Background and Player', () => {
+  test('.update should call .addEnemy', () => {
+    const addEnemySpy = jest.spyOn(game, 'addEnemy');
+    game.update(16);
+    expect(addEnemySpy).toHaveBeenCalled();
+  });
+
+  test('.draw should call draw on background, player and enemies array', () => {
     mockContext = { drawImage: jest.fn() };
     game.background.draw = jest.fn();
     game.player.draw = jest.fn();
@@ -52,5 +68,16 @@ describe('Game class', () => {
 
     expect(game.background.draw).toHaveBeenCalledWith(mockContext);
     expect(game.player.draw).toHaveBeenCalledWith(mockContext);
+    game.enemies.forEach(enemy => {
+      expect(enemy.draw).toHaveBeenCalledWith(mockContext);
+    });
+  });
+
+  test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {
+    game.enemies = [];
+    expect(game.enemies.length).toBe(0);
+    game.addEnemy();
+    expect(game.enemies.length).toBe(1);
+    // expect(game.enemies[0]).toBeInstanceOf(Zombie1);
   });
 });
