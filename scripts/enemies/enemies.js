@@ -1,3 +1,5 @@
+import { Standing } from '../enemyStates/enemyStates.js';
+
 const zombie1 = document.getElementById('zombie1');
 
 export class Zombie1 {
@@ -11,14 +13,22 @@ export class Zombie1 {
     this.x = this.game.width - this.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
     this.facingRight = -1;
+    this.speed = 0;
     this.frameX = 0;
-    this.maxFrame = 11;
-    this.frameY = 2;
+    this.maxFrame;
+    this.frameY;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
+    this.states = [new Standing(this.game, this)];
+    this.currentState = this.states[0];
+    this.currentState.enter();
   }
   update(deltaTime) {
+    // currentState update
+    this.currentState.update();
+    // Motion
+    this.x -= this.speed;
     // Animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {

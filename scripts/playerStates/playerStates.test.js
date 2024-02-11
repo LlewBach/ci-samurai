@@ -10,7 +10,7 @@ const states = {
 }
 let player;
 
-beforeEach(() => {
+beforeEach(() => { //Change to beforeAll?
   player = {
     frameX: undefined,
     maxFrame: undefined,

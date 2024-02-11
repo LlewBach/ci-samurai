@@ -32,6 +32,7 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('x');
     expect(zombie1).toHaveProperty('y');
     expect(zombie1).toHaveProperty('facingRight');
+    expect(zombie1).toHaveProperty('speed');
     expect(zombie1).toHaveProperty('frameX');
     expect(zombie1).toHaveProperty('frameY');
     expect(zombie1).toHaveProperty('maxFrame');
@@ -43,6 +44,20 @@ describe('Zombie1 class', () => {
   test('should correctly initialize with the given game dimensions', () => {
     expect(zombie1.x).toBe(game.width - zombie1.width);
     expect(zombie1.y).toBe(game.height - game.groundMargin - zombie1.height);
+  });
+
+  test('.update should enact currentState.update()', () => {
+    zombie1.currentState.update = jest.fn();
+    zombie1.update(16);
+    expect(zombie1.currentState.update).toHaveBeenCalled();
+  });
+
+  test('.update should update x position', () => {
+    zombie1.currentState.update = jest.fn();
+    zombie1.x = 100;
+    zombie1.speed = 7;
+    zombie1.update(16);
+    expect(zombie1.x).toBe(93);
   });
 
   test('.update should increment frameTimer if less than frameInterval', () => {
