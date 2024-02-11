@@ -10,6 +10,7 @@ export class Zombie1 {
     this.height = this.spriteHeight * 2;
     this.x = this.game.width - this.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
+    this.facingRight = -1;
     this.frameX = 0;
     this.maxFrame = 11;
     this.frameY = 2;
@@ -27,6 +28,9 @@ export class Zombie1 {
     }
   }
   draw(context) {
-    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+    context.save();
+    context.scale(this.facingRight, 1);
+    context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
+    context.restore();
   }
 }

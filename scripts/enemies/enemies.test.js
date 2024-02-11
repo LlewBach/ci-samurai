@@ -12,9 +12,9 @@ describe('Zombie1 class', () => {
     zombie1 = new Zombie1(game);
     mockContext = {
       drawImage: jest.fn(),
-      // save: jest.fn(),
-      // scale: jest.fn(),
-      // restore: jest.fn()
+      save: jest.fn(),
+      scale: jest.fn(),
+      restore: jest.fn()
     };
   });
 
@@ -31,6 +31,7 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('height');
     expect(zombie1).toHaveProperty('x');
     expect(zombie1).toHaveProperty('y');
+    expect(zombie1).toHaveProperty('facingRight');
     expect(zombie1).toHaveProperty('frameX');
     expect(zombie1).toHaveProperty('frameY');
     expect(zombie1).toHaveProperty('maxFrame');
@@ -77,6 +78,6 @@ describe('Zombie1 class', () => {
   test('.draw should call context.drawImage correctly', () => {
     zombie1.image = mockImage;
     zombie1.draw(mockContext);
-    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, zombie1.frameX * zombie1.spriteWidth, zombie1.frameY * zombie1.spriteHeight, zombie1.spriteWidth, zombie1.spriteHeight, zombie1.x, zombie1.y, zombie1.width, zombie1.height);
+    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, zombie1.frameX * zombie1.spriteWidth, zombie1.frameY * zombie1.spriteHeight, zombie1.spriteWidth, zombie1.spriteHeight, zombie1.x * zombie1.facingRight, zombie1.y, zombie1.width * zombie1.facingRight, zombie1.height);
   });
 });
