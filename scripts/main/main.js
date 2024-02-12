@@ -19,6 +19,7 @@ export class Game {
     this.player.update(deltaTime);
     this.addEnemy();
     this.enemies.forEach(enemy => enemy.update(deltaTime));
+    this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
   }
   draw(context) {
     this.background.draw(context);

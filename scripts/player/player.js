@@ -24,11 +24,13 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Attack1(this)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Attack1(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
+    // Check enemy inShortRange status
+    this.shortRangeCheck();
     // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves
@@ -56,6 +58,19 @@ export class Player {
   }
   onGround() {
     return this.y >= this.game.height - this.game.groundMargin - this.height;
+  }
+  shortRangeCheck() {
+    this.game.enemies.forEach(enemy => {
+      if (
+        enemy.x + enemy.hitMargin < this.x + this.width - this.attackMargin &&
+        enemy.x + (enemy.width / 2) > this.x + (this.width / 2)
+      ) enemy.inShortRange = 1;
+      else if (
+        enemy.x + enemy.width - enemy.hitMargin > this.x + this.attackMargin &&
+        enemy.x + (enemy.width / 2) < this.x + (this.width / 2)
+      ) enemy.inShortRange = -1;
+      else enemy.inShortRange = 0;
+    });
   }
   draw(context) {
     context.save();

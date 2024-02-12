@@ -16,8 +16,8 @@ describe('Game class', () => {
     jest.clearAllMocks();
     game = new Game(800, 600);
     game.enemies = [
-      { update: jest.fn(), draw: jest.fn() },
-      { update: jest.fn(), draw: jest.fn() }
+      { update: jest.fn(), draw: jest.fn(), markedForDeletion: false },
+      { update: jest.fn(), draw: jest.fn(), markedForDeletion: true }
     ];
   });
 
@@ -58,6 +58,12 @@ describe('Game class', () => {
     const addEnemySpy = jest.spyOn(game, 'addEnemy');
     game.update(16);
     expect(addEnemySpy).toHaveBeenCalled();
+  });
+
+  test('.update should filter enemies array according to markedForDeletion status', () => {
+    expect(game.enemies.some(enemy => enemy.markedForDeletion)).toBe(true);
+    game.update(16);
+    expect(game.enemies.some(enemy => enemy.markedForDeletion)).toBe(false);
   });
 
   test('.draw should call draw on background, player and enemies array', () => {

@@ -122,13 +122,22 @@ export class Rolling extends State {
 }
 
 export class Attack1 extends State {
-  constructor(player) {
+  constructor(player, game) {
     super(player);
+    this.game = game;
   }
   enter() {
     this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 9;
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
+        this.game.enemies[i].markedForDeletion = true;
+        break;
+      } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
+        this.game.enemies[i].markedForDeletion = true;
+      }
+    }
   }
   handleInput(inputKeys) {
     if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);

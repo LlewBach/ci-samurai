@@ -12,9 +12,11 @@ export class Zombie1 {
     this.height = this.spriteHeight * 2;
     this.x = this.game.width - this.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.hitMargin = 100; // new
-    this.yContactMargin = 20; // new
+    this.hitMargin = 100;
+    this.yContactMargin = 20;
     this.facingRight = -1;
+    this.inShortRange = false; // new
+    this.markedForDeletion = false; // new
     this.speed = 0;
     this.frameX = 0;
     this.maxFrame;

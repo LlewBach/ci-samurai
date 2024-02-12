@@ -214,17 +214,31 @@ describe('Rolling State', () => {
 });
 
 describe('Attack1 State', () => {
-  let attack1State;
+  let attack1State, game;
 
   beforeEach(() => {
-    attack1State = new Attack1(player);
+    game = {
+      enemies: [
+        { inShortRange: 0, markedForDeletion: false },
+        { inShortRange: 1, markedForDeletion: false },
+        { inShortRange: -1, markedForDeletion: false }
+      ]
+    };
+    player.facingRight = 1;
+    attack1State = new Attack1(player, game);
     attack1State.enter();
   });
 
-  test('should configure some player properties on .enter()', () => {
-    player.facingRight = 1;
+  test('.enter should configure some player properties', () => {
     expect(player.maxFrame).toBe(7);
     expect(player.frameY).toBe(9);
+  });
+
+  test('.enter should set enemy.markedForDeletion based on enemy.inShortRange status and player.facingRight', () => {
+    expect(game.enemies[1].markedForDeletion).toBe(true);
+    player.facingRight = -1;
+    attack1State.enter();
+    expect(game.enemies[2].markedForDeletion).toBe(true);
   });
 
   test('should transition to STANDING if frameX === maxFrame', () => {

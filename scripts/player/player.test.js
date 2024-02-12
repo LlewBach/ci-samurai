@@ -61,6 +61,12 @@ describe('Player class', () => {
     expect(player.speed).toBe(0);
   });
 
+  test('.update should call shortRangeCheck()', () => {
+    const shortRangeCheckSpy = jest.spyOn(player, 'shortRangeCheck');
+    player.update(16);
+    expect(shortRangeCheckSpy).toHaveBeenCalled();
+  });
+
   test('.update should enact currentState.handleInput()', () => {
     player.currentState.handleInput = jest.fn();
     player.update(16);
@@ -134,6 +140,31 @@ describe('Player class', () => {
     expect(player.onGround()).toBe(true);
     player.y = game.height - game.groundMargin - player.height - 20;
     expect(player.onGround()).toBe(false);
+  });
+
+  test('.shortRangeCheck should check each enemy to see if player attack range and enemy hit range intersect and on what side', () => {
+    game.enemies = [
+      {
+        x: 100,
+        width: 50,
+        hitMargin: 10,
+        inShortRange: 0
+      }, {
+        x: 145,
+        width: 50,
+        hitMargin: 10,
+        inShortRange: 0
+      }
+    ];
+    game.enemies.forEach(enemy => {
+      expect(enemy.inShortRange).toBe(0);
+    });
+    player.x = 120;
+    player.width = 50;
+    player.attackMargin = 10;
+    player.shortRangeCheck();
+    expect(game.enemies[0].inShortRange).toBe(-1);
+    expect(game.enemies[1].inShortRange).toBe(1);
   });
 
   test('.draw should call context.drawImage correctly', () => {
