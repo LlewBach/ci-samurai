@@ -14,7 +14,8 @@ describe('Zombie1 class', () => {
       drawImage: jest.fn(),
       save: jest.fn(),
       scale: jest.fn(),
-      restore: jest.fn()
+      restore: jest.fn(),
+      strokeRect: jest.fn() // might need to delete
     };
   });
 
@@ -31,6 +32,8 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('height');
     expect(zombie1).toHaveProperty('x');
     expect(zombie1).toHaveProperty('y');
+    expect(zombie1).toHaveProperty('hitMargin');
+    expect(zombie1).toHaveProperty('yContactMargin');
     expect(zombie1).toHaveProperty('facingRight');
     expect(zombie1).toHaveProperty('speed');
     expect(zombie1).toHaveProperty('frameX');

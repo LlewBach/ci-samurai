@@ -15,7 +15,8 @@ describe('Player class', () => {
       drawImage: jest.fn(),
       save: jest.fn(),
       scale: jest.fn(),
-      restore: jest.fn()
+      restore: jest.fn(),
+      strokeRect: jest.fn() // might need to delete
     };
 
   });

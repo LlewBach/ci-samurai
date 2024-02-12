@@ -10,6 +10,9 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
+    this.attackMargin = 160; //New
+    this.hitMargin = 290; // new
+    this.yContactMargin = 180; // new
     this.facingRight;
     this.speed;
     this.maxSpeed = 7;
@@ -56,6 +59,15 @@ export class Player {
   }
   draw(context) {
     context.save();
+    // Sprite box
+    context.strokeStyle = 'black';
+    context.strokeRect(this.x, this.y, this.width, this.height);
+    // Attack box
+    context.strokeStyle = 'red';
+    context.strokeRect(this.x + this.attackMargin, this.y + this.yContactMargin, this.width - (2 * this.attackMargin), this.height - this.yContactMargin);
+    // Hit box
+    context.strokeStyle = 'blue';
+    context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin), this.height - this.yContactMargin);
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
     context.restore();

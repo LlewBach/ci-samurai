@@ -12,6 +12,8 @@ export class Zombie1 {
     this.height = this.spriteHeight * 2;
     this.x = this.game.width - this.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
+    this.hitMargin = 100; // new
+    this.yContactMargin = 20; // new
     this.facingRight = -1;
     this.speed = 0;
     this.frameX = 0;
@@ -39,6 +41,12 @@ export class Zombie1 {
   }
   draw(context) {
     context.save();
+    // Sprite boundary box
+    context.strokeStyle = 'black';
+    context.strokeRect(this.x, this.y, this.width, this.height);
+    // Hit box
+    context.strokeStyle = 'blue';
+    context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin) + 15, this.height - this.yContactMargin);
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
     context.restore();
