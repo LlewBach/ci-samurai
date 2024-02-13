@@ -6,6 +6,7 @@ const states = {
   ROLLING: 4,
   STUN: 5,
   ATTACK1: 6,
+  ATTACK2: 7,
 }
 
 class State {
@@ -35,6 +36,9 @@ export class Standing extends State {
     } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK1);
+    } else if (inputKeys.includes('s') || inputKeys.includes('S')) { // need to test
+      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      this.player.setState(states.ATTACK2);
     }
   }
 }
@@ -64,7 +68,9 @@ export class Running extends State {
     }
     // ArrowUp pressed
     if (inputKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
-    else if (inputKeys.includes('a')) this.player.setState(states.ATTACK1);
+    // Attack buttons
+    else if (inputKeys.includes('a') || inputKeys.includes('A')) this.player.setState(states.ATTACK1);
+    else if (inputKeys.includes('s') || inputKeys.includes('S')) this.player.setState(states.ATTACK2);
   }
 }
 
@@ -149,10 +155,35 @@ export class Attack1 extends State {
     this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 9;
+    this.player.speed = 0;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);
         break;
+      } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
+        this.game.enemies[i].setState(2);
+        break;
+      }
+    }
+  }
+  handleInput(inputKeys) {
+    if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);
+  }
+}
+
+export class Attack2 extends State {
+  constructor(player, game) {
+    super(player);
+    this.game = game;
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 9;
+    this.player.frameY = 10;
+    this.player.speed = 0;
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
+        this.game.enemies[i].setState(2);
       } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
         this.game.enemies[i].setState(2);
       }

@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1 } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2 } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -8,6 +8,7 @@ const states = {
   ROLLING: 4,
   STUN: 5,
   ATTACK1: 6,
+  ATTACK2: 7,
 }
 let player;
 
@@ -74,6 +75,16 @@ describe('Standing State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
     expect(player.facingRight).toBe(-1);
   });
+
+  test('should correctly transition to ATTACK2 on "s" press or "shift + S"', () => {
+    player.facingRight = 1;
+    standingState.handleInput(['s']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+    expect(player.facingRight).toBe(1);
+    standingState.handleInput(['Shift', 'S']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+    expect(player.facingRight).toBe(-1);
+  });
 });
 
 describe('Running State', () => {
@@ -114,6 +125,11 @@ describe('Running State', () => {
   test('should transition to ATTACK1 on "a" key press', () => {
     runningState.handleInput(['a']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+  });
+
+  test('should transition to ATTACK2 on "s" key press', () => {
+    runningState.handleInput(['s']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 });
 
@@ -252,7 +268,8 @@ describe('Attack1 State', () => {
       enemies: [
         { inShortRange: 0, setState: jest.fn() },
         { inShortRange: 1, setState: jest.fn() },
-        { inShortRange: -1, setState: jest.fn() }
+        { inShortRange: -1, setState: jest.fn() },
+        { inShortRange: 1, setState: jest.fn() },
       ]
     };
     player.facingRight = 1;
@@ -265,21 +282,64 @@ describe('Attack1 State', () => {
     expect(player.frameY).toBe(9);
   });
 
-  test('.enter should set change enemy state based on enemy.inShortRange status and player.facingRight', () => {
+  test('.enter should set change max 1 x enemy state based on enemy.inShortRange status and player.facingRight', () => {
     expect(game.enemies[0].setState).not.toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalled();
     expect(game.enemies[2].setState).not.toHaveBeenCalled();
+    expect(game.enemies[3].setState).not.toHaveBeenCalled();
     player.facingRight = -1;
     attack1State.enter();
     expect(game.enemies[2].setState).toHaveBeenCalled();
   });
 
   test('should transition to STANDING if frameX === maxFrame', () => {
-    player.frameX = 6;
+    player.frameX = player.maxFrame - 1;
     attack1State.handleInput();
     expect(player.setState).not.toHaveBeenCalled();
-    player.frameX = 7;
+    player.frameX = player.maxFrame;
     attack1State.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+});
+
+describe('Attack2 State', () => {
+  let attack2State, game;
+
+  beforeEach(() => {
+    game = {
+      enemies: [
+        { inShortRange: 0, setState: jest.fn() },
+        { inShortRange: 1, setState: jest.fn() },
+        { inShortRange: -1, setState: jest.fn() },
+        { inShortRange: 1, setState: jest.fn() },
+      ]
+    };
+    player.facingRight = 1;
+    attack2State = new Attack2(player, game);
+    attack2State.enter();
+  });
+
+  test('.enter should configure some player properties', () => {
+    expect(player.maxFrame).toBe(9);
+    expect(player.frameY).toBe(10);
+  });
+
+  test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalled();
+    expect(game.enemies[2].setState).not.toHaveBeenCalled();
+    expect(game.enemies[3].setState).toHaveBeenCalled();
+    player.facingRight = -1;
+    attack2State.enter();
+    expect(game.enemies[2].setState).toHaveBeenCalled();
+  });
+
+  test('should transition to STANDING if frameX === maxFrame', () => {
+    player.frameX = player.maxFrame - 1;
+    attack2State.handleInput();
+    expect(player.setState).not.toHaveBeenCalled();
+    player.frameX = player.maxFrame;
+    attack2State.handleInput();
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 });
