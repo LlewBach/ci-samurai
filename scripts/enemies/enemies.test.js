@@ -1,5 +1,6 @@
 import { Game } from '../main/main.js';
 import { Zombie1 } from './enemies.js';
+import { Walking } from '../enemyStates/enemyStates.js';
 
 describe('Zombie1 class', () => {
   let game;
@@ -35,7 +36,10 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('hitMargin');
     expect(zombie1).toHaveProperty('yContactMargin');
     expect(zombie1).toHaveProperty('facingRight');
+    expect(zombie1).toHaveProperty('inShortRange');
+    expect(zombie1).toHaveProperty('markedForDeletion');
     expect(zombie1).toHaveProperty('speed');
+    expect(zombie1).toHaveProperty('maxSpeed');
     expect(zombie1).toHaveProperty('frameX');
     expect(zombie1).toHaveProperty('frameY');
     expect(zombie1).toHaveProperty('maxFrame');
@@ -45,7 +49,7 @@ describe('Zombie1 class', () => {
   });
 
   test('should correctly initialize with the given game dimensions', () => {
-    expect(zombie1.x).toBe(game.width - zombie1.width);
+    expect(zombie1.x).toBe(game.width);
     expect(zombie1.y).toBe(game.height - game.groundMargin - zombie1.height);
   });
 
@@ -91,6 +95,13 @@ describe('Zombie1 class', () => {
     zombie1.frameTimer = zombie1.frameInterval;
     zombie1.update(16);
     expect(zombie1.frameX).toBe(0);
+  });
+
+  test('.setState should transition to the correct state', () => {
+    zombie1.setState(1);
+    expect(zombie1.currentState).toBeInstanceOf(Walking);
+    expect(zombie1.currentState).toBe(zombie1.states[1]);
+    expect(zombie1.frameY).toBe(3);
   });
 
   test('.draw should call context.drawImage correctly', () => {

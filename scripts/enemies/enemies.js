@@ -1,4 +1,4 @@
-import { Standing } from '../enemyStates/enemyStates.js';
+import { Standing, Walking } from '../enemyStates/enemyStates.js';
 
 const zombie1 = document.getElementById('zombie1');
 
@@ -10,21 +10,22 @@ export class Zombie1 {
     this.spriteHeight = 70;
     this.width = this.spriteWidth * 2;
     this.height = this.spriteHeight * 2;
-    this.x = this.game.width - this.width;
+    this.x = this.game.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
     this.hitMargin = 100;
     this.yContactMargin = 20;
     this.facingRight = -1;
-    this.inShortRange = false; // new
-    this.markedForDeletion = false; // new
+    this.inShortRange = false;
+    this.markedForDeletion = false;
     this.speed = 0;
+    this.maxSpeed = 1;
     this.frameX = 0;
     this.maxFrame;
     this.frameY;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this.game, this)];
+    this.states = [new Standing(this.game, this), new Walking(this.game, this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -40,6 +41,10 @@ export class Zombie1 {
       if (this.frameX < this.maxFrame) this.frameX++;
       else this.frameX = 0;
     }
+  }
+  setState(state) {
+    this.currentState = this.states[state];
+    this.currentState.enter();
   }
   draw(context) {
     context.save();
