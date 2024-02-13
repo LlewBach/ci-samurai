@@ -7,6 +7,7 @@ const states = {
   STUN: 5,
   ATTACK1: 6,
   ATTACK2: 7,
+  ATTACK3: 8,
 }
 
 class State {
@@ -36,9 +37,12 @@ export class Standing extends State {
     } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK1);
-    } else if (inputKeys.includes('s') || inputKeys.includes('S')) { // need to test
+    } else if (inputKeys.includes('s') || inputKeys.includes('S')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK2);
+    } else if (inputKeys.includes('d') || inputKeys.includes('D')) {
+      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      this.player.setState(states.ATTACK3);
     }
   }
 }
@@ -71,6 +75,7 @@ export class Running extends State {
     // Attack buttons
     else if (inputKeys.includes('a') || inputKeys.includes('A')) this.player.setState(states.ATTACK1);
     else if (inputKeys.includes('s') || inputKeys.includes('S')) this.player.setState(states.ATTACK2);
+    else if (inputKeys.includes('d') || inputKeys.includes('D')) this.player.setState(states.ATTACK3);
   }
 }
 
@@ -191,5 +196,37 @@ export class Attack2 extends State {
   }
   handleInput(inputKeys) {
     if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);
+  }
+}
+
+export class Attack3 extends State {
+  constructor(player, game) {
+    super(player);
+    this.game = game;
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 18;
+    this.player.frameY = 11;
+    this.player.speed = 0;
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
+        this.game.enemies[i].setState(2);
+      } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
+        this.game.enemies[i].setState(2);
+      }
+    }
+  }
+  handleInput(inputKeys) {
+    if (this.player.frameX === this.player.maxFrame) {
+      for (let i = 0; i < this.game.enemies.length; i++) {
+        if (this.game.enemies[i].inLongRange === 1 && this.player.facingRight === 1) {
+          this.game.enemies[i].setState(2);
+        } else if (this.game.enemies[i].inLongRange === -1 && this.player.facingRight === -1) {
+          this.game.enemies[i].setState(2);
+        }
+      }
+      this.player.setState(states.STANDING);
+    }
   }
 }

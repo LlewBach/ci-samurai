@@ -15,7 +15,8 @@ export class Zombie1 {
     this.hitMargin = 100;
     this.yContactMargin = 20;
     this.facingRight = -1;
-    this.inShortRange = false;
+    this.inShortRange = 0;
+    this.inLongRange = 0;
     this.markedForDeletion = false;
     this.speed = 0;
     this.maxSpeed = 1;

@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2 } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3 } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -9,6 +9,7 @@ const states = {
   STUN: 5,
   ATTACK1: 6,
   ATTACK2: 7,
+  ATTACK3: 8,
 }
 let player;
 
@@ -85,6 +86,16 @@ describe('Standing State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     expect(player.facingRight).toBe(-1);
   });
+
+  test('should correctly transition to ATTACK3 on "d" press or "shift + D"', () => {
+    player.facingRight = 1;
+    standingState.handleInput(['d']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+    expect(player.facingRight).toBe(1);
+    standingState.handleInput(['Shift', 'D']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+    expect(player.facingRight).toBe(-1);
+  });
 });
 
 describe('Running State', () => {
@@ -130,6 +141,11 @@ describe('Running State', () => {
   test('should transition to ATTACK2 on "s" key press', () => {
     runningState.handleInput(['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+  });
+
+  test('should transition to ATTACK3 on "d" key press', () => {
+    runningState.handleInput(['d']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
   });
 });
 
@@ -340,6 +356,60 @@ describe('Attack2 State', () => {
     expect(player.setState).not.toHaveBeenCalled();
     player.frameX = player.maxFrame;
     attack2State.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+});
+
+describe('Attack3 State', () => {
+  let attack3State, game;
+
+  beforeEach(() => {
+    game = {
+      enemies: [
+        { inShortRange: 0, inLongRange: 0, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+        { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+      ]
+    };
+    player.facingRight = 1;
+    attack3State = new Attack3(player, game);
+    attack3State.enter();
+  });
+
+  test('.enter should configure some player properties', () => {
+    expect(player.maxFrame).toBe(18);
+    expect(player.frameY).toBe(11);
+  });
+
+  test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalled();
+    expect(game.enemies[2].setState).not.toHaveBeenCalled();
+    expect(game.enemies[3].setState).toHaveBeenCalled();
+    player.facingRight = -1;
+    attack3State.enter();
+    expect(game.enemies[2].setState).toHaveBeenCalled();
+  });
+
+  test('.handleInput should set change multiple enemies states based on enemy.inLongRange status, player.facingRight and frameX', () => {
+    player.frameX = player.maxFrame;
+    attack3State.handleInput();
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalled();
+    expect(game.enemies[2].setState).not.toHaveBeenCalled();
+    expect(game.enemies[3].setState).toHaveBeenCalled();
+    player.facingRight = -1;
+    attack3State.handleInput();
+    expect(game.enemies[2].setState).toHaveBeenCalled();
+  });
+
+  test('should transition to STANDING if frameX === maxFrame', () => {
+    player.frameX = player.maxFrame - 1;
+    attack3State.handleInput();
+    expect(player.setState).not.toHaveBeenCalled();
+    player.frameX = player.maxFrame;
+    attack3State.handleInput();
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 });

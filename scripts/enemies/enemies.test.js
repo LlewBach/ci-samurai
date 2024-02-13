@@ -37,6 +37,7 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('yContactMargin');
     expect(zombie1).toHaveProperty('facingRight');
     expect(zombie1).toHaveProperty('inShortRange');
+    expect(zombie1).toHaveProperty('inLongRange');
     expect(zombie1).toHaveProperty('markedForDeletion');
     expect(zombie1).toHaveProperty('speed');
     expect(zombie1).toHaveProperty('maxSpeed');

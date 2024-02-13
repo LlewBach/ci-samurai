@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2 } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3 } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,13 +24,14 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this), new Attack1(this, this.game), new Attack2(this, this.game)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
-    // Check enemy inShortRange status
+    // Check enemy range status
     this.shortRangeCheck();
+    this.longRangeCheck();
     // Check player contact status
     if (this.hitCheck()) this.setState(5);
     // Update based on currentState
@@ -72,6 +73,18 @@ export class Player {
         enemy.x + (enemy.width / 2) < this.x + (this.width / 2)
       ) enemy.inShortRange = -1;
       else enemy.inShortRange = 0;
+    });
+  }
+  longRangeCheck() {
+    this.game.enemies.forEach(enemy => {
+      if (
+        enemy.x + enemy.hitMargin < this.x + this.width &&
+        enemy.x + (enemy.width / 2) > this.x + (this.width / 2)
+      ) enemy.inLongRange = 1;
+      else if (
+        enemy.x + enemy.width - enemy.hitMargin > this.x &&
+        enemy.x + (enemy.width / 2) < this.x + (this.width / 2)
+      ) enemy.inLongRange = -1;
     });
   }
   // need to test

@@ -61,10 +61,12 @@ describe('Player class', () => {
     expect(player.speed).toBe(0);
   });
 
-  test('.update should call shortRangeCheck()', () => {
+  test('.update should call range checks', () => {
     const shortRangeCheckSpy = jest.spyOn(player, 'shortRangeCheck');
+    const longRangeCheckSpy = jest.spyOn(player, 'longRangeCheck');
     player.update(16);
     expect(shortRangeCheckSpy).toHaveBeenCalled();
+    expect(longRangeCheckSpy).toHaveBeenCalled();
   });
 
   test('.update should .setState to Stun if .hitCheck returns true', () => {
@@ -164,17 +166,76 @@ describe('Player class', () => {
         width: 50,
         hitMargin: 10,
         inShortRange: 0
+      }, {
+        x: 300,
+        width: 50,
+        hitMargin: 10,
+        inShortRange: 0
       }
     ];
-    game.enemies.forEach(enemy => {
-      expect(enemy.inShortRange).toBe(0);
-    });
     player.x = 120;
     player.width = 50;
     player.attackMargin = 10;
     player.shortRangeCheck();
     expect(game.enemies[0].inShortRange).toBe(-1);
     expect(game.enemies[1].inShortRange).toBe(1);
+    expect(game.enemies[2].inShortRange).toBe(0);
+  });
+
+  test('.longRangeCheck should check each enemy to see if player long attack range and enemy hit range intersect and on what side', () => {
+    game.enemies = [
+      {
+        x: 100,
+        width: 50,
+        hitMargin: 10,
+        inLongRange: 0
+      }, {
+        x: 200,
+        width: 50,
+        hitMargin: 10,
+        inLongRange: 0
+      }, {
+        x: 300,
+        width: 50,
+        hitMargin: 10,
+        inLongRange: 0
+      }
+    ];
+    player.x = 120;
+    player.width = 100;
+    player.longRangeCheck();
+    expect(game.enemies[0].inLongRange).toBe(-1);
+    expect(game.enemies[1].inLongRange).toBe(1);
+    expect(game.enemies[2].inLongRange).toBe(0);
+  });
+
+  test('.hitCheck should check to see if enemies are touching player hit box', () => {
+    game.enemies = [
+      {
+        x: 100,
+        y: 100,
+        width: 50,
+        hitMargin: 10,
+        yContactMargin: 10,
+        states: ['state0', 'state1', 'state1'],
+        currentState: 'state2',
+      }, {
+        x: 200,
+        y: 100,
+        width: 50,
+        hitMargin: 10,
+        yContactMargin: 10,
+        states: ['state0', 'state1', 'state2'],
+        currentState: 'state2',
+      },
+    ];
+    player.x = 80;
+    player.y = 100;
+    player.width = 100;
+    player.hitMargin = 40;
+    player.yContactMargin = 10;
+    expect(player.hitCheck()).toBe(true);
+
   });
 
   test('.draw should call context.drawImage correctly', () => {
