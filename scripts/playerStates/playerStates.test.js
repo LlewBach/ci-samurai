@@ -219,9 +219,9 @@ describe('Attack1 State', () => {
   beforeEach(() => {
     game = {
       enemies: [
-        { inShortRange: 0, markedForDeletion: false },
-        { inShortRange: 1, markedForDeletion: false },
-        { inShortRange: -1, markedForDeletion: false }
+        { inShortRange: 0, setState: jest.fn() },
+        { inShortRange: 1, setState: jest.fn() },
+        { inShortRange: -1, setState: jest.fn() }
       ]
     };
     player.facingRight = 1;
@@ -234,11 +234,13 @@ describe('Attack1 State', () => {
     expect(player.frameY).toBe(9);
   });
 
-  test('.enter should set enemy.markedForDeletion based on enemy.inShortRange status and player.facingRight', () => {
-    expect(game.enemies[1].markedForDeletion).toBe(true);
+  test('.enter should set change enemy state based on enemy.inShortRange status and player.facingRight', () => {
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalled();
+    expect(game.enemies[2].setState).not.toHaveBeenCalled();
     player.facingRight = -1;
     attack1State.enter();
-    expect(game.enemies[2].markedForDeletion).toBe(true);
+    expect(game.enemies[2].setState).toHaveBeenCalled();
   });
 
   test('should transition to STANDING if frameX === maxFrame', () => {

@@ -1,8 +1,9 @@
-import { Standing, Walking } from './enemyStates.js';
+import { Standing, Walking, Dying } from './enemyStates.js';
 
 const states = {
   STANDING: 0,
   WALKING: 1,
+  DYING: 2,
 }
 
 let game, enemy;
@@ -21,6 +22,7 @@ beforeEach(() => {
     speed: undefined,
     maxSpeed: 1,
     setState: jest.fn(),
+    markedForDeletion: false,
   };
 });
 
@@ -32,6 +34,7 @@ afterEach(() => {
     speed: undefined,
     maxSpeed: 1,
     setState: jest.fn(),
+    markedForDeletion: false,
   };
 });
 
@@ -82,5 +85,30 @@ describe('Walking state', () => {
     game.speed = 7;
     walkingState.update();
     expect(enemy.speed).toBe(8);
+  });
+});
+
+describe('Dying state', () => {
+  let dyingState;
+
+  beforeEach(() => {
+    dyingState = new Dying(game, enemy);
+  });
+
+  test('should configure some enemy properties on .enter()', () => {
+    dyingState.enter();
+    expect(enemy.frameX).toBe(10);
+    expect(enemy.maxFrame).toBe(11);
+    expect(enemy.frameY).toBe(10);
+  });
+
+  test('should modify the standard animate algorithm', () => {
+    dyingState.enter();
+    enemy.frameX = 11;
+    dyingState.update();
+    expect(enemy.frameX).toBe(0);
+    enemy.frameX = 3;
+    dyingState.update();
+    expect(enemy.markedForDeletion).toBe(true);
   });
 });

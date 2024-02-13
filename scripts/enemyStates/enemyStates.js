@@ -1,6 +1,7 @@
 const states = {
   STANDING: 0,
   WALKING: 1,
+  DYING: 2,
 }
 
 class State {
@@ -21,12 +22,10 @@ export class Standing extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
-    // needs testing
     if (this.enemy.x < this.game.width - this.enemy.width) this.enemy.setState(states.WALKING);
   }
 }
 
-// needs testing
 export class Walking extends State {
   constructor(game, enemy) {
     super(game, enemy);
@@ -38,5 +37,23 @@ export class Walking extends State {
   }
   update() {
     this.enemy.speed = this.game.speed + this.enemy.maxSpeed;
+  }
+}
+
+export class Dying extends State {
+  constructor(game, enemy) {
+    super(game, enemy);
+  }
+  enter() {
+    this.enemy.frameX = 10;
+    this.enemy.maxFrame = 11;
+    this.enemy.frameY = 10;
+  }
+  update() {
+    this.enemy.speed = this.game.speed;
+    if (this.enemy.frameX === 11) {
+      this.enemy.frameX = 0;
+      this.enemy.frameY++;
+    } else if (this.enemy.frameX === 3) this.enemy.markedForDeletion = true;
   }
 }

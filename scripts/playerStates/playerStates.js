@@ -132,10 +132,10 @@ export class Attack1 extends State {
     this.player.frameY = 9;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
-        this.game.enemies[i].markedForDeletion = true;
+        this.game.enemies[i].setState(2);
         break;
       } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
-        this.game.enemies[i].markedForDeletion = true;
+        this.game.enemies[i].setState(2);
       }
     }
   }

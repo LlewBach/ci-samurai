@@ -1,4 +1,4 @@
-import { Standing, Walking } from '../enemyStates/enemyStates.js';
+import { Standing, Walking, Dying } from '../enemyStates/enemyStates.js';
 
 const zombie1 = document.getElementById('zombie1');
 
@@ -25,7 +25,7 @@ export class Zombie1 {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this.game, this), new Walking(this.game, this)];
+    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
