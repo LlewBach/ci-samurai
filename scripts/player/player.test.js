@@ -67,6 +67,16 @@ describe('Player class', () => {
     expect(shortRangeCheckSpy).toHaveBeenCalled();
   });
 
+  test('.update should .setState to Stun if .hitCheck returns true', () => {
+    const setStateSpy = jest.spyOn(player, 'setState');
+    jest.spyOn(player, 'hitCheck').mockReturnValue(false);
+    player.update();
+    expect(setStateSpy).not.toHaveBeenCalled();
+    jest.spyOn(player, 'hitCheck').mockReturnValue(true);
+    player.update();
+    expect(setStateSpy).toHaveBeenCalledWith(5);
+  });
+
   test('.update should enact currentState.handleInput()', () => {
     player.currentState.handleInput = jest.fn();
     player.update(16);

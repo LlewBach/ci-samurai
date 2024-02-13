@@ -4,7 +4,8 @@ const states = {
   JUMPING: 2,
   FALLING: 3,
   ROLLING: 4,
-  ATTACK1: 5,
+  STUN: 5,
+  ATTACK1: 6,
 }
 
 class State {
@@ -118,6 +119,24 @@ export class Rolling extends State {
     }
     if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
     else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
+  }
+}
+
+export class Stun extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 5;
+    this.player.frameY = 14;
+    if (this.player.onGround()) this.player.speed = 0;
+  }
+  handleInput() {
+    if (this.player.frameX === 5) {
+      if (this.player.onGround()) this.player.setState(states.STANDING);
+      else this.player.setState(states.FALLING);
+    }
   }
 }
 

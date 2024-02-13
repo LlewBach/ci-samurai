@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Attack1 } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1 } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,13 +24,15 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Attack1(this, this.game)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this), new Attack1(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
     // Check enemy inShortRange status
     this.shortRangeCheck();
+    // Check player contact status
+    if (this.hitCheck()) this.setState(5);
     // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves
@@ -71,6 +73,19 @@ export class Player {
       ) enemy.inShortRange = -1;
       else enemy.inShortRange = 0;
     });
+  }
+  // need to test
+  hitCheck() {
+    return (
+      this.game.enemies.some(enemy => {
+        return (
+          enemy.x + enemy.hitMargin < this.x + this.width - this.hitMargin &&
+          enemy.x + enemy.width - enemy.hitMargin > this.x + this.hitMargin &&
+          enemy.y + enemy.yContactMargin < this.y + this.height &&
+          enemy.currentState !== enemy.states[2]
+        );
+      })
+    );
   }
   draw(context) {
     context.save();

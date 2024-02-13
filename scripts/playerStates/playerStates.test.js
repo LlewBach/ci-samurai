@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Attack1 } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1 } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -6,7 +6,8 @@ const states = {
   JUMPING: 2,
   FALLING: 3,
   ROLLING: 4,
-  ATTACK1: 5,
+  STUN: 5,
+  ATTACK1: 6,
 }
 let player;
 
@@ -30,6 +31,7 @@ afterEach(() => {
     speed: undefined,
     maxSpeed: 7,
     setState: jest.fn(),
+    onGround: jest.fn(),
   };
 });
 
@@ -211,6 +213,35 @@ describe('Rolling State', () => {
     rollingState.handleInput(['ArrowRight']);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
+});
+
+describe('Stun State', () => {
+  let stunState;
+
+  beforeEach(() => {
+    stunState = new Stun(player);
+    stunState.enter();
+  });
+
+  test('.enter should configure some player properties', () => {
+    player.speed = player.maxSpeed;
+    jest.spyOn(player, 'onGround').mockReturnValue(true);
+    stunState.enter();
+    expect(player.maxFrame).toBe(5);
+    expect(player.frameY).toBe(14);
+    expect(player.speed).toBe(0);
+  });
+
+  test('should transition state correctly depending on frameX and onGround status', () => {
+    player.frameX = player.maxFrame;
+    jest.spyOn(player, 'onGround').mockReturnValue(true);
+    stunState.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+    jest.spyOn(player, 'onGround').mockReturnValue(false);
+    stunState.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.FALLING);
+  });
+
 });
 
 describe('Attack1 State', () => {
