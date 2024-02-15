@@ -57,3 +57,22 @@ export class Dying extends State {
     } else if (this.enemy.frameX === 3) this.enemy.markedForDeletion = true;
   }
 }
+
+// need to test
+export class Spawning extends State {
+  constructor(game, enemy) {
+    super(game, enemy);
+  }
+  enter() {
+    this.enemy.frameX = 0;
+    this.enemy.maxFrame = 11;
+    this.enemy.frameY = 0;
+  }
+  update() {
+    this.enemy.speed = this.game.speed;
+    if (this.enemy.frameX === 11 && this.enemy.frameY === 0) {
+      this.enemy.frameX = 0;
+      this.enemy.frameY = 1;
+    } else if (this.enemy.frameX === 11 && this.enemy.frameY === 1) this.enemy.setState(states.STANDING);
+  }
+}

@@ -36,6 +36,7 @@ h1 {
 #layer2,
 #layer3,
 #layer4,
-#zombie1 {
+#zombie1,
+#zombie2 {
   display: none;
 }

@@ -1,16 +1,17 @@
 import { Game } from '../main/main.js';
-import { Zombie1 } from './enemies.js';
+import { Zombie1, Zombie2 } from './enemies.js';
 import { Walking } from '../enemyStates/enemyStates.js';
 
 describe('Zombie1 class', () => {
   let game;
-  let zombie1;
+  let zombie1, zombie2;
   let mockContext;
   let mockImage = {};
 
   beforeEach(() => {
     game = new Game(800, 600);
     zombie1 = new Zombie1(game);
+    zombie2 = new Zombie2(game);
     mockContext = {
       drawImage: jest.fn(),
       save: jest.fn(),
@@ -22,6 +23,7 @@ describe('Zombie1 class', () => {
 
   test('should create an instance of Zombie1', () => {
     expect(zombie1).toBeInstanceOf(Zombie1);
+    expect(zombie2).toBeInstanceOf(Zombie2);
   });
 
   test('should contain necessary keys', () => {
@@ -53,6 +55,9 @@ describe('Zombie1 class', () => {
     expect(zombie1.x).toBe(game.width);
     expect(zombie1.y).toBe(game.height - game.groundMargin - zombie1.height);
   });
+
+  // test('should initialize with correct state', () => {
+  // });
 
   test('.update should enact currentState.update()', () => {
     zombie1.currentState.update = jest.fn();

@@ -1,6 +1,6 @@
 import { Background } from '../background/background.js';
 import { InputHandler } from '../input/input.js';
-import { Zombie1 } from '../enemies/enemies.js';
+import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
 
 export class Game {
@@ -13,11 +13,13 @@ export class Game {
     this.input = new InputHandler();
     this.player = new Player(this);
     this.enemies = [];
+    this.enemyTimer = 0;
+    this.enemyInterval = 5000;
   }
   update(deltaTime) {
     this.background.update();
     this.player.update(deltaTime);
-    this.addEnemy();
+    this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
   }
@@ -26,9 +28,14 @@ export class Game {
     this.player.draw(context);
     this.enemies.forEach(enemy => enemy.draw(context));
   }
-  addEnemy() {
+  addEnemy(deltaTime) {
     if (this.enemies.length === 0) {
       this.enemies.push(new Zombie1(this));
+    }
+    if (this.enemyTimer < this.enemyInterval) this.enemyTimer += deltaTime;
+    else {
+      this.enemyTimer = 0;
+      if (Math.random() < 0.5) this.enemies.push(new Zombie2(this));
     }
   }
 }

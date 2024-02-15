@@ -1,12 +1,20 @@
 import { Game } from './main.js';
 import { Background } from '../background/background.js';
 import { Player } from '../player/player.js';
-// import { Zombie1 } from '../enemies/enemies.js';
+import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 
 // Mock dependencies
 jest.mock('../background/background.js');
 jest.mock('../player/player.js');
-// jest.mock('../enemies/enemies.js');
+jest.mock('../enemies/enemies.js');
+// jest.mock('../enemies/enemies.js', () => ({
+//   Zombie1: jest.fn().mockImplementation(() => ({})),
+//   Zombie2: jest.fn().mockImplementation(() => ({})),
+// }));
+
+// afterEach(() => {
+//   jest.restoreAllMocks();
+// });
 
 describe('Game class', () => {
   let game;
@@ -35,6 +43,8 @@ describe('Game class', () => {
     expect(game).toHaveProperty('background');
     expect(game).toHaveProperty('player');
     expect(game).toHaveProperty('enemies');
+    expect(game).toHaveProperty('enemyTimer');
+    expect(game).toHaveProperty('enemyInterval');
   });
 
   test('should initialize with Background and Player instances', () => {
@@ -82,8 +92,23 @@ describe('Game class', () => {
   test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {
     game.enemies = [];
     expect(game.enemies.length).toBe(0);
-    game.addEnemy();
+    game.addEnemy(16);
     expect(game.enemies.length).toBe(1);
-    // expect(game.enemies[0]).toBeInstanceOf(Zombie1);
+    expect(game.enemies[0]).toBeInstanceOf(Zombie1);
+  });
+
+  test('.addEnemy should add a Zombie2 instance to enemies at certain intervals with 50% chance', () => {
+    jest.spyOn(Math, 'random').mockReturnValue(0.4);
+    game.enemyTimer = 1000;
+    game.enemyInterval = 1000;
+    game.enemies = [];
+    game.addEnemy(16);
+    expect(Zombie1).toHaveBeenCalled();
+    expect(Zombie2).toHaveBeenCalled();
+    jest.clearAllMocks();
+    jest.spyOn(Math, 'random').mockReturnValue(0.7);
+    game.addEnemy(16);
+    expect(Zombie1).not.toHaveBeenCalled();
+    expect(Zombie2).not.toHaveBeenCalled();
   });
 });

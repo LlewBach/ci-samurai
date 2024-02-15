@@ -1,9 +1,10 @@
-import { Standing, Walking, Dying } from './enemyStates.js';
+import { Standing, Walking, Dying, Spawning } from './enemyStates.js';
 
 const states = {
   STANDING: 0,
   WALKING: 1,
   DYING: 2,
+  SPAWNING: 3,
 }
 
 let game, enemy;
@@ -111,4 +112,35 @@ describe('Dying state', () => {
     dyingState.update();
     expect(enemy.markedForDeletion).toBe(true);
   });
+});
+
+describe('Spawning state', () => {
+  let spawningState;
+
+  beforeEach(() => {
+    spawningState = new Spawning(game, enemy);
+    spawningState.enter();
+  });
+
+  test('should configure some enemy properties on .enter()', () => {
+    expect(enemy.frameX).toBe(0);
+    expect(enemy.maxFrame).toBe(11);
+    expect(enemy.frameY).toBe(0);
+  });
+
+  test('should modify the standard animate algorithm', () => {
+    enemy.frameX = 11;
+    spawningState.update();
+    expect(enemy.frameX).toBe(0);
+    expect(enemy.frameY).toBe(1);
+    enemy.frameX = 3;
+  });
+
+  test('should transition to STANDING if frameX is 11 and frameY is 1', () => {
+    enemy.frameX = 11;
+    enemy.frameY = 1;
+    spawningState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+
 });

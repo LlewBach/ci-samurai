@@ -1,16 +1,15 @@
-import { Standing, Walking, Dying } from '../enemyStates/enemyStates.js';
+import { Standing, Walking, Dying, Spawning } from '../enemyStates/enemyStates.js';
 
 const zombie1 = document.getElementById('zombie1');
+const zombie2 = document.getElementById('zombie2');
 
-export class Zombie1 {
+class Zombie {
   constructor(game) {
     this.game = game;
-    this.image = zombie1;
     this.spriteWidth = 130;
     this.spriteHeight = 70;
     this.width = this.spriteWidth * 2;
     this.height = this.spriteHeight * 2;
-    this.x = this.game.width;
     this.y = this.game.height - this.game.groundMargin - this.height;
     this.hitMargin = 100;
     this.yContactMargin = 20;
@@ -19,16 +18,12 @@ export class Zombie1 {
     this.inLongRange = 0;
     this.markedForDeletion = false;
     this.speed = 0;
-    this.maxSpeed = 1;
     this.frameX = 0;
     this.maxFrame;
     this.frameY;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this)];
-    this.currentState = this.states[0];
-    this.currentState.enter();
   }
   update(deltaTime) {
     // currentState update
@@ -55,8 +50,45 @@ export class Zombie1 {
     // Hit box
     context.strokeStyle = 'blue';
     context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin) + 15, this.height - this.yContactMargin);
+    // Sprite
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
     context.restore();
+  }
+}
+
+export class Zombie1 extends Zombie {
+  constructor(game) {
+    super(game);
+    this.image = zombie1;
+    this.x = this.game.width;
+    this.maxSpeed = 1;
+    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this)];
+    this.currentState = this.states[0];
+    this.currentState.enter();
+  }
+  update(deltaTime) {
+    super.update(deltaTime);
+  }
+  draw(context) {
+    super.draw(context);
+  }
+}
+
+export class Zombie2 extends Zombie {
+  constructor(game) {
+    super(game);
+    this.image = zombie2;
+    this.x = this.game.width * Math.random();
+    this.maxSpeed = 1;
+    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this)];
+    this.currentState = this.states[3];
+    this.currentState.enter();
+  }
+  update(deltaTime) {
+    super.update(deltaTime);
+  }
+  draw(context) {
+    super.draw(context);
   }
 }
