@@ -1,4 +1,4 @@
-import { Standing, Walking, Dying, Spawning } from '../enemyStates/enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning } from '../enemyStates/enemyStates.js';
 
 const zombie1 = document.getElementById('zombie1');
 const zombie2 = document.getElementById('zombie2');
@@ -24,6 +24,7 @@ class Zombie {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
+    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this), new Turning(this.game, this)];
   }
   update(deltaTime) {
     // currentState update
@@ -49,7 +50,7 @@ class Zombie {
     context.strokeRect(this.x, this.y, this.width, this.height);
     // Hit box
     context.strokeStyle = 'blue';
-    context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin) + 15, this.height - this.yContactMargin);
+    context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin), this.height - this.yContactMargin);
     // Sprite
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
@@ -63,7 +64,6 @@ export class Zombie1 extends Zombie {
     this.image = zombie1;
     this.x = this.game.width;
     this.maxSpeed = 1;
-    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -81,7 +81,6 @@ export class Zombie2 extends Zombie {
     this.image = zombie2;
     this.x = this.game.width * Math.random();
     this.maxSpeed = 1;
-    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this)];
     this.currentState = this.states[3];
     this.currentState.enter();
   }

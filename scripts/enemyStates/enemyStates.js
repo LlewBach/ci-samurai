@@ -2,6 +2,8 @@ const states = {
   STANDING: 0,
   WALKING: 1,
   DYING: 2,
+  SPAWNING: 3,
+  TURNING: 4,
 }
 
 class State {
@@ -36,7 +38,10 @@ export class Walking extends State {
     this.enemy.frameY = 3;
   }
   update() {
-    this.enemy.speed = this.game.speed + this.enemy.maxSpeed;
+    this.enemy.speed = this.game.speed - (this.enemy.maxSpeed * this.enemy.facingRight);
+
+    if (this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin && this.enemy.facingRight === -1) this.enemy.setState(states.TURNING);
+    else if (this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin && this.enemy.facingRight === 1) this.enemy.setState(states.TURNING);
   }
 }
 
@@ -58,7 +63,6 @@ export class Dying extends State {
   }
 }
 
-// need to test
 export class Spawning extends State {
   constructor(game, enemy) {
     super(game, enemy);
@@ -74,5 +78,26 @@ export class Spawning extends State {
       this.enemy.frameX = 0;
       this.enemy.frameY = 1;
     } else if (this.enemy.frameX === 11 && this.enemy.frameY === 1) this.enemy.setState(states.STANDING);
+  }
+}
+
+export class Turning extends State {
+  constructor(game, enemy) {
+    super(game, enemy);
+  }
+  enter() {
+    this.enemy.frameX = 9;
+    this.enemy.maxFrame = 11;
+    this.enemy.frameY = 3;
+  }
+  update() {
+    this.enemy.speed = this.game.speed;
+    if (this.enemy.frameX === 11) {
+      this.enemy.frameX = 0;
+      this.enemy.frameY = 4;
+    } else if (this.enemy.frameX === 4) {
+      this.enemy.facingRight *= -1;
+      this.enemy.setState(states.WALKING);
+    }
   }
 }

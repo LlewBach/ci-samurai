@@ -1,10 +1,11 @@
-import { Standing, Walking, Dying, Spawning } from './enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning } from './enemyStates.js';
 
 const states = {
   STANDING: 0,
   WALKING: 1,
   DYING: 2,
   SPAWNING: 3,
+  TURNING: 4,
 }
 
 let game, enemy;
@@ -13,10 +14,14 @@ beforeEach(() => {
   game = {
     width: 500,
     speed: 0,
+    player: {
+      width: 50,
+      x: 40,
+      attackMargin: 10,
+    }
   };
 
   enemy = {
-    width: 50,
     frameX: undefined,
     maxFrame: undefined,
     frameY: undefined,
@@ -24,6 +29,10 @@ beforeEach(() => {
     maxSpeed: 1,
     setState: jest.fn(),
     markedForDeletion: false,
+    facingRight: -1,
+    width: 50,
+    x: 20,
+    hitMargin: 10,
   };
 });
 
@@ -36,6 +45,10 @@ afterEach(() => {
     maxSpeed: 1,
     setState: jest.fn(),
     markedForDeletion: false,
+    facingRight: -1,
+    width: 50,
+    x: 20,
+    hitMargin: 10,
   };
 });
 
@@ -72,10 +85,10 @@ describe('Walking state', () => {
 
   beforeEach(() => {
     walkingState = new Walking(game, enemy);
+    walkingState.enter();
   });
 
   test('should configure some enemy properties on .enter()', () => {
-    walkingState.enter();
     expect(enemy.frameX).toBe(0);
     expect(enemy.maxFrame).toBe(11);
     expect(enemy.frameY).toBe(3);
@@ -86,6 +99,27 @@ describe('Walking state', () => {
     game.speed = 7;
     walkingState.update();
     expect(enemy.speed).toBe(8);
+    enemy.facingRight = 1;
+    walkingState.update();
+    expect(enemy.speed).toBe(6);
+  });
+
+  test('.update should transition to TURNING at certain distance left of player', () => {
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    enemy.x = 0;
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.TURNING);
+  });
+
+  test('.update should transition to TURNING at certain distance right of player', () => {
+    enemy.facingRight = 1;
+    enemy.x = 60;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    enemy.x = 100;
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.TURNING);
   });
 });
 
@@ -133,7 +167,6 @@ describe('Spawning state', () => {
     spawningState.update();
     expect(enemy.frameX).toBe(0);
     expect(enemy.frameY).toBe(1);
-    enemy.frameX = 3;
   });
 
   test('should transition to STANDING if frameX is 11 and frameY is 1', () => {
@@ -142,5 +175,33 @@ describe('Spawning state', () => {
     spawningState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.STANDING);
   });
+});
 
+describe('Turning state', () => {
+  let turningState;
+
+  beforeEach(() => {
+    turningState = new Turning(game, enemy);
+    turningState.enter();
+  });
+
+  test('should configure some enemy properties on .enter()', () => {
+    expect(enemy.frameX).toBe(9);
+    expect(enemy.maxFrame).toBe(11);
+    expect(enemy.frameY).toBe(3);
+  });
+
+  test('should modify the standard animate algorithm', () => {
+    enemy.frameX = 11;
+    turningState.update();
+    expect(enemy.frameX).toBe(0);
+    expect(enemy.frameY).toBe(4);
+  });
+
+  test('should correctly transition to WALKING if frameX is 4', () => {
+    enemy.frameX = 4;
+    turningState.update();
+    expect(enemy.facingRight).toBe(1);
+    expect(enemy.setState).toHaveBeenCalledWith(states.WALKING);
+  });
 });
