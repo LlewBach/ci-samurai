@@ -34,6 +34,9 @@ describe('Player class', () => {
     expect(player).toHaveProperty('height');
     expect(player).toHaveProperty('x');
     expect(player).toHaveProperty('y');
+    expect(player).toHaveProperty('attackMargin');
+    expect(player).toHaveProperty('hitMargin');
+    expect(player).toHaveProperty('yContactMargin');
     expect(player).toHaveProperty('facingRight');
     expect(player).toHaveProperty('speed');
     expect(player).toHaveProperty('maxSpeed');
@@ -69,14 +72,24 @@ describe('Player class', () => {
     expect(longRangeCheckSpy).toHaveBeenCalled();
   });
 
-  test('.update should .setState to Stun if .hitCheck returns true', () => {
+  test('.update should .setState to Stun if .hitCheck returns true and currentState is not immune', () => {
     const setStateSpy = jest.spyOn(player, 'setState');
     jest.spyOn(player, 'hitCheck').mockReturnValue(false);
+    expect(player.currentState).toBe(player.states[0]);
     player.update();
     expect(setStateSpy).not.toHaveBeenCalled();
     jest.spyOn(player, 'hitCheck').mockReturnValue(true);
     player.update();
     expect(setStateSpy).toHaveBeenCalledWith(5);
+  });
+
+  test('.update should not .setState to Stun if .hitCheck returns tru and currentState is immune', () => {
+    const setStateSpy = jest.spyOn(player, 'setState');
+    jest.spyOn(player, 'hitCheck').mockReturnValue(true);
+    player.currentState = player.states[4];
+    expect(player.currentState).toBe(player.states[4]);
+    player.update();
+    expect(setStateSpy).not.toHaveBeenCalled();
   });
 
   test('.update should enact currentState.handleInput()', () => {

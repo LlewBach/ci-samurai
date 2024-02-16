@@ -143,11 +143,13 @@ export class Stun extends State {
     this.player.frameY = 14;
     if (this.player.onGround()) this.player.speed = 0;
   }
-  handleInput() {
+  handleInput(inputKeys) {
     if (this.player.frameX === 5) {
       if (this.player.onGround()) this.player.setState(states.STANDING);
       else this.player.setState(states.FALLING);
     }
+    if (inputKeys.includes('ArrowUp') && this.player.onGround()) this.player.setState(states.JUMPING);
+    else if (inputKeys.includes('ArrowDown') && this.player.onGround()) this.player.setState(states.ROLLING);
   }
 }
 

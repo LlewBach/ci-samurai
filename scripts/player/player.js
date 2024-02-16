@@ -10,9 +10,9 @@ export class Player {
     this.height = this.spriteHeight * 2.2;
     this.x = (this.game.width - this.width) / 2;
     this.y = this.game.height - this.game.groundMargin - this.height;
-    this.attackMargin = 160; //New
-    this.hitMargin = 290; // new
-    this.yContactMargin = 180; // new
+    this.attackMargin = 160;
+    this.hitMargin = 290;
+    this.yContactMargin = 180;
     this.facingRight;
     this.speed;
     this.maxSpeed = 7;
@@ -33,7 +33,7 @@ export class Player {
     this.shortRangeCheck();
     this.longRangeCheck();
     // Check player contact status
-    if (this.hitCheck()) this.setState(5);
+    if (this.hitCheck() && this.currentState !== this.states[5] && this.currentState !== this.states[4]) this.setState(5);
     // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves
@@ -87,7 +87,6 @@ export class Player {
       ) enemy.inLongRange = -1;
     });
   }
-  // need to test
   hitCheck() {
     return (
       this.game.enemies.some(enemy => {
