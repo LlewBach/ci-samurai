@@ -1,4 +1,4 @@
-import { Standing, Walking, Dying, Spawning, Turning } from './enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning, Attack1 } from './enemyStates.js';
 
 const states = {
   STANDING: 0,
@@ -6,6 +6,7 @@ const states = {
   DYING: 2,
   SPAWNING: 3,
   TURNING: 4,
+  ATTACK1: 5,
 }
 
 let game, enemy;
@@ -18,6 +19,7 @@ beforeEach(() => {
       width: 50,
       x: 40,
       attackMargin: 10,
+      hitMargin: 9,
     }
   };
 
@@ -121,6 +123,24 @@ describe('Walking state', () => {
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.TURNING);
   });
+
+  test('.update should transition to ATTACK1 at certain distance left of player', () => {
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    enemy.facingRight = 1;
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK1);
+  });
+
+  test('.update should transition to ATTACK1 at certain distance right of player', () => {
+    enemy.facingRight = 1;
+    enemy.x = 60;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    enemy.facingRight = -1;
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK1);
+  });
 });
 
 describe('Dying state', () => {
@@ -203,5 +223,34 @@ describe('Turning state', () => {
     turningState.update();
     expect(enemy.facingRight).toBe(1);
     expect(enemy.setState).toHaveBeenCalledWith(states.WALKING);
+  });
+});
+
+describe('Attack1 state', () => {
+  let attack1State;
+
+  beforeEach(() => {
+    attack1State = new Attack1(game, enemy);
+    attack1State.enter();
+  });
+
+  test('should configure some enemy properties on .enter()', () => {
+    expect(enemy.frameX).toBe(5);
+    expect(enemy.maxFrame).toBe(11);
+    expect(enemy.frameY).toBe(4);
+  });
+
+  test('should modify the standard animate algorithm', () => {
+    enemy.frameX = 11;
+    attack1State.update();
+    expect(enemy.frameX).toBe(0);
+    expect(enemy.frameY).toBe(5);
+  });
+
+  test('should correctly transition to STANDING if frameX is 6', () => {
+    enemy.frameX = 6;
+    enemy.frameY = 5;
+    attack1State.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.STANDING);
   });
 });

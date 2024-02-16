@@ -4,6 +4,7 @@ const states = {
   DYING: 2,
   SPAWNING: 3,
   TURNING: 4,
+  ATTACK1: 5,
 }
 
 class State {
@@ -42,6 +43,8 @@ export class Walking extends State {
 
     if (this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin && this.enemy.facingRight === -1) this.enemy.setState(states.TURNING);
     else if (this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin && this.enemy.facingRight === 1) this.enemy.setState(states.TURNING);
+    else if (this.enemy.x + this.enemy.width - this.enemy.hitMargin > this.game.player.x + this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === 1) this.enemy.setState(states.ATTACK1);
+    else if (this.enemy.x + this.enemy.hitMargin < this.game.player.x + this.game.player.width - this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === -1) this.enemy.setState(states.ATTACK1);
   }
 }
 
@@ -99,5 +102,23 @@ export class Turning extends State {
       this.enemy.facingRight *= -1;
       this.enemy.setState(states.WALKING);
     }
+  }
+}
+
+export class Attack1 extends State {
+  constructor(game, enemy) {
+    super(game, enemy);
+  }
+  enter() {
+    this.enemy.frameX = 5;
+    this.enemy.maxFrame = 11;
+    this.enemy.frameY = 4;
+  }
+  update() {
+    this.enemy.speed = this.game.speed;
+    if (this.enemy.frameX === 11) {
+      this.enemy.frameX = 0;
+      this.enemy.frameY = 5;
+    } else if (this.enemy.frameX === 6 && this.enemy.frameY === 5) this.enemy.setState(states.STANDING);
   }
 }
