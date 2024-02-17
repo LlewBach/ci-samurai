@@ -33,7 +33,7 @@ export class Player {
     this.shortRangeCheck();
     this.longRangeCheck();
     // Check player contact status
-    if (this.hitCheck() && this.currentState !== this.states[5] && this.currentState !== this.states[4]) this.setState(5);
+    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4]) this.setState(5);
     // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves
@@ -98,6 +98,22 @@ export class Player {
         );
       })
     );
+  }
+  jumpAttackCheck() {
+    return (
+      this.game.enemies.some(enemy => {
+        return (
+          (enemy.jumpAttacking === true &&
+            enemy.facingRight === -1 &&
+            enemy.x < this.x + this.width - this.hitMargin) &&
+          enemy.x + (enemy.width / 2) > this.x + (this.width / 2) ||
+          (enemy.jumpAttacking === true &&
+            enemy.facingRight === 1 &&
+            enemy.x + enemy.width > this.x + this.hitMargin &&
+            enemy.x + (enemy.width / 2) < this.x + (this.width / 2))
+        );
+      })
+    )
   }
   draw(context) {
     context.save();

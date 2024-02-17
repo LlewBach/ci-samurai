@@ -5,6 +5,7 @@ const states = {
   SPAWNING: 3,
   TURNING: 4,
   ATTACK1: 5,
+  ATTACK2: 6,
 }
 
 class State {
@@ -40,6 +41,14 @@ export class Walking extends State {
   }
   update() {
     this.enemy.speed = this.game.speed - (this.enemy.maxSpeed * this.enemy.facingRight);
+    if (this.enemy.attackChoice < 0.2) {
+      if (this.enemy.x < this.game.player.x + this.game.player.width - (this.game.player.attackMargin * 0.8) &&
+        this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) &&
+        this.enemy.facingRight === -1) this.enemy.setState(states.ATTACK2);
+      else if (this.enemy.x + this.enemy.width > this.game.player.x + (this.game.player.attackMargin * 0.8) &&
+        this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) &&
+        this.enemy.facingRight === 1) this.enemy.setState(states.ATTACK2);
+    }
 
     if (this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin && this.enemy.facingRight === -1) this.enemy.setState(states.TURNING);
     else if (this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin && this.enemy.facingRight === 1) this.enemy.setState(states.TURNING);
@@ -120,5 +129,26 @@ export class Attack1 extends State {
       this.enemy.frameX = 0;
       this.enemy.frameY = 5;
     } else if (this.enemy.frameX === 6 && this.enemy.frameY === 5) this.enemy.setState(states.STANDING);
+  }
+}
+
+export class Attack2 extends State {
+  constructor(game, enemy) {
+    super(game, enemy);
+  }
+  enter() {
+    this.enemy.frameX = 9;
+    this.enemy.maxFrame = 11;
+    this.enemy.frameY = 5;
+  }
+  update() {
+    if (this.enemy.frameX === 11 && this.enemy.frameY !== 7) {
+      this.enemy.frameX = 0;
+      this.enemy.frameY++;
+    } else if (this.enemy.frameX === 3 && this.enemy.frameY === 6) this.enemy.speed = this.game.speed - (this.enemy.jumpSpeed * this.enemy.facingRight);
+    else if (this.enemy.frameX === 5 && this.enemy.frameY === 6) this.enemy.jumpAttacking = true;
+    else if (this.enemy.frameX === 8 && this.enemy.frameY === 6) this.enemy.speed = this.game.speed;
+    else if (this.enemy.frameX === 9 && this.enemy.frameY === 6) this.enemy.jumpAttacking = false;
+    else if (this.enemy.frameX === 9 && this.enemy.frameY === 7) this.enemy.setState(states.STANDING);
   }
 }

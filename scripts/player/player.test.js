@@ -83,7 +83,18 @@ describe('Player class', () => {
     expect(setStateSpy).toHaveBeenCalledWith(5);
   });
 
-  test('.update should not .setState to Stun if .hitCheck returns tru and currentState is immune', () => {
+  test('.update should .setState to Stun if .jumpAttackCheck returns true and currentState is not immune', () => {
+    const setStateSpy = jest.spyOn(player, 'setState');
+    jest.spyOn(player, 'jumpAttackCheck').mockReturnValue(false);
+    expect(player.currentState).toBe(player.states[0]);
+    player.update();
+    expect(setStateSpy).not.toHaveBeenCalled();
+    jest.spyOn(player, 'jumpAttackCheck').mockReturnValue(true);
+    player.update();
+    expect(setStateSpy).toHaveBeenCalledWith(5);
+  });
+
+  test('.update should not .setState to Stun if .hitCheck returns true and currentState is immune', () => {
     const setStateSpy = jest.spyOn(player, 'setState');
     jest.spyOn(player, 'hitCheck').mockReturnValue(true);
     player.currentState = player.states[4];
@@ -248,7 +259,38 @@ describe('Player class', () => {
     player.hitMargin = 40;
     player.yContactMargin = 10;
     expect(player.hitCheck()).toBe(true);
+  });
 
+  test('.jumpAttackCheck should check to see if enemy full boxes overlap player attack  box', () => {
+    game.enemies = [
+      {
+        x: 135,
+        y: 100,
+        width: 50,
+        hitMargin: 10,
+        yContactMargin: 10,
+        states: ['state0', 'state1', 'state1'],
+        currentState: 'state2',
+        jumpAttacking: true,
+        facingRight: -1,
+      }, {
+        x: 200,
+        y: 100,
+        width: 50,
+        hitMargin: 10,
+        yContactMargin: 10,
+        states: ['state0', 'state1', 'state2'],
+        currentState: 'state2',
+        jumpAttacking: false,
+        facingRight: -1,
+      }
+    ];
+    player.x = 80;
+    player.y = 100;
+    player.width = 100;
+    player.hitMargin = 40;
+    player.yContactMargin = 10;
+    expect(player.jumpAttackCheck()).toBe(true);
   });
 
   test('.draw should call context.drawImage correctly', () => {

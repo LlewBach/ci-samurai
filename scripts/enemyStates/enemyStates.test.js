@@ -1,4 +1,4 @@
-import { Standing, Walking, Dying, Spawning, Turning, Attack1 } from './enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemyStates.js';
 
 const states = {
   STANDING: 0,
@@ -7,6 +7,7 @@ const states = {
   SPAWNING: 3,
   TURNING: 4,
   ATTACK1: 5,
+  ATTACK2: 6,
 }
 
 let game, enemy;
@@ -18,8 +19,8 @@ beforeEach(() => {
     player: {
       width: 50,
       x: 40,
-      attackMargin: 10,
-      hitMargin: 9,
+      attackMargin: 5,
+      hitMargin: 10,
     }
   };
 
@@ -29,12 +30,15 @@ beforeEach(() => {
     frameY: undefined,
     speed: undefined,
     maxSpeed: 1,
+    jumpSpeed: 8,
+    jumpAttacking: false,
     setState: jest.fn(),
     markedForDeletion: false,
     facingRight: -1,
     width: 50,
     x: 20,
     hitMargin: 10,
+    attackChoice: 0.1,
   };
 });
 
@@ -45,12 +49,15 @@ afterEach(() => {
     frameY: undefined,
     speed: undefined,
     maxSpeed: 1,
+    jumpSpeed: 8,
+    jumpAttacking: false,
     setState: jest.fn(),
     markedForDeletion: false,
     facingRight: -1,
     width: 50,
     x: 20,
     hitMargin: 10,
+    attackChoice: 0.1,
   };
 });
 
@@ -104,6 +111,20 @@ describe('Walking state', () => {
     enemy.facingRight = 1;
     walkingState.update();
     expect(enemy.speed).toBe(6);
+  });
+
+  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies', () => {
+    enemy.facingRight = 1;
+    game.player.x = 63;
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK2);
+  });
+
+  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies', () => {
+    enemy.facingRight = -1;
+    enemy.x = 84
+    walkingState.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
   test('.update should transition to TURNING at certain distance left of player', () => {
@@ -251,6 +272,46 @@ describe('Attack1 state', () => {
     enemy.frameX = 6;
     enemy.frameY = 5;
     attack1State.update();
+    expect(enemy.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+});
+
+describe('Attack2 state', () => {
+  let attack2State;
+
+  beforeEach(() => {
+    attack2State = new Attack2(game, enemy);
+    attack2State.enter();
+  });
+
+  test('should configure some enemy properties on .enter()', () => {
+    expect(enemy.frameX).toBe(9);
+    expect(enemy.maxFrame).toBe(11);
+    expect(enemy.frameY).toBe(5);
+  });
+
+  test('should modify the standard animate algorithm', () => {
+    enemy.frameX = 11;
+    attack2State.update();
+    expect(enemy.frameX).toBe(0);
+    expect(enemy.frameY).toBe(6);
+    enemy.frameX = 3;
+    attack2State.update();
+    expect(enemy.speed).toBe(8);
+    enemy.frameX = 5;
+    attack2State.update();
+    expect(enemy.jumpAttacking).toBe(true);
+    enemy.frameX = 8;
+    attack2State.update();
+    expect(enemy.speed).toBe(0);
+    enemy.frameX = 9;
+    expect(enemy.jumpAttacking = false);
+  });
+
+  test('should correctly transition to STANDING if frameX is 9 and frameY is 7', () => {
+    enemy.frameX = 9;
+    enemy.frameY = 7;
+    attack2State.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.STANDING);
   });
 });

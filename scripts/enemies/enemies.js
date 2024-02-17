@@ -1,4 +1,4 @@
-import { Standing, Walking, Dying, Spawning, Turning, Attack1 } from '../enemyStates/enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from '../enemyStates/enemyStates.js';
 
 const zombie1 = document.getElementById('zombie1');
 const zombie2 = document.getElementById('zombie2');
@@ -16,6 +16,8 @@ class Zombie {
     this.facingRight = -1;
     this.inShortRange = 0;
     this.inLongRange = 0;
+    this.attackChoice = Math.random();
+    this.jumpAttacking = false;
     this.markedForDeletion = false;
     this.speed = 0;
     this.frameX = 0;
@@ -24,7 +26,7 @@ class Zombie {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this), new Turning(this.game, this), new Attack1(this.game, this)];
+    this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this), new Turning(this.game, this), new Attack1(this.game, this), new Attack2(this.game, this)];
   }
   update(deltaTime) {
     // currentState update
@@ -64,6 +66,7 @@ export class Zombie1 extends Zombie {
     this.image = zombie1;
     this.x = this.game.width;
     this.maxSpeed = 1;
+    this.jumpSpeed = 12;
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -81,6 +84,7 @@ export class Zombie2 extends Zombie {
     this.image = zombie2;
     this.x = this.game.width * Math.random();
     this.maxSpeed = 1;
+    this.jumpSpeed = 8;
     this.currentState = this.states[3];
     this.currentState.enter();
   }

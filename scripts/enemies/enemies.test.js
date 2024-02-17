@@ -40,9 +40,12 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('facingRight');
     expect(zombie1).toHaveProperty('inShortRange');
     expect(zombie1).toHaveProperty('inLongRange');
+    expect(zombie1).toHaveProperty('attackChoice');
+    expect(zombie1).toHaveProperty('jumpAttacking');
     expect(zombie1).toHaveProperty('markedForDeletion');
     expect(zombie1).toHaveProperty('speed');
     expect(zombie1).toHaveProperty('maxSpeed');
+    expect(zombie1).toHaveProperty('jumpSpeed');
     expect(zombie1).toHaveProperty('frameX');
     expect(zombie1).toHaveProperty('frameY');
     expect(zombie1).toHaveProperty('maxFrame');
