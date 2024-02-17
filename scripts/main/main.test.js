@@ -77,9 +77,10 @@ describe('Game class', () => {
   });
 
   test('.draw should call draw on background, player and enemies array', () => {
-    mockContext = { drawImage: jest.fn() };
+    mockContext = { drawImage: jest.fn(), fillText: jest.fn() };
     game.background.draw = jest.fn();
     game.player.draw = jest.fn();
+    game.UI.draw = jest.fn();
     game.draw(mockContext);
 
     expect(game.background.draw).toHaveBeenCalledWith(mockContext);
@@ -87,6 +88,7 @@ describe('Game class', () => {
     game.enemies.forEach(enemy => {
       expect(enemy.draw).toHaveBeenCalledWith(mockContext);
     });
+    expect(game.UI.draw).toHaveBeenCalledWith(mockContext);
   });
 
   test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {

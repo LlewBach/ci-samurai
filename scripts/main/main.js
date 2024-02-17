@@ -2,6 +2,7 @@ import { Background } from '../background/background.js';
 import { InputHandler } from '../input/input.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
+import { UI } from '../UI/UI.js';
 
 export class Game {
   constructor(width, height) {
@@ -11,10 +12,12 @@ export class Game {
     this.speed = 0;
     this.background = new Background(this);
     this.input = new InputHandler();
+    this.UI = new UI(this);
     this.player = new Player(this);
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
+    this.score = 0;
   }
   update(deltaTime) {
     this.background.update();
@@ -27,6 +30,7 @@ export class Game {
     this.background.draw(context);
     this.player.draw(context);
     this.enemies.forEach(enemy => enemy.draw(context));
+    this.UI.draw(context);
   }
   addEnemy(deltaTime) {
     if (this.enemies.length === 0) {
