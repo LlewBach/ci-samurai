@@ -64,6 +64,8 @@ export class Player {
   }
   shortRangeCheck() {
     this.game.enemies.forEach(enemy => {
+      if (enemy.jumpAttacking) enemy.hitMargin = 0;
+      else enemy.hitMargin = 100;
       if (
         enemy.x + enemy.hitMargin < this.x + this.width - this.attackMargin &&
         enemy.x + (enemy.width / 2) > this.x + (this.width / 2)

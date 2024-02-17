@@ -178,28 +178,46 @@ describe('Player class', () => {
     expect(player.onGround()).toBe(false);
   });
 
+  test('.shortRangeCheck should adjust enemy.hitMargin based on jumpAttacking status', () => {
+    game.enemies = [
+      {
+        hitMargin: 100,
+        jumpAttacking: false,
+      }, {
+        hitMargin: 100,
+        jumpAttacking: true,
+      }
+    ];
+    player.shortRangeCheck();
+    expect(game.enemies[0].hitMargin).toBe(100);
+    expect(game.enemies[1].hitMargin).toBe(0);
+  });
+
   test('.shortRangeCheck should check each enemy to see if player attack range and enemy hit range intersect and on what side', () => {
     game.enemies = [
       {
-        x: 100,
-        width: 50,
-        hitMargin: 10,
-        inShortRange: 0
+        x: 1000,
+        width: 500,
+        hitMargin: 100,
+        inShortRange: 0,
+        jumpAttacking: false,
       }, {
-        x: 145,
-        width: 50,
-        hitMargin: 10,
-        inShortRange: 0
+        x: 1450,
+        width: 500,
+        hitMargin: 100,
+        inShortRange: 0,
+        jumpAttacking: false,
       }, {
-        x: 300,
-        width: 50,
-        hitMargin: 10,
-        inShortRange: 0
+        x: 3000,
+        width: 500,
+        hitMargin: 100,
+        inShortRange: 0,
+        jumpAttacking: false,
       }
     ];
-    player.x = 120;
-    player.width = 50;
-    player.attackMargin = 10;
+    player.x = 1200;
+    player.width = 500;
+    player.attackMargin = 100;
     player.shortRangeCheck();
     expect(game.enemies[0].inShortRange).toBe(-1);
     expect(game.enemies[1].inShortRange).toBe(1);

@@ -142,13 +142,15 @@ export class Attack2 extends State {
     this.enemy.frameY = 5;
   }
   update() {
+    this.enemy.speed = this.game.speed;
     if (this.enemy.frameX === 11 && this.enemy.frameY !== 7) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;
-    } else if (this.enemy.frameX === 3 && this.enemy.frameY === 6) this.enemy.speed = this.game.speed - (this.enemy.jumpSpeed * this.enemy.facingRight);
-    else if (this.enemy.frameX === 5 && this.enemy.frameY === 6) this.enemy.jumpAttacking = true;
-    else if (this.enemy.frameX === 8 && this.enemy.frameY === 6) this.enemy.speed = this.game.speed;
-    else if (this.enemy.frameX === 9 && this.enemy.frameY === 6) this.enemy.jumpAttacking = false;
+    } else if (this.enemy.frameX >= 3 && this.enemy.frameX <= 7 && this.enemy.frameY === 6) {
+      this.enemy.jumpAttacking = true;
+      this.enemy.speed = this.game.speed - (this.enemy.jumpSpeed * this.enemy.facingRight);
+    }
+    else if (this.enemy.frameX === 8 && this.enemy.frameY === 6) this.enemy.jumpAttacking = false;
     else if (this.enemy.frameX === 9 && this.enemy.frameY === 7) this.enemy.setState(states.STANDING);
   }
 }

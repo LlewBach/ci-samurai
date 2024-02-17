@@ -66,7 +66,7 @@ export class Zombie1 extends Zombie {
     this.image = zombie1;
     this.x = this.game.width;
     this.maxSpeed = 1;
-    this.jumpSpeed = 12;
+    this.jumpSpeed = 6;
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -84,7 +84,7 @@ export class Zombie2 extends Zombie {
     this.image = zombie2;
     this.x = this.game.width * Math.random();
     this.maxSpeed = 1;
-    this.jumpSpeed = 8;
+    this.jumpSpeed = 6;
     this.currentState = this.states[3];
     this.currentState.enter();
   }

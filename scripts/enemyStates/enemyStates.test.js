@@ -298,13 +298,10 @@ describe('Attack2 state', () => {
     enemy.frameX = 3;
     attack2State.update();
     expect(enemy.speed).toBe(8);
-    enemy.frameX = 5;
-    attack2State.update();
     expect(enemy.jumpAttacking).toBe(true);
     enemy.frameX = 8;
     attack2State.update();
     expect(enemy.speed).toBe(0);
-    enemy.frameX = 9;
     expect(enemy.jumpAttacking = false);
   });
 
