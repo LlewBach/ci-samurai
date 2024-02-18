@@ -33,7 +33,11 @@ export class Player {
     this.shortRangeCheck();
     this.longRangeCheck();
     // Check player contact status
-    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4]) this.setState(5);
+    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4]) {
+      this.setState(5);
+      if (this.game.health > 3) this.game.health -= 3;
+      else if (this.game.health > 0) this.game.health = 0;
+    }
     // Update based on currentState
     this.currentState.handleInput(this.game.input.keys);
     // Update game.speed based on player moves

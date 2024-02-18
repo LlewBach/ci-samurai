@@ -21,7 +21,10 @@ beforeEach(() => {
       x: 40,
       attackMargin: 5,
       hitMargin: 10,
-    }
+      onGround: jest.fn(),
+      health: 100,
+    },
+    score: 0,
   };
 
   enemy = {
@@ -186,6 +189,7 @@ describe('Dying state', () => {
     enemy.frameX = 3;
     dyingState.update();
     expect(enemy.markedForDeletion).toBe(true);
+    expect(game.score).toBe(1);
   });
 });
 
@@ -266,6 +270,14 @@ describe('Attack1 state', () => {
     attack1State.update();
     expect(enemy.frameX).toBe(0);
     expect(enemy.frameY).toBe(5);
+  });
+
+  test('should subtract from health if frameX is 10 and player.onGround', () => {
+    enemy.frameX = 10;
+    game.health = 10;
+    game.player.onGround.mockReturnValue(true);
+    attack1State.update();
+    expect(game.health).toBe(9);
   });
 
   test('should correctly transition to STANDING if frameX is 6', () => {

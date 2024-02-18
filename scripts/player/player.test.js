@@ -92,6 +92,7 @@ describe('Player class', () => {
     jest.spyOn(player, 'jumpAttackCheck').mockReturnValue(true);
     player.update();
     expect(setStateSpy).toHaveBeenCalledWith(5);
+    expect(game.health).toBe(97);
   });
 
   test('.update should not .setState to Stun if .hitCheck returns true and currentState is immune', () => {

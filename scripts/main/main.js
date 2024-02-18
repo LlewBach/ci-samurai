@@ -18,6 +18,8 @@ export class Game {
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
     this.score = 0;
+    this.health = 100;
+    this.gameOver = false;
   }
   update(deltaTime) {
     this.background.update();
@@ -25,6 +27,7 @@ export class Game {
     this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
+    this.healthCheck();
   }
   draw(context) {
     this.background.draw(context);
@@ -41,6 +44,9 @@ export class Game {
       this.enemyTimer = 0;
       if (Math.random() < 0.5) this.enemies.push(new Zombie2(this));
     }
+  }
+  healthCheck() {
+    if (this.health <= 0) this.gameOver = true;
   }
 }
 

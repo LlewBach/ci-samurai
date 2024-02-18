@@ -52,6 +52,7 @@ export class Walking extends State {
 
     if (this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin && this.enemy.facingRight === -1) this.enemy.setState(states.TURNING);
     else if (this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin && this.enemy.facingRight === 1) this.enemy.setState(states.TURNING);
+
     else if (this.enemy.x + this.enemy.width - this.enemy.hitMargin > this.game.player.x + this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === 1) this.enemy.setState(states.ATTACK1);
     else if (this.enemy.x + this.enemy.hitMargin < this.game.player.x + this.game.player.width - this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === -1) this.enemy.setState(states.ATTACK1);
   }
@@ -71,7 +72,10 @@ export class Dying extends State {
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;
-    } else if (this.enemy.frameX === 3) this.enemy.markedForDeletion = true;
+    } else if (this.enemy.frameX === 3) {
+      this.enemy.markedForDeletion = true;
+      this.game.score++;
+    }
   }
 }
 
@@ -125,6 +129,7 @@ export class Attack1 extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
+    if (this.enemy.frameX === 10 && this.game.player.onGround() && this.game.health > 0) this.game.health -= 1;
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY = 5;

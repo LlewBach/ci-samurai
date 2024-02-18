@@ -45,6 +45,9 @@ describe('Game class', () => {
     expect(game).toHaveProperty('enemies');
     expect(game).toHaveProperty('enemyTimer');
     expect(game).toHaveProperty('enemyInterval');
+    expect(game).toHaveProperty('score');
+    expect(game).toHaveProperty('health');
+    expect(game).toHaveProperty('gameOver');
   });
 
   test('should initialize with Background and Player instances', () => {
@@ -112,5 +115,14 @@ describe('Game class', () => {
     game.addEnemy(16);
     expect(Zombie1).not.toHaveBeenCalled();
     expect(Zombie2).not.toHaveBeenCalled();
+  });
+
+  test('.healthCheck should set gameOver to true at zero health', () => {
+    game.health = 10;
+    game.healthCheck();
+    expect(game.gameOver).toBe(false);
+    game.health = 0;
+    game.healthCheck();
+    expect(game.gameOver).toBe(true);
   });
 });
