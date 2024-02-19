@@ -1,4 +1,5 @@
 import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemyStates.js';
+import { ZombieBlood } from '../particles/particles.js';
 
 const states = {
   STANDING: 0,
@@ -9,6 +10,7 @@ const states = {
   ATTACK1: 5,
   ATTACK2: 6,
 }
+
 
 let game, enemy;
 
@@ -25,6 +27,7 @@ beforeEach(() => {
       health: 100,
     },
     score: 0,
+    particles: [],
   };
 
   enemy = {
@@ -172,17 +175,26 @@ describe('Dying state', () => {
 
   beforeEach(() => {
     dyingState = new Dying(game, enemy);
+    dyingState.enter();
   });
 
   test('should configure some enemy properties on .enter()', () => {
-    dyingState.enter();
     expect(enemy.frameX).toBe(10);
     expect(enemy.maxFrame).toBe(11);
     expect(enemy.frameY).toBe(10);
   });
 
+  test('should unshift 10 zombieBloodDrops to game.particles array for duration of frameY', () => {
+    dyingState.update();
+    expect(game.particles[0]).toBeInstanceOf(ZombieBlood);
+    expect(game.particles[9]).toBeInstanceOf(ZombieBlood);
+    enemy.frameX = 11;
+    dyingState.update();
+    expect(game.particles[10]).toBeInstanceOf(ZombieBlood);
+    expect(game.particles[19]).toBeInstanceOf(ZombieBlood);
+  });
+
   test('should modify the standard animate algorithm', () => {
-    dyingState.enter();
     enemy.frameX = 11;
     dyingState.update();
     expect(enemy.frameX).toBe(0);

@@ -1,3 +1,5 @@
+import { ZombieBlood } from '../particles/particles.js';
+
 const states = {
   STANDING: 0,
   WALKING: 1,
@@ -69,6 +71,11 @@ export class Dying extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
+    if (this.enemy.frameY === 10) {
+      for (let i = 0; i < 10; i++) {
+        this.game.particles.unshift(new ZombieBlood(this.game, this.enemy.x + (this.enemy.width / 2), this.enemy.y + (this.enemy.height / 2)));
+      }
+    }
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;

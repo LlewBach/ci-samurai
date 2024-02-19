@@ -18,7 +18,6 @@ describe('Player class', () => {
       restore: jest.fn(),
       strokeRect: jest.fn() // might need to delete
     };
-
   });
 
   test('should create an instance of Player', () => {
