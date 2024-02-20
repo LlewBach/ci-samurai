@@ -1,5 +1,5 @@
 import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemyStates.js';
-import { ZombieBlood } from '../particles/particles.js';
+import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
 
 const states = {
   STANDING: 0,
@@ -284,12 +284,14 @@ describe('Attack1 state', () => {
     expect(enemy.frameY).toBe(5);
   });
 
-  test('should subtract from health if frameX is 10 and player.onGround', () => {
+  test('should subtract from health, and cause PlayerBlood spatter if frameX is 10 and player.onGround', () => {
     enemy.frameX = 10;
     game.health = 10;
     game.player.onGround.mockReturnValue(true);
     attack1State.update();
     expect(game.health).toBe(9);
+    expect(game.particles[0]).toBeInstanceOf(PlayerBlood);
+    expect(game.particles[9]).toBeInstanceOf(PlayerBlood);
   });
 
   test('should correctly transition to STANDING if frameX is 6', () => {

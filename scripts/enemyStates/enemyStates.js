@@ -1,4 +1,4 @@
-import { ZombieBlood } from '../particles/particles.js';
+import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
 
 const states = {
   STANDING: 0,
@@ -136,7 +136,12 @@ export class Attack1 extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
-    if (this.enemy.frameX === 10 && this.game.player.onGround() && this.game.health > 0) this.game.health -= 1;
+    if (this.enemy.frameX === 10 && this.game.player.onGround() && this.game.health > 0) {
+      this.game.health -= 1;
+      for (let i = 0; i < 10; i++) {
+        this.game.particles.unshift(new PlayerBlood(this.game, this.game.player.x + (this.game.player.width / 2), this.game.height - ((this.game.player.y + this.game.player.yContactMargin) / 2), this.enemy.facingRight));
+      }
+    }
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY = 5;

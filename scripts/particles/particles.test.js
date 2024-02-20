@@ -1,11 +1,12 @@
-import { ZombieBlood } from './particles.js';
+import { ZombieBlood, PlayerBlood } from './particles.js';
+
+let zombieBloodDrop;
+let playerBloodDrop;
+let mockContext;
+let game;
+let enemy;
 
 describe('ZombieBlood class', () => {
-
-  let zombieBloodDrop;
-  let mockContext;
-  let game
-
   beforeEach(() => {
     game = {
       player: {
@@ -13,6 +14,7 @@ describe('ZombieBlood class', () => {
       },
       speed: 0,
     };
+
     zombieBloodDrop = new ZombieBlood(game, 10, 10);
     mockContext = {
       beginPath: jest.fn(),
@@ -58,3 +60,29 @@ describe('ZombieBlood class', () => {
     expect(mockContext.fill).toHaveBeenCalled();
   });
 });
+
+describe('PlayerBlood class', () => {
+  beforeEach(() => {
+    game = {
+      player: {
+        facingRight: 1,
+      },
+      speed: 0,
+    };
+    enemy = {
+      facingRight: -1,
+    };
+
+    playerBloodDrop = new PlayerBlood(game, 10, 10, enemy.facingRight);
+    jest.spyOn(Math, 'random').mockReturnValue(0.5);
+  });
+
+  test('.update should adjust x, y, speedY and size properties correctly', () => {
+    playerBloodDrop.update();
+    expect(playerBloodDrop.x).toBe(-5);
+    expect(playerBloodDrop.y).toBe(1.5);
+    expect(playerBloodDrop.speedY).toBe(7.5);
+    expect(playerBloodDrop.size).toBe(4.5 * 0.9);
+  });
+});
+
