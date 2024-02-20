@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -436,11 +436,19 @@ describe('Seppaku state', () => {
     expect(player.maxFrame).toBe(19);
     expect(player.frameY).toBe(15);
   });
+});
 
-  test('should keep player face down at end of animation sequence', () => {
-    player.frameX = 19;
-    seppakuState.handleInput();
-    expect(player.frameX).toBe(18);
+describe('Transcending state', () => {
+  let transcendingState, game;
+
+  beforeEach(() => {
+    game = { gameOver: true };
+    transcendingState = new Transcending(player);
+    transcendingState.enter();
   });
 
+  test('should configure some player properties', () => {
+    expect(player.maxFrame).toBe(19);
+    expect(player.frameY).toBe(16);
+  });
 });

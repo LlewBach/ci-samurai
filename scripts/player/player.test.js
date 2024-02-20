@@ -63,6 +63,12 @@ describe('Player class', () => {
     expect(player.speed).toBe(0);
   });
 
+  test('.update should call winCheck', () => {
+    const winCheckSpy = jest.spyOn(player, 'winCheck');
+    player.update(16);
+    expect(winCheckSpy).toHaveBeenCalled();
+  });
+
   test('.update should call range checks', () => {
     const shortRangeCheckSpy = jest.spyOn(player, 'shortRangeCheck');
     const longRangeCheckSpy = jest.spyOn(player, 'longRangeCheck');
@@ -163,6 +169,17 @@ describe('Player class', () => {
     player.frameTimer = player.frameInterval;
     player.update(16);
     expect(player.frameX).toBe(0);
+  });
+
+  test('.update should not reset frameX when maxFrame reached in certain states', () => {
+    player.currentState = player.states[9];
+    player.frameX = player.maxFrame;
+    player.frameTimer = player.frameInterval;
+    player.update(16);
+    expect(player.frameX).toBe(player.maxFrame);
+    player.currentState = player.states[10];
+    player.update(16);
+    expect(player.frameX).toBe(player.maxFrame);
   });
 
   test('.setState should transition to the correct state', () => {
@@ -309,6 +326,17 @@ describe('Player class', () => {
     player.hitMargin = 40;
     player.yContactMargin = 10;
     expect(player.jumpAttackCheck()).toBe(true);
+  });
+
+  test('.winCheck should set player state at certain game.score and if gameOver is false', () => {
+    const setStateSpy = jest.spyOn(player, 'setState');
+    game.score = game.winningScore;
+    game.gameOver = true;
+    player.winCheck();
+    expect(setStateSpy).not.toHaveBeenCalled();
+    game.gameOver = false;
+    player.winCheck();
+    expect(setStateSpy).toHaveBeenCalledWith(10);
   });
 
   test('.draw should call context.drawImage correctly', () => {

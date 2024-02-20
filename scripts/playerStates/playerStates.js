@@ -9,6 +9,7 @@ const states = {
   ATTACK2: 7,
   ATTACK3: 8,
   SEPPAKU: 9,
+  TRANSCENDING: 10,
 }
 
 class State {
@@ -247,6 +248,21 @@ export class Seppaku extends State {
     this.player.speed = 0;
   }
   handleInput() {
-    if (this.player.frameX === 19) this.player.frameX = 18;
+
+  }
+}
+
+export class Transcending extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 19;
+    this.player.frameY = 16;
+    this.player.speed = 0;
+  }
+  handleInput() {
+
   }
 }

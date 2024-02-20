@@ -51,6 +51,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('enemyTimer');
     expect(game).toHaveProperty('enemyInterval');
     expect(game).toHaveProperty('score');
+    expect(game).toHaveProperty('winningScore');
     expect(game).toHaveProperty('health');
     expect(game).toHaveProperty('gameOver');
   });

@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,16 +24,22 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this), new Transcending(this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
+    this.winCheck();
     // Check enemy range status
     this.shortRangeCheck();
     this.longRangeCheck();
     // Check player contact status
-    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4] && this.currentState !== this.states[9]) {
+    if (
+      (this.hitCheck() || this.jumpAttackCheck()) &&
+      this.currentState !== this.states[4] &&
+      this.currentState !== this.states[5] &&
+      this.currentState !== this.states[9] &&
+      this.currentState !== this.states[10]) {
       this.setState(5);
       if (this.game.health > 3) this.game.health -= 3;
       else if (this.game.health > 0) this.game.health = 0;
@@ -56,7 +62,12 @@ export class Player {
     else {
       this.frameTimer = 0;
       if (this.frameX < this.maxFrame) this.frameX++;
-      else this.frameX = 0;
+      else {
+        if (this.currentState === this.states[9] || this.currentState === this.states[10]) {
+          this.frameX = this.maxFrame;
+        }
+        else this.frameX = 0;
+      }
     }
   }
   setState(state) {
@@ -120,6 +131,12 @@ export class Player {
         );
       })
     )
+  }
+  winCheck() {
+    if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
+      this.setState(10);
+      this.game.gameOver = true;
+    }
   }
   draw(context) {
     context.save();
