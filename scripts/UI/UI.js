@@ -26,7 +26,7 @@ export class UI {
       }
       else {
         this.text1 = 'If you can\'t beat them...';
-        this.text2 = 'Join them';
+        this.text2 = 'Join them, Class-hopper';
       }
       context.fillStyle = 'white';
       context.font = this.fontSize * 2 + 'px ' + this.fontFamily;

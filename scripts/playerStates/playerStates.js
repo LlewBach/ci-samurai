@@ -1,3 +1,5 @@
+import { PlayerBlood } from '../particles/particles.js';
+
 const states = {
   STANDING: 0,
   RUNNING: 1,
@@ -238,8 +240,9 @@ export class Attack3 extends State {
 }
 
 export class Seppaku extends State {
-  constructor(player) {
+  constructor(player, game) {
     super(player);
+    this.game = game;
   }
   enter() {
     this.player.frameX = 0;
@@ -248,7 +251,11 @@ export class Seppaku extends State {
     this.player.speed = 0;
   }
   handleInput() {
-
+    if (this.player.frameX >= 11 && this.player.frameX <= 13) {
+      for (let i = 0; i < 10; i++) {
+        this.game.particles.unshift(new PlayerBlood(this.game, this.player.x + (this.player.width / 2), this.game.height - ((this.player.y + this.player.yContactMargin) / 2), -1));
+      }
+    }
   }
 }
 

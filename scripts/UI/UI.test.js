@@ -58,7 +58,7 @@ describe('UI class', () => {
     game.gameOver = true;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('If you can\'t beat them...');
-    expect(ui.text2).toEqual('Join them');
+    expect(ui.text2).toEqual('Join them, Class-hopper');
     game.score = 6;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Coder-san');

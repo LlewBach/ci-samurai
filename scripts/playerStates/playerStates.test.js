@@ -1,4 +1,5 @@
 import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending } from './playerStates.js';
+import { PlayerBlood } from '../particles/particles.js';
 
 const states = {
   STANDING: 0,
@@ -427,14 +428,27 @@ describe('Seppaku state', () => {
   let seppakuState, game;
 
   beforeEach(() => {
-    game = { gameOver: true };
-    seppakuState = new Seppaku(player);
+    game = {
+      gameOver: true,
+      particles: [],
+    };
+    seppakuState = new Seppaku(player, game);
     seppakuState.enter();
   });
 
   test('should configure some player properties', () => {
     expect(player.maxFrame).toBe(19);
     expect(player.frameY).toBe(15);
+  });
+
+  test('should add particles to game.particles array at certain x frames', () => {
+    player.frameX = 8;
+    seppakuState.handleInput();
+    expect(game.particles.length).toBe(0);
+    player.frameX = 13;
+    seppakuState.handleInput();
+    expect(game.particles.length).toBe(10);
+    expect(game.particles[0]).toBeInstanceOf(PlayerBlood);
   });
 });
 
