@@ -8,6 +8,7 @@ const states = {
   ATTACK1: 6,
   ATTACK2: 7,
   ATTACK3: 8,
+  SEPPAKU: 9,
 }
 
 class State {
@@ -134,8 +135,9 @@ export class Rolling extends State {
 }
 
 export class Stun extends State {
-  constructor(player) {
+  constructor(player, game) {
     super(player);
+    this.game = game;
   }
   enter() {
     this.player.frameX = 0;
@@ -150,6 +152,7 @@ export class Stun extends State {
     }
     if (inputKeys.includes('ArrowUp') && this.player.onGround()) this.player.setState(states.JUMPING);
     else if (inputKeys.includes('ArrowDown') && this.player.onGround()) this.player.setState(states.ROLLING);
+    if (this.game.gameOver) this.player.setState(states.SEPPAKU);
   }
 }
 
@@ -230,5 +233,20 @@ export class Attack3 extends State {
       }
       this.player.setState(states.STANDING);
     }
+  }
+}
+
+export class Seppaku extends State {
+  constructor(player) {
+    super(player);
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 19;
+    this.player.frameY = 15;
+    this.player.speed = 0;
+  }
+  handleInput() {
+    if (this.player.frameX === 19) this.player.frameX = 18;
   }
 }

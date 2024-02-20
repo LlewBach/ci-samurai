@@ -43,20 +43,45 @@ export class Walking extends State {
   }
   update() {
     this.enemy.speed = this.game.speed - (this.enemy.maxSpeed * this.enemy.facingRight);
+    // Attack2 transitions
     if (this.enemy.attackChoice < 0.2) {
-      if (this.enemy.x < this.game.player.x + this.game.player.width - (this.game.player.attackMargin * 0.8) &&
+      if (
+        this.enemy.x < this.game.player.x + this.game.player.width - (this.game.player.attackMargin * 0.8) &&
         this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) &&
-        this.enemy.facingRight === -1) this.enemy.setState(states.ATTACK2);
-      else if (this.enemy.x + this.enemy.width > this.game.player.x + (this.game.player.attackMargin * 0.8) &&
+        this.enemy.facingRight === -1 &&
+        !this.game.gameOver
+      ) this.enemy.setState(states.ATTACK2);
+      else if (
+        this.enemy.x + this.enemy.width > this.game.player.x + (this.game.player.attackMargin * 0.8) &&
         this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) &&
-        this.enemy.facingRight === 1) this.enemy.setState(states.ATTACK2);
+        this.enemy.facingRight === 1 &&
+        !this.game.gameOver
+      ) this.enemy.setState(states.ATTACK2);
     }
-
-    if (this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin && this.enemy.facingRight === -1) this.enemy.setState(states.TURNING);
-    else if (this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin && this.enemy.facingRight === 1) this.enemy.setState(states.TURNING);
-
-    else if (this.enemy.x + this.enemy.width - this.enemy.hitMargin > this.game.player.x + this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === 1) this.enemy.setState(states.ATTACK1);
-    else if (this.enemy.x + this.enemy.hitMargin < this.game.player.x + this.game.player.width - this.game.player.hitMargin && this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) && this.enemy.facingRight === -1) this.enemy.setState(states.ATTACK1);
+    // Turning transitions
+    if (
+      this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin &&
+      this.enemy.facingRight === -1 &&
+      !this.game.gameOver
+    ) this.enemy.setState(states.TURNING);
+    else if (
+      this.enemy.x + this.enemy.hitMargin > this.game.player.x + this.game.player.width - this.game.player.attackMargin &&
+      this.enemy.facingRight === 1 &&
+      !this.game.gameOver
+    ) this.enemy.setState(states.TURNING);
+    // Attack1 transitions
+    else if (
+      this.enemy.x + this.enemy.width - this.enemy.hitMargin > this.game.player.x + this.game.player.hitMargin &&
+      this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) &&
+      this.enemy.facingRight === 1 &&
+      !this.game.gameOver
+    ) this.enemy.setState(states.ATTACK1);
+    else if (
+      this.enemy.x + this.enemy.hitMargin < this.game.player.x + this.game.player.width - this.game.player.hitMargin &&
+      this.enemy.x + (this.enemy.width / 2) > this.game.player.x + (this.game.player.width / 2) &&
+      this.enemy.facingRight === -1 &&
+      !this.game.gameOver
+    ) this.enemy.setState(states.ATTACK1);
   }
 }
 

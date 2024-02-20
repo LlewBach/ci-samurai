@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3 } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,7 +24,7 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
@@ -33,7 +33,7 @@ export class Player {
     this.shortRangeCheck();
     this.longRangeCheck();
     // Check player contact status
-    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4]) {
+    if ((this.hitCheck() || this.jumpAttackCheck()) && this.currentState !== this.states[5] && this.currentState !== this.states[4] && this.currentState !== this.states[9]) {
       this.setState(5);
       if (this.game.health > 3) this.game.health -= 3;
       else if (this.game.health > 0) this.game.health = 0;

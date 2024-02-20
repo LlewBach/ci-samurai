@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3 } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku } from './playerStates.js';
 
 const states = {
   STANDING: 0,
@@ -10,6 +10,7 @@ const states = {
   ATTACK1: 6,
   ATTACK2: 7,
   ATTACK3: 8,
+  SEPPAKU: 9,
 }
 let player;
 
@@ -248,10 +249,13 @@ describe('Rolling State', () => {
 });
 
 describe('Stun State', () => {
-  let stunState;
+  let stunState, game;
 
   beforeEach(() => {
-    stunState = new Stun(player);
+    game = {
+      gameOver: false
+    };
+    stunState = new Stun(player, game);
     stunState.enter();
   });
 
@@ -417,4 +421,26 @@ describe('Attack3 State', () => {
     attack3State.handleInput();
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
+});
+
+describe('Seppaku state', () => {
+  let seppakuState, game;
+
+  beforeEach(() => {
+    game = { gameOver: true };
+    seppakuState = new Seppaku(player);
+    seppakuState.enter();
+  });
+
+  test('should configure some player properties', () => {
+    expect(player.maxFrame).toBe(19);
+    expect(player.frameY).toBe(15);
+  });
+
+  test('should keep player face down at end of animation sequence', () => {
+    player.frameX = 19;
+    seppakuState.handleInput();
+    expect(player.frameX).toBe(18);
+  });
+
 });

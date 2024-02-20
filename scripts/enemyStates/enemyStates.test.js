@@ -28,6 +28,7 @@ beforeEach(() => {
     },
     score: 0,
     particles: [],
+    gameOver: false,
   };
 
   enemy = {
@@ -119,52 +120,76 @@ describe('Walking state', () => {
     expect(enemy.speed).toBe(6);
   });
 
-  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies', () => {
+  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies, if game not over', () => {
     enemy.facingRight = 1;
     game.player.x = 63;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
-  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies', () => {
+  test('.update should transition to ATTACK2 at certain distance left of player for certain percentage of zombies, if game not over', () => {
     enemy.facingRight = -1;
-    enemy.x = 84
+    enemy.x = 84;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
-  test('.update should transition to TURNING at certain distance left of player', () => {
+  test('.update should transition to TURNING at certain distance left of player, if game not over', () => {
     walkingState.update();
     expect(enemy.setState).not.toHaveBeenCalled();
     enemy.x = 0;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.TURNING);
   });
 
-  test('.update should transition to TURNING at certain distance right of player', () => {
+  test('.update should transition to TURNING at certain distance right of player, if game not over', () => {
     enemy.facingRight = 1;
     enemy.x = 60;
     walkingState.update();
     expect(enemy.setState).not.toHaveBeenCalled();
     enemy.x = 100;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.TURNING);
   });
 
-  test('.update should transition to ATTACK1 at certain distance left of player', () => {
+  test('.update should transition to ATTACK1 at certain distance left of player, if game not over', () => {
     walkingState.update();
     expect(enemy.setState).not.toHaveBeenCalled();
     enemy.facingRight = 1;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 
-  test('.update should transition to ATTACK1 at certain distance right of player', () => {
+  test('.update should transition to ATTACK1 at certain distance right of player, if game not over', () => {
     enemy.facingRight = 1;
     enemy.x = 60;
     walkingState.update();
     expect(enemy.setState).not.toHaveBeenCalled();
     enemy.facingRight = -1;
+    game.gameOver = true;
+    walkingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    game.gameOver = false;
     walkingState.update();
     expect(enemy.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
