@@ -31,6 +31,10 @@ describe('Game class', () => {
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: false },
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: true }
     ];
+    game.floatingText = [
+      { update: jest.fn(), draw: jest.fn(), markedForDeletion: false },
+      { update: jest.fn(), draw: jest.fn(), markedForDeletion: true }
+    ];
   });
 
   test('should create an instance of Game', () => {
@@ -47,6 +51,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('background');
     expect(game).toHaveProperty('player');
     expect(game).toHaveProperty('particles');
+    expect(game).toHaveProperty('floatingText');
     expect(game).toHaveProperty('enemies');
     expect(game).toHaveProperty('enemyTimer');
     expect(game).toHaveProperty('enemyInterval');
@@ -74,6 +79,9 @@ describe('Game class', () => {
     game.particles.forEach(particle => {
       expect(particle.update).toHaveBeenCalled();
     });
+    game.floatingText.forEach(message => {
+      expect(message.update).toHaveBeenCalled();
+    });
   });
 
   test('.update should call .addEnemy', () => {
@@ -82,15 +90,17 @@ describe('Game class', () => {
     expect(addEnemySpy).toHaveBeenCalled();
   });
 
-  test('.update should filter enemies and particles arrays according to markedForDeletion status', () => {
+  test('.update should filter enemies, particles and floatingText arrays according to markedForDeletion status', () => {
     expect(game.enemies.some(enemy => enemy.markedForDeletion)).toBe(true);
     expect(game.particles.some(particle => particle.markedForDeletion)).toBe(true);
+    expect(game.floatingText.some(message => message.markedForDeletion)).toBe(true);
     game.update(16);
     expect(game.enemies.some(enemy => enemy.markedForDeletion)).toBe(false);
     expect(game.particles.some(particle => particle.markedForDeletion)).toBe(false);
+    expect(game.floatingText.some(message => message.markedForDeletion)).toBe(false);
   });
 
-  test('.draw should call draw on background, player, particles and enemies arrays', () => {
+  test('.draw should call draw on background, player, particles, floatingText and enemies arrays', () => {
     mockContext = { drawImage: jest.fn(), fillText: jest.fn() };
     game.background.draw = jest.fn();
     game.player.draw = jest.fn();
@@ -104,6 +114,9 @@ describe('Game class', () => {
     });
     game.particles.forEach(particle => {
       expect(particle.draw).toHaveBeenCalledWith(mockContext);
+    });
+    game.floatingText.forEach(message => {
+      expect(message.draw).toHaveBeenCalledWith(mockContext);
     });
     expect(game.UI.draw).toHaveBeenCalledWith(mockContext);
   });

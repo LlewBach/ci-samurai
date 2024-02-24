@@ -1,4 +1,5 @@
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
+import { FloatingText } from '../floatingText/floatingText.js';
 
 const states = {
   STANDING: 0,
@@ -104,6 +105,7 @@ export class Dying extends State {
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;
+      this.game.floatingText.push(new FloatingText('git some!', this.enemy.x, this.enemy.y, 0, 0));
     } else if (this.enemy.frameX === 3) {
       this.enemy.markedForDeletion = true;
       this.game.score++;

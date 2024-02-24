@@ -1,5 +1,6 @@
 import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemyStates.js';
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
+import { FloatingText } from '../floatingText/floatingText.js';
 
 const states = {
   STANDING: 0,
@@ -28,6 +29,7 @@ beforeEach(() => {
     },
     score: 0,
     particles: [],
+    floatingText: [],
     gameOver: false,
   };
 
@@ -217,6 +219,13 @@ describe('Dying state', () => {
     dyingState.update();
     expect(game.particles[10]).toBeInstanceOf(ZombieBlood);
     expect(game.particles[19]).toBeInstanceOf(ZombieBlood);
+  });
+
+  test('should push one floating message', () => {
+    enemy.frameX = 11;
+    dyingState.update();
+    expect(game.floatingText.length).toBe(1);
+    expect(game.floatingText[0]).toBeInstanceOf(FloatingText);
   });
 
   test('should modify the standard animate algorithm', () => {

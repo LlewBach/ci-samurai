@@ -12,6 +12,7 @@ const states = {
   ATTACK2: 7,
   ATTACK3: 8,
   SEPPAKU: 9,
+  TRANSCENDING: 10,
 }
 let player;
 

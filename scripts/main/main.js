@@ -15,6 +15,7 @@ export class Game {
     this.UI = new UI(this);
     this.player = new Player(this);
     this.particles = [];
+    this.floatingText = [];
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
@@ -28,9 +29,11 @@ export class Game {
     this.player.update(deltaTime);
     this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
-    this.particles.forEach(particle => particle.update());
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
+    this.particles.forEach(particle => particle.update());
     this.particles = this.particles.filter(particle => !particle.markedForDeletion);
+    this.floatingText.forEach(message => message.update());
+    this.floatingText = this.floatingText.filter(message => !message.markedForDeletion);
     this.healthCheck();
   }
   draw(context) {
@@ -38,6 +41,7 @@ export class Game {
     this.player.draw(context);
     this.enemies.forEach(enemy => enemy.draw(context));
     this.particles.forEach(particle => particle.draw(context));
+    this.floatingText.forEach(message => message.draw(context));
     this.UI.draw(context);
   }
   addEnemy(deltaTime) {
