@@ -1,15 +1,19 @@
 export class Symbol {
-  constructor(x, y, fontSize, canvasHeight) {
+  constructor(x, y, fontSize, canvasHeight, game) {
     this.characters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン1234567890';
     this.x = x;
     this.y = y;
     this.fontSize = fontSize;
     this.text = '';
     this.canvasHeight = canvasHeight;
+    this.game = game;
+    this.threshold = 0.98;
   }
   update() {
+    if (this.game.gameOver) this.threshold = 0.999;
+    else this.threshold = 0.98;
     this.text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
-    if (this.y * this.fontSize > this.canvasHeight && Math.random() > 0.98) this.y = 0;
+    if (this.y * this.fontSize > this.canvasHeight && Math.random() > this.threshold) this.y = 0;
     else this.y++;
   }
   draw(context) {
@@ -33,7 +37,7 @@ export class MatrixRain {
   }
   initialize() {
     for (let i = 0; i < this.columns; i++) {
-      this.symbols[i] = new Symbol(i, this.canvasHeight, this.fontSize, this.canvasHeight);
+      this.symbols[i] = new Symbol(i, this.canvasHeight, this.fontSize, this.canvasHeight, this.game);
     }
   }
   update(deltaTime) {

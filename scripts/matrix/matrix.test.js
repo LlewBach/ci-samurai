@@ -1,10 +1,13 @@
 import { Symbol, MatrixRain } from './matrix.js';
 
 describe('Symbol class', () => {
-  let symbol, mockContext;
+  let symbol, mockContext, game;
 
   beforeEach(() => {
-    symbol = new Symbol(5, 5, 25, 500);
+    game = {
+      gameOver: false
+    };
+    symbol = new Symbol(5, 5, 25, 500, game);
     mockContext = {
       fillText: jest.fn()
     };
@@ -25,6 +28,15 @@ describe('Symbol class', () => {
     expect(symbol).toHaveProperty('fontSize');
     expect(symbol).toHaveProperty('text');
     expect(symbol).toHaveProperty('canvasHeight');
+    expect(symbol).toHaveProperty('game');
+    expect(symbol).toHaveProperty('threshold');
+  });
+
+  test('.update should reset threshold property depending on game.gameOver status', () => {
+    expect(symbol.threshold).toBe(0.98);
+    game.gameOver = true;
+    symbol.update();
+    expect(symbol.threshold).toBe(0.999);
   });
 
   test('.update should select random character', () => {
