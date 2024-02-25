@@ -153,4 +153,24 @@ describe('Game class', () => {
     game.healthCheck();
     expect(game.gameOver).toBe(true);
   });
+
+  test('.restart should reset necessary game properties', () => {
+    game.speed = 10;
+    game.particles = ['particle0'];
+    game.floatingText = ['text0'];
+    game.enemies = ['enemy0'];
+    game.score = 10;
+    game.health = 50;
+    game.gameOver = true;
+    game.isPaused = true;
+    game.restart();
+    expect(game.speed).toBe(0);
+    expect(game.particles).toEqual([]);
+    expect(game.floatingText).toEqual([]);
+    expect(game.enemies).toEqual([]);
+    expect(game.score).toBe(0);
+    expect(game.health).toBe(100);
+    expect(game.gameOver).toBe(false);
+    expect(game.isPaused).toBe(false);
+  });
 });

@@ -61,6 +61,17 @@ export class Game {
       this.gameOver = true;
     }
   }
+  restart() {
+    this.speed = 0;
+    this.player = new Player(this);
+    this.particles = [];
+    this.floatingText = [];
+    this.enemies = [];
+    this.score = 0;
+    this.health = 100;
+    this.gameOver = false;
+    this.isPaused = false;
+  }
 }
 
 window.addEventListener('load', function () {
@@ -109,7 +120,7 @@ window.addEventListener('load', function () {
         game.isPaused = false;
         animate();
       }
-    }
+    } else if (e.key === 'r' && game.gameOver) game.restart();
   });
 });
 
