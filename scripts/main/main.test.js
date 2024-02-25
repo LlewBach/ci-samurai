@@ -60,8 +60,6 @@ describe('Game class', () => {
     expect(game).toHaveProperty('health');
     expect(game).toHaveProperty('gameOver');
     expect(game).toHaveProperty('isPaused');
-    expect(game).toHaveProperty('colour');
-
   });
 
   test('should initialize with Background and Player instances', () => {

@@ -77,7 +77,12 @@ describe('MatrixRain Class', () => {
       fillText: jest.fn()
     };
     game = {
-      colour: '#0aff0a'
+      colour: '#0aff0a',
+      gameOver: false,
+      player: {
+        currentState: 'state0',
+        states: ['state0', 'state1', 'state2', 'state3', 'state4', 'state5']
+      }
     };
     matrix = new MatrixRain(game, 500, 500);
     matrix.symbols = [{ update: jest.fn(), draw: jest.fn() }, { update: jest.fn(), draw: jest.fn() }];
@@ -104,6 +109,18 @@ describe('MatrixRain Class', () => {
     matrix.initialize();
     expect(matrix.symbols.length).toBe(matrix.columns);
     expect(matrix.symbols[0]).toBeInstanceOf(Symbol);
+  });
+
+  test('.colourState should update matrix colour depending on gameOver status, player state', () => {
+    game.gameOver = true;
+    matrix.colourState();
+    expect(matrix.colour).toBe('white');
+    game.gameOver = false;
+    matrix.colourState();
+    expect(matrix.colour).toBe('#0aff0a');
+    game.player.currentState = game.player.states[5];
+    matrix.colourState();
+    expect(matrix.colour).toBe('red');
   });
 
   test('.update should increment or reset frameTimer', () => {

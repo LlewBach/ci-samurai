@@ -25,7 +25,6 @@ export class Game {
     this.health = 100;
     this.gameOver = false;
     this.isPaused = false;
-    this.colour = '#0aff0a';
   }
   update(deltaTime) {
     this.background.update();
@@ -58,7 +57,9 @@ export class Game {
     }
   }
   healthCheck() {
-    if (this.health <= 0) this.gameOver = true;
+    if (this.health <= 0) {
+      this.gameOver = true;
+    }
   }
 }
 

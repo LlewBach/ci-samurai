@@ -32,7 +32,7 @@ export class MatrixRain {
     this.fps = 30;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.colour = game.colour;
+    this.colour = '#0aff0a';
     this.initialize();
   }
   initialize() {
@@ -40,7 +40,14 @@ export class MatrixRain {
       this.symbols[i] = new Symbol(i, this.canvasHeight, this.fontSize, this.canvasHeight, this.game);
     }
   }
+  colourState() {
+    if (this.game.gameOver) this.colour = 'white';
+    else this.colour = '#0aff0a';
+    if (this.game.player.currentState === this.game.player.states[5]) this.colour = 'red';
+    // else if (this.game.enemies.some(enemy => enemy.currentState === enemy.states[2])) this.colour = '#3137fd';
+  }
   update(deltaTime) {
+    this.colourState();
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
     else {
       this.frameTimer = 0;
