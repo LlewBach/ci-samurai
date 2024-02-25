@@ -7,8 +7,10 @@ describe('Player class', () => {
   let player;
   let mockContext;
   let mockImage = {};
+  let canvas1;
 
   beforeEach(() => {
+    canvas1 = { getContext: jest.fn() };
     game = new Game(800, 600);
     player = new Player(game);
     mockContext = {

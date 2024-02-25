@@ -1,4 +1,3 @@
-import { Game } from '../main/main.js';
 import { Zombie1, Zombie2 } from './enemies.js';
 import { Walking } from '../enemyStates/enemyStates.js';
 
@@ -9,7 +8,7 @@ describe('Zombie1 class', () => {
   let mockImage = {};
 
   beforeEach(() => {
-    game = new Game(800, 600);
+    game = {};
     zombie1 = new Zombie1(game);
     zombie2 = new Zombie2(game);
     mockContext = {

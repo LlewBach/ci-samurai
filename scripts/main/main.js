@@ -24,6 +24,7 @@ export class Game {
     this.winningScore = 20;
     this.health = 100;
     this.gameOver = false;
+    this.isPaused = false;
     this.colour = '#0aff0a';
   }
   update(deltaTime) {
@@ -61,8 +62,6 @@ export class Game {
   }
 }
 
-
-
 window.addEventListener('load', function () {
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
@@ -70,6 +69,17 @@ window.addEventListener('load', function () {
   canvas1.height = 500;
 
   const game = new Game(canvas1.width, canvas1.height);
+
+  let lastTime1 = 0;
+
+  function animate(timestamp) {
+    ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+    const deltaTime = timestamp - lastTime1;
+    lastTime1 = timestamp;
+    game.update(deltaTime);
+    game.draw(ctx1);
+    if (!game.isPaused) requestAnimationFrame(animate);
+  }
 
   const canvas2 = document.getElementById('canvas2');
   const ctx2 = canvas2.getContext('2d');
@@ -88,16 +98,17 @@ window.addEventListener('load', function () {
     requestAnimationFrame(animateMatrix);
   }
 
-  let lastTime1 = 0;
-
-  function animate(timestamp) {
-    ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-    const deltaTime = timestamp - lastTime1;
-    lastTime1 = timestamp;
-    game.update(deltaTime);
-    game.draw(ctx1);
-    requestAnimationFrame(animate);
-  }
   animateMatrix(0);
   animate(0);
+
+  window.addEventListener('keydown', e => {
+    if (e.key === ' ') {
+      if (game.isPaused === false) game.isPaused = true;
+      else {
+        game.isPaused = false;
+        animate();
+      }
+    }
+  });
 });
+

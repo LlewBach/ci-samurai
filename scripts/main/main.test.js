@@ -59,6 +59,9 @@ describe('Game class', () => {
     expect(game).toHaveProperty('winningScore');
     expect(game).toHaveProperty('health');
     expect(game).toHaveProperty('gameOver');
+    expect(game).toHaveProperty('isPaused');
+    expect(game).toHaveProperty('colour');
+
   });
 
   test('should initialize with Background and Player instances', () => {
@@ -153,18 +156,3 @@ describe('Game class', () => {
     expect(game.gameOver).toBe(true);
   });
 });
-
-// describe('animateMatrix function', () => {
-//   let ctx2, lastTime2, matrix, canvas1;
-//   beforeEach(() => {
-//     canvas1 = { getContext: jest.fn() };
-//     ctx2 = { clearRect: jest.fn() };
-//     lastTime2 = 0;
-//     matrix = { update: jest.fn(), draw: jest.fn() };
-//     animateMatrix(10);
-//   });
-
-//   test('should call .clearRect on ctx1 context', () => {
-//     expect(ctx2.clearRect).toHaveBeenCalled();
-//   });
-// });
