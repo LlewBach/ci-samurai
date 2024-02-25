@@ -3,6 +3,7 @@ import { InputHandler } from '../input/input.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
 import { UI } from '../UI/UI.js';
+import { MatrixRain } from '../matrix/matrix.js';
 
 export class Game {
   constructor(width, height) {
@@ -23,6 +24,7 @@ export class Game {
     this.winningScore = 20;
     this.health = 100;
     this.gameOver = false;
+    this.colour = '#0aff0a';
   }
   update(deltaTime) {
     this.background.update();
@@ -59,26 +61,43 @@ export class Game {
   }
 }
 
+
+
 window.addEventListener('load', function () {
-  // const canvas = document.getElementById('canvas1');
-  const canvas = canvas1;
-  const ctx = canvas.getContext('2d');
-  canvas.width = 800;
-  canvas.height = 500;
+  const canvas1 = document.getElementById('canvas1');
+  const ctx1 = canvas1.getContext('2d');
+  canvas1.width = 800;
+  canvas1.height = 500;
 
-  const game = new Game(canvas.width, canvas.height);
+  const game = new Game(canvas1.width, canvas1.height);
 
-  let lastTime = 0;
+  const canvas2 = document.getElementById('canvas2');
+  const ctx2 = canvas2.getContext('2d');
+  canvas2.width = window.innerWidth;
+  canvas2.height = window.innerHeight;
 
-  function animate(timestamp) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const deltaTime = timestamp - lastTime;
-    lastTime = timestamp;
-    game.update(deltaTime);
-    game.draw(ctx);
-    requestAnimationFrame(animate);
+  const matrix = new MatrixRain(game, canvas2.width, canvas2.height);
+
+  let lastTime2 = 0;
+
+  function animateMatrix(timestamp) {
+    const deltaTime = timestamp - lastTime2;
+    lastTime2 = timestamp;
+    matrix.update(deltaTime);
+    matrix.draw(ctx2);
+    requestAnimationFrame(animateMatrix);
   }
 
-  animate(0);
+  let lastTime1 = 0;
 
+  function animate(timestamp) {
+    ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+    const deltaTime = timestamp - lastTime1;
+    lastTime1 = timestamp;
+    game.update(deltaTime);
+    game.draw(ctx1);
+    requestAnimationFrame(animate);
+  }
+  animateMatrix(0);
+  animate(0);
 });

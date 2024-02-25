@@ -1,4 +1,4 @@
-import { Game } from './main.js';
+import { Game, animateMatrix } from './main.js';
 import { Background } from '../background/background.js';
 import { Player } from '../player/player.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
@@ -153,3 +153,18 @@ describe('Game class', () => {
     expect(game.gameOver).toBe(true);
   });
 });
+
+// describe('animateMatrix function', () => {
+//   let ctx2, lastTime2, matrix, canvas1;
+//   beforeEach(() => {
+//     canvas1 = { getContext: jest.fn() };
+//     ctx2 = { clearRect: jest.fn() };
+//     lastTime2 = 0;
+//     matrix = { update: jest.fn(), draw: jest.fn() };
+//     animateMatrix(10);
+//   });
+
+//   test('should call .clearRect on ctx1 context', () => {
+//     expect(ctx2.clearRect).toHaveBeenCalled();
+//   });
+// });
