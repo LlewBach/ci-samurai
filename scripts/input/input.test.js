@@ -18,6 +18,13 @@ describe('InputHandler', () => {
     window.dispatchEvent(event);
   }
 
+  const simulateTouchEvent = (type, pageY) => {
+    const event = new TouchEvent(type, {
+      changedTouches: [{ pageY: pageY }]
+    });
+    window.dispatchEvent(event);
+  };
+
   test('add ArrowLeft to keys on keydown', () => {
     simulateEvent('keydown', 'ArrowLeft');
     expect(inputHandler.keys).toContain('ArrowLeft');
@@ -35,8 +42,36 @@ describe('InputHandler', () => {
     expect(inputHandler.keys.filter(key => key === 'ArrowLeft').length).toBe(1);
   });
 
-  it('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a', () => {
+  test('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a', () => {
     simulateEvent('keydown', 'p');
     expect(inputHandler.keys).toEqual([]);
+  });
+
+  test('touching screen updates touchY value', () => {
+    simulateTouchEvent('touchstart', '50');
+    expect(inputHandler.touchY).toBe('50');
+  });
+
+  test('swiping further than threshold should push "swipe down" to keys array', () => {
+    simulateTouchEvent('touchstart', '50');
+    simulateTouchEvent('touchmove', '79');
+    expect(inputHandler.keys).not.toContain('swipe down');
+    simulateTouchEvent('touchmove', '81');
+    expect(inputHandler.keys).toContain('swipe down');
+  });
+
+  test('swiping further than threshold should push "swipe up" to keys array', () => {
+    simulateTouchEvent('touchstart', '50');
+    simulateTouchEvent('touchmove', '21');
+    expect(inputHandler.keys).not.toContain('swipe up');
+    simulateTouchEvent('touchmove', '19');
+    expect(inputHandler.keys).toContain('swipe up');
+  });
+
+  test('touchend event should remove touch values from keys array', () => {
+    simulateTouchEvent('touchstart', '50');
+    simulateTouchEvent('touchmove', '81');
+    simulateTouchEvent('touchend', 0);
+    expect(inputHandler.keys).not.toContain('swipe down');
   });
 });

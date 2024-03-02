@@ -70,6 +70,11 @@ describe('Standing State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
+  test('should transition to JUMPING state on swipe up', () => {
+    standingState.handleInput(['swipe up']);
+    expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
+
   test('should correctly transition to ATTACK1 on "a" press or "shift + A"', () => {
     player.facingRight = 1;
     standingState.handleInput(['a']);

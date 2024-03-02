@@ -36,7 +36,7 @@ export class Standing extends State {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
-    } else if (inputKeys.includes('ArrowUp')) {
+    } else if (inputKeys.includes('ArrowUp') || inputKeys.includes('swipe up')) {
       this.player.setState(states.JUMPING);
     } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
