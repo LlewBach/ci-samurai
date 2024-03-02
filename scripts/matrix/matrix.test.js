@@ -105,6 +105,12 @@ describe('MatrixRain Class', () => {
     expect(matrix).toHaveProperty('colour');
   });
 
+  test('should correctly initialize some properties', () => {
+    expect(matrix.canvasWidth).toBe(500);
+    expect(matrix.canvasHeight).toBe(500);
+    expect(matrix.columns).toBe(20);
+  });
+
   test('.initialize should set up each column with a symbol instance', () => {
     matrix.initialize();
     expect(matrix.symbols.length).toBe(matrix.columns);
@@ -145,5 +151,12 @@ describe('MatrixRain Class', () => {
     matrix.symbols.forEach(symbol => {
       expect(symbol.draw).toHaveBeenCalledWith(mockContext);
     });
+  });
+
+  test('.resize should reset necessary property values', () => {
+    matrix.resize(250, 250);
+    expect(matrix.canvasWidth).toBe(250);
+    expect(matrix.canvasHeight).toBe(250);
+    expect(matrix.columns).toBe(10);
   });
 });

@@ -122,5 +122,11 @@ window.addEventListener('load', function () {
       }
     } else if (e.key === 'r' && game.gameOver) game.restart();
   });
+
+  window.addEventListener('resize', e => {
+    canvas2.width = window.innerWidth;
+    canvas2.height = window.innerHeight;
+    matrix.resize(canvas2.width, canvas2.height);
+  });
 });
 

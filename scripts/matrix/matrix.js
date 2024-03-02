@@ -61,4 +61,11 @@ export class MatrixRain {
     context.font = this.fontSize + 'px monospace';
     this.symbols.forEach(symbol => symbol.draw(context));
   }
+  resize(width, height) {
+    this.canvasWidth = width;
+    this.canvasHeight = height;
+    this.columns = this.canvasWidth / this.fontSize;
+    this.symbols = [];
+    this.initialize();
+  }
 }
