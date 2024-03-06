@@ -29,7 +29,7 @@ export class Game {
   update(deltaTime) {
     this.background.update();
     this.player.update(deltaTime);
-    this.addEnemy(deltaTime);
+    // this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
     this.particles.forEach(particle => particle.update());

@@ -36,7 +36,7 @@ export class Standing extends State {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
-    } else if (inputKeys.includes('ArrowUp') || inputKeys.includes('swipe up')) {
+    } else if (inputKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
     } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
@@ -59,7 +59,6 @@ export class Running extends State {
     this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 1;
-
   }
   handleInput(inputKeys) {
     // No horizontal arrow pressed
