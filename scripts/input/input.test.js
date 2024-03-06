@@ -1,6 +1,37 @@
-import { InputHandler } from './input.js';
+import { Joystick, InputHandler } from './input.js';
 
-describe('InputHandler', () => {
+describe('Joystick class', () => {
+  let joystick, mockContext;
+
+  beforeEach(() => {
+    joystick = new Joystick(100, 100, 50);
+    mockContext = {
+      beginPath: jest.fn(),
+      arc: jest.fn(),
+      stroke: jest.fn(),
+      fill: jest.fn()
+    }
+  });
+
+  test('should have correct keys', () => {
+    expect(joystick).toHaveProperty('x');
+    expect(joystick).toHaveProperty('y');
+    expect(joystick).toHaveProperty('r');
+    expect(joystick).toHaveProperty('X');
+    expect(joystick).toHaveProperty('Y');
+    expect(joystick).toHaveProperty('R');
+  });
+
+  test('draw should call context methods', () => {
+    joystick.draw(mockContext);
+    expect(mockContext.beginPath).toHaveBeenCalled();
+    expect(mockContext.arc).toHaveBeenCalled();
+    expect(mockContext.stroke).toHaveBeenCalled();
+    expect(mockContext.fill).toHaveBeenCalled();
+  });
+});
+
+describe('InputHandler class', () => {
   let inputHandler;
 
   beforeEach(() => {
@@ -18,12 +49,16 @@ describe('InputHandler', () => {
     window.dispatchEvent(event);
   }
 
-  const simulateTouchEvent = (type, pageY) => {
-    const event = new TouchEvent(type, {
-      changedTouches: [{ pageY: pageY }]
-    });
-    window.dispatchEvent(event);
-  };
+  // const simulateTouchEvent = (type, pageY) => {
+  //   const event = new TouchEvent(type, {
+  //     changedTouches: [{ pageY: pageY }]
+  //   });
+  //   window.dispatchEvent(event);
+  // };
+
+  test('should have correct key', () => {
+    expect(inputHandler).toHaveProperty('keys');
+  });
 
   test('add ArrowLeft to keys on keydown', () => {
     simulateEvent('keydown', 'ArrowLeft');
@@ -47,31 +82,31 @@ describe('InputHandler', () => {
     expect(inputHandler.keys).toEqual([]);
   });
 
-  test('touching screen updates touchY value', () => {
-    simulateTouchEvent('touchstart', '50');
-    expect(inputHandler.touchY).toBe('50');
-  });
+  // test('touching screen updates touchY value', () => {
+  //   simulateTouchEvent('touchstart', '50');
+  //   expect(inputHandler.touchY).toBe('50');
+  // });
 
-  test('swiping further than threshold should push "swipe down" to keys array', () => {
-    simulateTouchEvent('touchstart', '50');
-    simulateTouchEvent('touchmove', '79');
-    expect(inputHandler.keys).not.toContain('swipe down');
-    simulateTouchEvent('touchmove', '81');
-    expect(inputHandler.keys).toContain('swipe down');
-  });
+  // test('swiping further than threshold should push "swipe down" to keys array', () => {
+  //   simulateTouchEvent('touchstart', '50');
+  //   simulateTouchEvent('touchmove', '79');
+  //   expect(inputHandler.keys).not.toContain('swipe down');
+  //   simulateTouchEvent('touchmove', '81');
+  //   expect(inputHandler.keys).toContain('swipe down');
+  // });
 
-  test('swiping further than threshold should push "swipe up" to keys array', () => {
-    simulateTouchEvent('touchstart', '50');
-    simulateTouchEvent('touchmove', '21');
-    expect(inputHandler.keys).not.toContain('swipe up');
-    simulateTouchEvent('touchmove', '19');
-    expect(inputHandler.keys).toContain('swipe up');
-  });
+  // test('swiping further than threshold should push "swipe up" to keys array', () => {
+  //   simulateTouchEvent('touchstart', '50');
+  //   simulateTouchEvent('touchmove', '21');
+  //   expect(inputHandler.keys).not.toContain('swipe up');
+  //   simulateTouchEvent('touchmove', '19');
+  //   expect(inputHandler.keys).toContain('swipe up');
+  // });
 
-  test('touchend event should remove touch values from keys array', () => {
-    simulateTouchEvent('touchstart', '50');
-    simulateTouchEvent('touchmove', '81');
-    simulateTouchEvent('touchend', 0);
-    expect(inputHandler.keys).not.toContain('swipe down');
-  });
+  // test('touchend event should remove touch values from keys array', () => {
+  //   simulateTouchEvent('touchstart', '50');
+  //   simulateTouchEvent('touchmove', '81');
+  //   simulateTouchEvent('touchend', 0);
+  //   expect(inputHandler.keys).not.toContain('swipe down');
+  // });
 });

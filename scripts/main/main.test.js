@@ -1,10 +1,14 @@
 import { Game, animateMatrix } from './main.js';
 import { Background } from '../background/background.js';
+import { Joystick, InputHandler } from '../input/input.js';
+import { UI } from '../UI/UI.js';
 import { Player } from '../player/player.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 
 // Mock dependencies
 jest.mock('../background/background.js');
+jest.mock('../input/input.js');
+jest.mock('../UI/UI.js');
 jest.mock('../player/player.js');
 jest.mock('../enemies/enemies.js');
 // jest.mock('../enemies/enemies.js', () => ({
@@ -35,6 +39,14 @@ describe('Game class', () => {
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: false },
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: true }
     ];
+    mockContext = {
+      drawImage: jest.fn(),
+      fillText: jest.fn(),
+      beginPath: jest.fn(),
+      arc: jest.fn(),
+      stroke: jest.fn(),
+      fill: jest.fn()
+    };
   });
 
   test('should create an instance of Game', () => {
@@ -49,6 +61,9 @@ describe('Game class', () => {
     expect(game).toHaveProperty('groundMargin');
     expect(game).toHaveProperty('speed');
     expect(game).toHaveProperty('background');
+    expect(game).toHaveProperty('joystick');
+    expect(game).toHaveProperty('input');
+    expect(game).toHaveProperty('UI');
     expect(game).toHaveProperty('player');
     expect(game).toHaveProperty('particles');
     expect(game).toHaveProperty('floatingText');
@@ -64,8 +79,16 @@ describe('Game class', () => {
 
   test('should initialize with Background and Player instances', () => {
     expect(game.background).toBeInstanceOf(Background);
+    expect(game.joystick).toBeInstanceOf(Joystick);
+    expect(game.input).toBeInstanceOf(InputHandler);
+    expect(game.UI).toBeInstanceOf(UI);
     expect(game.player).toBeInstanceOf(Player);
+  });
+
+  test('class instances should initialize correctly', () => {
     expect(Background).toHaveBeenCalledWith(game);
+    expect(Joystick).toHaveBeenCalledWith(90, 200, 50);
+    expect(UI).toHaveBeenCalledWith(game);
     expect(Player).toHaveBeenCalledWith(game);
   });
 
@@ -101,11 +124,11 @@ describe('Game class', () => {
     expect(game.floatingText.some(message => message.markedForDeletion)).toBe(false);
   });
 
-  test('.draw should call draw on background, player, particles, floatingText and enemies arrays', () => {
-    mockContext = { drawImage: jest.fn(), fillText: jest.fn() };
+  test('.draw should call draw method on correct game properties', () => {
     game.background.draw = jest.fn();
     game.player.draw = jest.fn();
     game.UI.draw = jest.fn();
+    game.joystick.draw = jest.fn();
     game.draw(mockContext);
 
     expect(game.background.draw).toHaveBeenCalledWith(mockContext);
@@ -120,6 +143,7 @@ describe('Game class', () => {
       expect(message.draw).toHaveBeenCalledWith(mockContext);
     });
     expect(game.UI.draw).toHaveBeenCalledWith(mockContext);
+    expect(game.joystick.draw).toHaveBeenCalledWith(mockContext);
   });
 
   test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {
