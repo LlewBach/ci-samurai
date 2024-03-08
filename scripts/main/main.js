@@ -6,13 +6,13 @@ import { UI } from '../UI/UI.js';
 import { MatrixRain } from '../matrix/matrix.js';
 
 export class Game {
-  constructor(width, height) {
+  constructor(width, height, canvas) {
     this.width = width;
     this.height = height;
     this.groundMargin = 90;
     this.speed = 0;
     this.background = new Background(this);
-    this.joystick = new Joystick(90, this.height / 3, 50);
+    this.joystick = new Joystick(90, this.height / 3, 50, canvas);
     this.input = new InputHandler();
     this.UI = new UI(this);
     this.player = new Player(this);
@@ -82,7 +82,7 @@ window.addEventListener('load', function () {
   canvas1.width = 800;
   canvas1.height = 500;
 
-  const game = new Game(canvas1.width, canvas1.height);
+  const game = new Game(canvas1.width, canvas1.height, canvas1);
 
   let lastTime1 = 0;
 
@@ -92,6 +92,9 @@ window.addEventListener('load', function () {
     lastTime1 = timestamp;
     game.update(deltaTime);
     game.draw(ctx1);
+    // debugging
+    ctx1.strokeStyle = 'black';
+    ctx1.strokeRect(0, 0, 90, 300);
     if (!game.isPaused) requestAnimationFrame(animate);
   }
 

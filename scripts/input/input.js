@@ -1,11 +1,58 @@
 export class Joystick {
-  constructor(x, y, r) {
+  constructor(x, y, r, canvas) {
     this.x = x;
     this.y = y;
     this.r = r;
     this.X = x;
     this.Y = y;
-    this.R = r + 30;
+    this.R = (r + 30);
+    this.pressed = false;
+    this.scaledX = 0;
+    this.scaledY = 0;
+    this.addListeners(canvas);
+  }
+  addListeners(canvas) {
+    const translateCoords = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      // Canvas border has width 5px
+      const scale = (rect.width - 10) / canvas.width;
+      const actualX = e.changedTouches[0].clientX - rect.left - 5;
+      const actualY = e.changedTouches[0].clientY - rect.top - 5;
+      this.scaledX = actualX / scale;
+      this.scaledY = actualY / scale;
+
+      console.log('actualX: ' + actualX, 'actualY: ' + actualY);
+      console.log('scale: ' + scale);
+      console.log('scaledX: ' + this.scaledX);
+      console.log('scaledY: ' + this.scaledY);
+    };
+
+    canvas.addEventListener('touchstart', e => {
+      translateCoords(e);
+      if (
+        this.scaledX > (this.X - this.r) &&
+        this.scaledX < (this.X + this.r) &&
+        this.scaledY > (this.Y - this.r) &&
+        this.scaledY < (this.Y + this.r)
+      ) {
+        this.pressed = true;
+        this.x = this.scaledX;
+        this.y = this.scaledY;
+      }
+    });
+
+    canvas.addEventListener('touchmove', e => {
+      if (this.pressed) {
+        translateCoords(e);
+        this.x = this.scaledX;
+        this.y = this.scaledY;
+      }
+    });
+    canvas.addEventListener('touchend', () => {
+      this.pressed = false;
+      this.x = this.X;
+      this.y = this.Y;
+    });
   }
   draw(context) {
     // Outer circle

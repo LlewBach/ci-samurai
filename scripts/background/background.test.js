@@ -1,4 +1,3 @@
-import { Game } from '../main/main.js';
 import { Layer, Background } from './background';
 
 describe('Layer class', () => {
@@ -8,7 +7,11 @@ describe('Layer class', () => {
   let mockContext;
 
   beforeEach(() => {
-    game = new Game(800, 600);
+    game = {
+      width: 800,
+      height: 600,
+      speed: 0,
+    };
     layer = new Layer(game, 3199, 943, mockImage, 1);
     mockContext = { drawImage: jest.fn() };
   });
@@ -71,7 +74,10 @@ describe('Background class', () => {
   let mockContext;
 
   beforeEach(() => {
-    game = new Game(800, 600);
+    game = {
+      width: 800,
+      height: 600,
+    };
     background = new Background(game);
   });
 

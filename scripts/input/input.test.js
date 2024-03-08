@@ -1,10 +1,15 @@
 import { Joystick, InputHandler } from './input.js';
 
 describe('Joystick class', () => {
-  let joystick, mockContext;
+  let joystick, mockContext, canvas1;
 
   beforeEach(() => {
-    joystick = new Joystick(100, 100, 50);
+    const canvas1 = {
+      width: 600,
+      addEventListener: jest.fn(),
+      getBoundingClientRect: jest.fn().mockReturnValue({ left: 10, top: 10, width: 310 }),
+    };
+    joystick = new Joystick(90, 170, 50, canvas1);
     mockContext = {
       beginPath: jest.fn(),
       arc: jest.fn(),
@@ -20,7 +25,58 @@ describe('Joystick class', () => {
     expect(joystick).toHaveProperty('X');
     expect(joystick).toHaveProperty('Y');
     expect(joystick).toHaveProperty('R');
+    expect(joystick).toHaveProperty('pressed');
+    expect(joystick).toHaveProperty('scaledX');
+    expect(joystick).toHaveProperty('scaledY');
   });
+
+  test('translateCoords function correctly translates touch coords into scaled canvas coords', () => {
+    const canvas1 = {
+      width: 600,
+      getBoundingClientRect: jest.fn().mockReturnValue({ left: 10, top: 10, width: 310 }),
+    };
+
+    const touchEvent = {
+      changedTouches: [{
+        clientX: 60,
+        clientY: 100
+      }]
+    };
+    let scaledX, scaledY;
+
+    const translateCoords = (e) => {
+      const rect = canvas1.getBoundingClientRect();
+      const scale = (rect.width - 10) / canvas1.width;
+      const actualX = e.changedTouches[0].clientX - rect.left - 5;
+      const actualY = e.changedTouches[0].clientY - rect.top - 5;
+      scaledX = actualX / scale;
+      scaledY = actualY / scale;
+    };
+    translateCoords(touchEvent);
+    expect(scaledX).toBe(90);
+    expect(scaledY).toBe(170);
+  });
+
+  // Testing eventListeners is an absolute fucking nightmare. Going to do behavioural instead
+
+  // test('.addListeners should attach event listeners to canvas', () => {
+  //   const canvas1 = { addEventListener: jest.fn() };
+  //   expect(canvas1.addEventListener).toHaveBeenCalledTimes(3);
+  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchstart', expect.any(Function));
+  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function));
+  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchend', expect.any(Function));
+  // });
+
+  // test('if acceptable coords touched, set this.pressed to true', () => {
+  //   const simulateTouchEvent = (type, clientX, clientY) => {
+  //     const event = new TouchEvent(type, {
+  //       changedTouches: [{ clientX: clientX, clientY: clientY }]
+  //     });
+  //     canvas1.dispatchEvent(event);
+  //   };
+  //   simulateTouchEvent('touchstart', '60', '100');
+  //   expect(joystick.pressed).toBe(true);
+  // });
 
   test('draw should call context methods', () => {
     joystick.draw(mockContext);

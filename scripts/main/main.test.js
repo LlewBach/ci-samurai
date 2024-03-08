@@ -21,12 +21,12 @@ jest.mock('../enemies/enemies.js');
 // });
 
 describe('Game class', () => {
-  let game;
-  let mockContext;
+  let game, mockContext, canvas1;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    game = new Game(800, 600);
+    canvas1 = {};
+    game = new Game(800, 600, canvas1);
     game.enemies = [
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: false },
       { update: jest.fn(), draw: jest.fn(), markedForDeletion: true }
@@ -87,7 +87,7 @@ describe('Game class', () => {
 
   test('class instances should initialize correctly', () => {
     expect(Background).toHaveBeenCalledWith(game);
-    expect(Joystick).toHaveBeenCalledWith(90, 200, 50);
+    expect(Joystick).toHaveBeenCalledWith(90, 200, 50, canvas1);
     expect(UI).toHaveBeenCalledWith(game);
     expect(Player).toHaveBeenCalledWith(game);
   });

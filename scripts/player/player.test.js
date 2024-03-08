@@ -1,4 +1,3 @@
-import { Game } from '../main/main.js';
 import { Player } from './player.js';
 import { Standing, Running } from '../playerStates/playerStates.js';
 
@@ -11,7 +10,19 @@ describe('Player class', () => {
 
   beforeEach(() => {
     canvas1 = { getContext: jest.fn() };
-    game = new Game(800, 600);
+    game = {
+      width: 800,
+      height: 600,
+      groundMargin: 90,
+      score: 0,
+      winningScore: 20,
+      health: 100,
+      gameOver: false,
+      enemies: [],
+      input: {
+        keys: []
+      }
+    };
     player = new Player(game);
     mockContext = {
       drawImage: jest.fn(),
