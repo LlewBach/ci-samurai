@@ -5,10 +5,11 @@ export class Joystick {
     this.r = r;
     this.X = x;
     this.Y = y;
-    this.R = (r + 30);
+    this.R = r + 30;
     this.pressed = false;
     this.scaledX = 0;
     this.scaledY = 0;
+    this.angleRadians = 0;
     this.addListeners(canvas);
   }
   addListeners(canvas) {
@@ -53,6 +54,36 @@ export class Joystick {
       this.x = this.X;
       this.y = this.Y;
     });
+  }
+  update() {
+    const xDistance = this.x - this.X;
+    const yDistance = this.y - this.Y;
+    const mouseDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+    this.angleRadians = Math.atan2(yDistance, xDistance);
+    // console.log('angleRadians: ' + this.angleRadians);
+
+    if (mouseDistance > this.R) {
+      if (this.angleRadians > -Math.PI / 8 && this.angleRadians <= Math.PI / 8) {
+        this.angleRadians = 0;
+      } else if (this.angleRadians > (-Math.PI * 3) / 8 && this.angleRadians <= -Math.PI / 8) {
+        this.angleRadians = -Math.PI / 4;
+      } else if (this.angleRadians > (-Math.PI * 5) / 8 && this.angleRadians <= (-Math.PI * 3) / 8) {
+        this.angleRadians = -Math.PI / 2;
+      } else if (this.angleRadians > (-Math.PI * 7) / 8 && this.angleRadians <= -Math.PI * 5 / 8) {
+        this.angleRadians = -Math.PI * 3 / 4;
+      } else if (this.angleRadians > Math.PI * 7 / 8 || this.angleRadians <= -Math.PI * 7 / 8) {
+        this.angleRadians = Math.PI;
+      } else if (this.angleRadians > Math.PI * 5 / 8 && this.angleRadians <= Math.PI * 7 / 8) {
+        this.angleRadians = Math.PI * 3 / 4;
+      } else if (this.angleRadians > Math.PI * 3 / 8 && this.angleRadians <= Math.PI * 5 / 8) {
+        this.angleRadians = Math.PI / 2;
+      } else {
+        this.angleRadians = Math.PI / 4;
+      }
+
+      this.x = this.X + Math.cos(this.angleRadians) * this.R;
+      this.y = this.Y + Math.sin(this.angleRadians) * this.R;
+    }
   }
   draw(context) {
     // Outer circle

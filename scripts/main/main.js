@@ -29,6 +29,7 @@ export class Game {
   }
   update(deltaTime) {
     this.background.update();
+    this.joystick.update();
     this.player.update(deltaTime);
     // this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));

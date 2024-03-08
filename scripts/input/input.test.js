@@ -78,7 +78,48 @@ describe('Joystick class', () => {
   //   expect(joystick.pressed).toBe(true);
   // });
 
-  test('draw should call context methods', () => {
+  test('.update should snap joystick to set increments if mouseDistance beyond joystick perimeter', () => {
+    joystick.x = joystick.X + 20;
+    joystick.y = joystick.Y - 15;
+    joystick.update();
+    expect(joystick.angleRadians).not.toBe(-Math.PI / 4);
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y + 1;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(0);
+    expect(joystick.x).toBe(joystick.X + Math.cos(joystick.angleRadians) * joystick.R);
+    expect(joystick.y).toBe(joystick.Y + Math.sin(joystick.angleRadians) * joystick.R);
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y - 80;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(-Math.PI / 4);
+    joystick.x = joystick.X + 1;
+    joystick.y = joystick.Y - 81;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(-Math.PI / 2);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y - 80;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(-Math.PI * 3 / 4);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y - 1;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(Math.PI);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y + 80;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(Math.PI * 3 / 4);
+    joystick.x = joystick.X - 1;
+    joystick.y = joystick.Y + 81;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(Math.PI / 2);
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y + 80;
+    joystick.update();
+    expect(joystick.angleRadians).toBe(Math.PI / 4);
+  });
+
+  test('.draw should call context methods', () => {
     joystick.draw(mockContext);
     expect(mockContext.beginPath).toHaveBeenCalled();
     expect(mockContext.arc).toHaveBeenCalled();

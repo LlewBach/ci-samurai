@@ -92,10 +92,11 @@ describe('Game class', () => {
     expect(Player).toHaveBeenCalledWith(game);
   });
 
-  test('.update should call .update on background, player, particles and enemies array', () => {
+  test('.update should call .update on background, joystick, player, particles and enemies array', () => {
     const deltaTime = 16; // The average value
     game.update(deltaTime);
     expect(game.background.update).toHaveBeenCalled();
+    expect(game.joystick.update).toHaveBeenCalled();
     expect(game.player.update).toHaveBeenCalledWith(deltaTime);
     game.enemies.forEach(enemy => {
       expect(enemy.update).toHaveBeenCalledWith(deltaTime);
