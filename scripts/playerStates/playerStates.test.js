@@ -158,8 +158,13 @@ describe('Running State', () => {
     expect(player.speed).toBe(player.maxSpeed);
   });
 
-  test('should transition to JUMPING state on ArrowUp press', () => {
+  test('should transition to JUMPING state on ArrowUp key press', () => {
     runningState.handleInput(['ArrowUp'], []);
+    expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+  });
+
+  test('should transition to JUMPING state on ArrowUp joystick move', () => {
+    runningState.handleInput([], ['ArrowUp']);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
@@ -222,19 +227,25 @@ describe('Falling State', () => {
 
   test('should transition to STANDING if player.onGround() and no horizontal arrow pressed', () => {
     player.onGround.mockReturnValue(true);
-    fallingState.handleInput([]);
+    fallingState.handleInput([], []);
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 
   test('should transition to RUNNING if player.onGround() and a horizontal arrow pressed', () => {
     player.onGround.mockReturnValue(true);
-    fallingState.handleInput(['ArrowRight']);
+    fallingState.handleInput(['ArrowRight'], []);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 
-  test('should transition to ROLLING if player.onGround() and ArrowDown is pressed', () => {
+  test('should transition to ROLLING if player.onGround() and ArrowDown key is pressed', () => {
     player.onGround.mockReturnValue(true);
-    fallingState.handleInput(['ArrowDown']);
+    fallingState.handleInput(['ArrowDown'], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ROLLING);
+  });
+
+  test('should transition to ROLLING if player.onGround() and ArrowDown joystick move', () => {
+    player.onGround.mockReturnValue(true);
+    fallingState.handleInput([], ['ArrowDown']);
     expect(player.setState).toHaveBeenCalledWith(states.ROLLING);
   });
 });
@@ -248,31 +259,40 @@ describe('Rolling State', () => {
   });
 
   test('should configure some player properties on .enter()', () => {
-    // rollingState.enter();
     expect(player.maxFrame).toBe(7);
     expect(player.frameY).toBe(6);
   });
 
-  test('should change player.speed from 0 if landing vertically', () => {
+  test('should roll left if landing straight down and ArrowLeft key pressed', () => {
     player.speed = 0;
-    rollingState.handleInput(['ArrowLeft']);
+    rollingState.handleInput(['ArrowLeft'], []);
+    expect(player.speed).toBe(-player.maxSpeed);
+  });
+
+  test('should roll left if landing straight down and ArrowLeft joystick move', () => {
+    player.speed = 0;
+    rollingState.handleInput([], ['ArrowLeft']);
     expect(player.speed).toBe(-player.maxSpeed);
   });
 
   test('should transition to STANDING if frameX === maxFrame && no horizontal arrow pressed', () => {
-    // rollingState.enter();
     player.frameX = player.maxFrame - 1;
-    rollingState.handleInput([]);
+    rollingState.handleInput([], []);
     expect(player.setState).not.toHaveBeenCalled();
     player.frameX = player.maxFrame;
-    rollingState.handleInput([]);
+    rollingState.handleInput([], []);
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 
-  test('should transition to RUNNING if frameX === maxFrame && a horizontal arrow pressed', () => {
-    // rollingState.enter();
+  test('should transition to RUNNING if frameX === maxFrame && a horizontal arrow key pressed', () => {
     player.frameX = player.maxFrame;
-    rollingState.handleInput(['ArrowRight']);
+    rollingState.handleInput(['ArrowRight'], []);
+    expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
+  });
+
+  test('should transition to RUNNING if frameX === maxFrame && a horizontal joystick move', () => {
+    player.frameX = player.maxFrame;
+    rollingState.handleInput([], ['ArrowRight']);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 });

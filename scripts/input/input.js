@@ -23,10 +23,10 @@ export class Joystick {
       this.scaledX = actualX / scale;
       this.scaledY = actualY / scale;
 
-      console.log('actualX: ' + actualX, 'actualY: ' + actualY);
-      console.log('scale: ' + scale);
-      console.log('scaledX: ' + this.scaledX);
-      console.log('scaledY: ' + this.scaledY);
+      // console.log('actualX: ' + actualX, 'actualY: ' + actualY);
+      // console.log('scale: ' + scale);
+      // console.log('scaledX: ' + this.scaledX);
+      // console.log('scaledY: ' + this.scaledY);
     };
 
     canvas.addEventListener('touchstart', e => {
@@ -62,6 +62,7 @@ export class Joystick {
     const mouseDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
     this.angleRadians = Math.atan2(yDistance, xDistance);
     // console.log('angleRadians: ' + this.angleRadians);
+    this.keys = [];
 
     if (mouseDistance >= this.R) {
       if (this.angleRadians > -Math.PI / 8 && this.angleRadians <= Math.PI / 8) {
@@ -75,20 +76,24 @@ export class Joystick {
         this.keys.push('ArrowUp');
       } else if (this.angleRadians > (-Math.PI * 7) / 8 && this.angleRadians <= -Math.PI * 5 / 8) {
         this.angleRadians = -Math.PI * 3 / 4;
+        this.keys.push('ArrowLeft', 'ArrowUp');
       } else if (this.angleRadians > Math.PI * 7 / 8 || this.angleRadians <= -Math.PI * 7 / 8) {
         this.angleRadians = Math.PI;
         this.keys.push('ArrowLeft');
       } else if (this.angleRadians > Math.PI * 5 / 8 && this.angleRadians <= Math.PI * 7 / 8) {
         this.angleRadians = Math.PI * 3 / 4;
+        this.keys.push('ArrowLeft', 'ArrowDown');
       } else if (this.angleRadians > Math.PI * 3 / 8 && this.angleRadians <= Math.PI * 5 / 8) {
         this.angleRadians = Math.PI / 2;
+        this.keys.push('ArrowDown');
       } else {
         this.angleRadians = Math.PI / 4;
+        this.keys.push('ArrowRight', 'ArrowDown');
       }
 
       this.x = this.X + Math.cos(this.angleRadians) * this.R;
       this.y = this.Y + Math.sin(this.angleRadians) * this.R;
-    } else this.keys = [];
+    }
   }
   draw(context) {
     // Outer circle

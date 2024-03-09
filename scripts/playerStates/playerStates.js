@@ -74,7 +74,7 @@ export class Running extends State {
       this.player.speed = this.player.maxSpeed;
     }
     // ArrowUp pressed
-    if (inputKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
+    if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
     // Attack buttons
     else if (inputKeys.includes('a') || inputKeys.includes('A')) this.player.setState(states.ATTACK1);
     else if (inputKeys.includes('s') || inputKeys.includes('S')) this.player.setState(states.ATTACK2);
@@ -106,8 +106,8 @@ export class Falling extends State {
     this.player.maxFrame = 2;
     this.player.frameY = 3;
   }
-  handleInput(inputKeys) {
-    if (this.player.onGround() && inputKeys.includes('ArrowDown')) this.player.setState(states.ROLLING);
+  handleInput(inputKeys, joystickKeys) {
+    if (this.player.onGround() && (inputKeys.includes('ArrowDown') || joystickKeys.includes('ArrowDown'))) this.player.setState(states.ROLLING);
     else if (this.player.onGround() && (inputKeys.includes('ArrowRight') || inputKeys.includes('ArrowLeft'))) this.player.setState(states.RUNNING);
     else if (this.player.onGround()) this.player.setState(states.STANDING);
   }
@@ -122,17 +122,17 @@ export class Rolling extends State {
     this.player.maxFrame = 7;
     this.player.frameY = 6;
   }
-  handleInput(inputKeys) {
+  handleInput(inputKeys, joystickKeys) {
     if (this.player.speed === 0) {
-      if (inputKeys.includes('ArrowLeft')) {
+      if (inputKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowLeft')) {
         this.player.facingRight = -1;
         this.player.speed = -this.player.maxSpeed;
       } else {
         this.player.speed = this.player.maxSpeed;
       }
     }
-    if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
-    else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
+    if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight') && !joystickKeys.includes('ArrowLeft') && !joystickKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
+    else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
   }
 }
 

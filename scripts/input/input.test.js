@@ -134,29 +134,29 @@ describe('Joystick class', () => {
     joystick.y = joystick.Y - 81;
     joystick.update();
     expect(joystick.keys).toContain('ArrowUp');
-    // joystick.x = joystick.X - 81;
-    // joystick.y = joystick.Y - 80;
-    // joystick.update();
-    // expect(joystick.angleRadians).toBe(-Math.PI * 3 / 4);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y - 80;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowLeft', 'ArrowUp');
     joystick.x = joystick.X - 81;
     joystick.y = joystick.Y - 1;
     joystick.update();
     expect(joystick.keys).toContain('ArrowLeft');
-    // joystick.x = joystick.X - 81;
-    // joystick.y = joystick.Y + 80;
-    // joystick.update();
-    // expect(joystick.angleRadians).toBe(Math.PI * 3 / 4);
-    // joystick.x = joystick.X - 1;
-    // joystick.y = joystick.Y + 81;
-    // joystick.update();
-    // expect(joystick.angleRadians).toBe(Math.PI / 2);
-    // joystick.x = joystick.X + 81;
-    // joystick.y = joystick.Y + 80;
-    // joystick.update();
-    // expect(joystick.angleRadians).toBe(Math.PI / 4);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y + 80;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowLeft', 'ArrowDown');
+    joystick.x = joystick.X - 1;
+    joystick.y = joystick.Y + 81;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowDown');
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y + 80;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowRight', 'ArrowDown');
   });
 
-  test('.update should empty keys array if mouseDistance less than this.R', () => {
+  test('.update should empty keys array each time it runs', () => {
     joystick.keys = ['ArrowRight'];
     joystick.x = joystick.X + 20;
     joystick.y = joystick.Y - 15;
