@@ -19,6 +19,7 @@ describe('Joystick class', () => {
   });
 
   test('should have correct keys', () => {
+    expect(joystick).toHaveProperty('keys');
     expect(joystick).toHaveProperty('x');
     expect(joystick).toHaveProperty('y');
     expect(joystick).toHaveProperty('r');
@@ -117,6 +118,50 @@ describe('Joystick class', () => {
     joystick.y = joystick.Y + 80;
     joystick.update();
     expect(joystick.angleRadians).toBe(Math.PI / 4);
+  });
+
+  test('.update should push correct keys to the keys array under correct conditions', () => {
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y + 1;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowRight');
+    joystick.x = joystick.X + 81;
+    joystick.y = joystick.Y - 80;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowRight');
+    expect(joystick.keys).toContain('ArrowUp');
+    joystick.x = joystick.X + 1;
+    joystick.y = joystick.Y - 81;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowUp');
+    // joystick.x = joystick.X - 81;
+    // joystick.y = joystick.Y - 80;
+    // joystick.update();
+    // expect(joystick.angleRadians).toBe(-Math.PI * 3 / 4);
+    joystick.x = joystick.X - 81;
+    joystick.y = joystick.Y - 1;
+    joystick.update();
+    expect(joystick.keys).toContain('ArrowLeft');
+    // joystick.x = joystick.X - 81;
+    // joystick.y = joystick.Y + 80;
+    // joystick.update();
+    // expect(joystick.angleRadians).toBe(Math.PI * 3 / 4);
+    // joystick.x = joystick.X - 1;
+    // joystick.y = joystick.Y + 81;
+    // joystick.update();
+    // expect(joystick.angleRadians).toBe(Math.PI / 2);
+    // joystick.x = joystick.X + 81;
+    // joystick.y = joystick.Y + 80;
+    // joystick.update();
+    // expect(joystick.angleRadians).toBe(Math.PI / 4);
+  });
+
+  test('.update should empty keys array if mouseDistance less than this.R', () => {
+    joystick.keys = ['ArrowRight'];
+    joystick.x = joystick.X + 20;
+    joystick.y = joystick.Y - 15;
+    joystick.update();
+    expect(joystick.keys.length).toBe(0);
   });
 
   test('.draw should call context methods', () => {

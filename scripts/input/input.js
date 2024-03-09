@@ -1,5 +1,6 @@
 export class Joystick {
   constructor(x, y, r, canvas) {
+    this.keys = [];
     this.x = x;
     this.y = y;
     this.r = r;
@@ -62,17 +63,21 @@ export class Joystick {
     this.angleRadians = Math.atan2(yDistance, xDistance);
     // console.log('angleRadians: ' + this.angleRadians);
 
-    if (mouseDistance > this.R) {
+    if (mouseDistance >= this.R) {
       if (this.angleRadians > -Math.PI / 8 && this.angleRadians <= Math.PI / 8) {
         this.angleRadians = 0;
+        this.keys.push('ArrowRight');
       } else if (this.angleRadians > (-Math.PI * 3) / 8 && this.angleRadians <= -Math.PI / 8) {
         this.angleRadians = -Math.PI / 4;
+        this.keys.push('ArrowRight', 'ArrowUp');
       } else if (this.angleRadians > (-Math.PI * 5) / 8 && this.angleRadians <= (-Math.PI * 3) / 8) {
         this.angleRadians = -Math.PI / 2;
+        this.keys.push('ArrowUp');
       } else if (this.angleRadians > (-Math.PI * 7) / 8 && this.angleRadians <= -Math.PI * 5 / 8) {
         this.angleRadians = -Math.PI * 3 / 4;
       } else if (this.angleRadians > Math.PI * 7 / 8 || this.angleRadians <= -Math.PI * 7 / 8) {
         this.angleRadians = Math.PI;
+        this.keys.push('ArrowLeft');
       } else if (this.angleRadians > Math.PI * 5 / 8 && this.angleRadians <= Math.PI * 7 / 8) {
         this.angleRadians = Math.PI * 3 / 4;
       } else if (this.angleRadians > Math.PI * 3 / 8 && this.angleRadians <= Math.PI * 5 / 8) {
@@ -83,7 +88,7 @@ export class Joystick {
 
       this.x = this.X + Math.cos(this.angleRadians) * this.R;
       this.y = this.Y + Math.sin(this.angleRadians) * this.R;
-    }
+    } else this.keys = [];
   }
   draw(context) {
     // Outer circle

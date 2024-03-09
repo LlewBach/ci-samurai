@@ -31,12 +31,12 @@ export class Standing extends State {
     this.player.facingRight = 1;
     this.player.speed = 0;
   }
-  handleInput(inputKeys) {
-    if (inputKeys.includes('ArrowLeft')) {
+  handleInput(inputKeys, joystickKeys) {
+    if (inputKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowLeft')) {
       this.player.setState(states.RUNNING);
-    } else if (inputKeys.includes('ArrowRight')) {
+    } else if (inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
-    } else if (inputKeys.includes('ArrowUp')) {
+    } else if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
     } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
@@ -60,16 +60,16 @@ export class Running extends State {
     this.player.maxFrame = 7;
     this.player.frameY = 1;
   }
-  handleInput(inputKeys) {
+  handleInput(inputKeys, joystickKeys) {
     // No horizontal arrow pressed
-    if (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight')) {
+    if (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight') && !joystickKeys.includes('ArrowLeft') && !joystickKeys.includes('ArrowRight')) {
       this.player.setState(states.STANDING);
     }
     // One horizontal arrow pressed
-    if (inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight')) {
+    if ((inputKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowLeft')) && !inputKeys.includes('ArrowRight')) {
       this.player.facingRight = -1;
       this.player.speed = -this.player.maxSpeed;
-    } else if (inputKeys.includes('ArrowRight') && !inputKeys.includes('ArrowLeft')) {
+    } else if ((inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowRight')) && !inputKeys.includes('ArrowLeft')) {
       this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
     }
