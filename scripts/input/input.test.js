@@ -1,7 +1,39 @@
-import { Joystick, InputHandler } from './input.js';
+import { ControlPad, Joystick, InputHandler } from './input.js';
+
+describe('ControlPad class', () => {
+  let controlPad, mockCanvas, mockContext;
+
+  beforeEach(() => {
+    mockCanvas = {};
+    controlPad = new ControlPad(200, 200, mockCanvas);
+    mockContext = {
+      beginPath: jest.fn(),
+      arc: jest.fn(),
+      stroke: jest.fn(),
+      fill: jest.fn(),
+      fillText: jest.fn(),
+    };
+  });
+
+  test('should have correct keys', () => {
+    expect(controlPad).toHaveProperty('x');
+    expect(controlPad).toHaveProperty('y');
+    expect(controlPad).toHaveProperty('r');
+  });
+
+  test('.draw should correctly call context methods', () => {
+    controlPad.draw(mockContext);
+    expect(mockContext.beginPath).toHaveBeenCalledTimes(6);
+    expect(mockContext.arc).toHaveBeenCalledTimes(6);
+    expect(mockContext.arc).toHaveBeenCalledTimes(6);
+    expect(mockContext.stroke).toHaveBeenCalledTimes(3);
+    expect(mockContext.fill).toHaveBeenCalledTimes(3);
+    expect(mockContext.fillText).toHaveBeenCalledTimes(3);
+  });
+});
 
 describe('Joystick class', () => {
-  let joystick, mockContext, canvas1;
+  let joystick, mockContext;
 
   beforeEach(() => {
     const canvas1 = {
@@ -9,7 +41,7 @@ describe('Joystick class', () => {
       addEventListener: jest.fn(),
       getBoundingClientRect: jest.fn().mockReturnValue({ left: 10, top: 10, width: 310 }),
     };
-    joystick = new Joystick(90, 170, 50, canvas1);
+    joystick = new Joystick(90, 170, canvas1);
     mockContext = {
       beginPath: jest.fn(),
       arc: jest.fn(),

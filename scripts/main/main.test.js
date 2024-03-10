@@ -1,4 +1,4 @@
-import { Game, animateMatrix } from './main.js';
+import { Game } from './main.js';
 import { Background } from '../background/background.js';
 import { Joystick, InputHandler } from '../input/input.js';
 import { UI } from '../UI/UI.js';
@@ -62,6 +62,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('speed');
     expect(game).toHaveProperty('background');
     expect(game).toHaveProperty('joystick');
+    expect(game).toHaveProperty('controlPad');
     expect(game).toHaveProperty('input');
     expect(game).toHaveProperty('UI');
     expect(game).toHaveProperty('player');
@@ -87,7 +88,7 @@ describe('Game class', () => {
 
   test('class instances should initialize correctly', () => {
     expect(Background).toHaveBeenCalledWith(game);
-    expect(Joystick).toHaveBeenCalledWith(90, 200, 50, canvas1);
+    expect(Joystick).toHaveBeenCalledWith(90, 200, canvas1);
     expect(UI).toHaveBeenCalledWith(game);
     expect(Player).toHaveBeenCalledWith(game);
   });
@@ -130,6 +131,7 @@ describe('Game class', () => {
     game.player.draw = jest.fn();
     game.UI.draw = jest.fn();
     game.joystick.draw = jest.fn();
+    game.controlPad.draw = jest.fn();
     game.draw(mockContext);
 
     expect(game.background.draw).toHaveBeenCalledWith(mockContext);
@@ -145,6 +147,7 @@ describe('Game class', () => {
     });
     expect(game.UI.draw).toHaveBeenCalledWith(mockContext);
     expect(game.joystick.draw).toHaveBeenCalledWith(mockContext);
+    expect(game.controlPad.draw).toHaveBeenCalledWith(mockContext);
   });
 
   test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {

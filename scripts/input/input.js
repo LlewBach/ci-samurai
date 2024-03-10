@@ -1,12 +1,79 @@
-export class Joystick {
-  constructor(x, y, r, canvas) {
+export class ControlPad {
+  constructor(x, y, canvas) {
     this.keys = [];
     this.x = x;
     this.y = y;
-    this.r = r;
+    this.r = 30;
+    // this.scaledX = 0;
+    // this.scaledY = 0;
+    // this.addListeners(canvas);
+  }
+  draw(context) {
+    // Outer circle 1
+    context.beginPath();
+    context.arc(this.x, this.y, this.r + 1, 0, Math.PI * 2);
+    context.strokeStyle = 'black';
+    context.lineWidth = 3;
+    context.stroke();
+    // Outer circle 2
+    context.beginPath();
+    context.arc(this.x, this.y - 80, this.r + 1, 0, Math.PI * 2);
+    // context.strokeStyle = 'black';
+    // context.lineWidth = 3;
+    context.stroke();
+    // Outer circle 3
+    context.beginPath();
+    context.arc(this.x, this.y + 80, this.r + 1, 0, Math.PI * 2);
+    // context.strokeStyle = 'black';
+    // context.lineWidth = 3;
+    context.stroke();
+
+    // Button 1
+    context.beginPath();
+    context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    context.fillStyle = 'red';
+    context.fill();
+    // Button 2
+    context.beginPath();
+    context.arc(this.x, this.y - 80, this.r, 0, Math.PI * 2);
+    context.fillStyle = 'green';
+    context.fill();
+    // Button 3
+    context.beginPath();
+    context.arc(this.x, this.y + 80, this.r, 0, Math.PI * 2);
+    context.fillStyle = 'blue';
+    context.fill();
+
+    // Label 1
+    context.font = '20px Arial';
+    context.fillStyle = 'black';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('1', this.x, this.y);
+    // Label 2
+    context.font = '20px Arial';
+    context.fillStyle = 'black';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('2', this.x, this.y - 80);
+    // Label 3
+    context.font = '20px Arial';
+    context.fillStyle = 'black';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('3', this.x, this.y + 80);
+  }
+}
+
+export class Joystick {
+  constructor(x, y, canvas) {
+    this.keys = [];
+    this.x = x;
+    this.y = y;
+    this.r = 50;
     this.X = x;
     this.Y = y;
-    this.R = r + 30;
+    this.R = this.r + 30;
     this.pressed = false;
     this.scaledX = 0;
     this.scaledY = 0;

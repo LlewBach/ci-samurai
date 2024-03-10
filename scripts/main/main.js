@@ -1,5 +1,5 @@
 import { Background } from '../background/background.js';
-import { Joystick, InputHandler } from '../input/input.js';
+import { Joystick, ControlPad, InputHandler } from '../input/input.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
 import { UI } from '../UI/UI.js';
@@ -12,7 +12,8 @@ export class Game {
     this.groundMargin = 90;
     this.speed = 0;
     this.background = new Background(this);
-    this.joystick = new Joystick(90, this.height / 3, 50, canvas);
+    this.joystick = new Joystick(90, this.height / 3, canvas);
+    this.controlPad = new ControlPad(this.width - 90, this.height / 3, canvas);
     this.input = new InputHandler();
     this.UI = new UI(this);
     this.player = new Player(this);
@@ -48,6 +49,7 @@ export class Game {
     this.floatingText.forEach(message => message.draw(context));
     this.UI.draw(context);
     this.joystick.draw(context);
+    this.controlPad.draw(context);
   }
   addEnemy(deltaTime) {
     if (this.enemies.length === 0) {
