@@ -4,9 +4,70 @@ export class ControlPad {
     this.x = x;
     this.y = y;
     this.r = 30;
-    // this.scaledX = 0;
-    // this.scaledY = 0;
-    // this.addListeners(canvas);
+    this.scaledX = 0;
+    this.scaledY = 0;
+    this.addListeners(canvas);
+  }
+  // Manually test addListeners method
+  addListeners(canvas) {
+    const translateCoords = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      // Canvas border has width 5px
+      const scale = (rect.width - 10) / canvas.width;
+      const actualX = e.changedTouches[0].clientX - rect.left - 5;
+      const actualY = e.changedTouches[0].clientY - rect.top - 5;
+      this.scaledX = actualX / scale;
+      this.scaledY = actualY / scale;
+    }
+
+    const checkWhichButton = (scaledX, scaledY) => {
+      if (
+        scaledX > (this.x - this.r) &&
+        scaledX < (this.x + this.r) &&
+        scaledY > (this.y - this.r) &&
+        scaledY < (this.y + this.r)
+      ) {
+        return 'button1';
+      }
+      else if (
+        scaledX > (this.x - this.r) &&
+        scaledX < (this.x + this.r) &&
+        scaledY > (this.y - 80 - this.r) &&
+        scaledY < (this.y - 80 + this.r)
+      ) {
+        return 'button2';
+      }
+      else if (
+        scaledX > (this.x - this.r) &&
+        scaledX < (this.x + this.r) &&
+        scaledY > (this.y + 80 - this.r) &&
+        scaledY < (this.y + 80 + this.r)
+      ) {
+        return 'button3';
+      }
+    };
+
+    canvas.addEventListener('touchstart', e => {
+      translateCoords(e);
+      let button = checkWhichButton(this.scaledX, this.scaledY);
+      if (button === 'button1') {
+        if (this.keys.indexOf('a') === -1) this.keys.push('a');
+      } else if (button === 'button2') {
+        if (this.keys.indexOf('s') === -1) this.keys.push('s');
+      } else if (button === 'button3') {
+        if (this.keys.indexOf('d') === -1) this.keys.push('d');
+      }
+      console.log(this.keys);
+    });
+
+    canvas.addEventListener('touchend', e => {
+      translateCoords(e);
+      let button = checkWhichButton(this.scaledX, this.scaledY);
+      if (button === 'button1') this.keys.splice(this.keys.indexOf('a'));
+      else if (button === 'button2') this.keys.splice(this.keys.indexOf('s'));
+      else if (button === 'button3') this.keys.splice(this.keys.indexOf('d'));
+      console.log(this.keys);
+    });
   }
   draw(context) {
     // Outer circle 1
@@ -18,14 +79,10 @@ export class ControlPad {
     // Outer circle 2
     context.beginPath();
     context.arc(this.x, this.y - 80, this.r + 1, 0, Math.PI * 2);
-    // context.strokeStyle = 'black';
-    // context.lineWidth = 3;
     context.stroke();
     // Outer circle 3
     context.beginPath();
     context.arc(this.x, this.y + 80, this.r + 1, 0, Math.PI * 2);
-    // context.strokeStyle = 'black';
-    // context.lineWidth = 3;
     context.stroke();
 
     // Button 1
@@ -51,16 +108,8 @@ export class ControlPad {
     context.textBaseline = 'middle';
     context.fillText('1', this.x, this.y);
     // Label 2
-    context.font = '20px Arial';
-    context.fillStyle = 'black';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
     context.fillText('2', this.x, this.y - 80);
     // Label 3
-    context.font = '20px Arial';
-    context.fillStyle = 'black';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
     context.fillText('3', this.x, this.y + 80);
   }
 }
@@ -80,6 +129,7 @@ export class Joystick {
     this.angleRadians = 0;
     this.addListeners(canvas);
   }
+  // Manually test addListeners method
   addListeners(canvas) {
     const translateCoords = (e) => {
       const rect = canvas.getBoundingClientRect();

@@ -4,7 +4,7 @@ describe('ControlPad class', () => {
   let controlPad, mockCanvas, mockContext;
 
   beforeEach(() => {
-    mockCanvas = {};
+    mockCanvas = { addEventListener: jest.fn() };
     controlPad = new ControlPad(200, 200, mockCanvas);
     mockContext = {
       beginPath: jest.fn(),
@@ -19,7 +19,11 @@ describe('ControlPad class', () => {
     expect(controlPad).toHaveProperty('x');
     expect(controlPad).toHaveProperty('y');
     expect(controlPad).toHaveProperty('r');
+    expect(controlPad).toHaveProperty('scaledX');
+    expect(controlPad).toHaveProperty('scaledY');
   });
+
+  // Manually test .addListeners method
 
   test('.draw should correctly call context methods', () => {
     controlPad.draw(mockContext);
