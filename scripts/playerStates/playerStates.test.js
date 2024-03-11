@@ -56,63 +56,78 @@ describe('Standing State', () => {
   });
 
   test('should transition to RUNNING state on ArrowLeft key press', () => {
-    standingState.handleInput(['ArrowLeft'], []);
+    standingState.handleInput(['ArrowLeft'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 
   test('should transition to RUNNING state on ArrowLeft joystick move', () => {
-    standingState.handleInput([], ['ArrowLeft']);
+    standingState.handleInput([], ['ArrowLeft'], []);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 
   test('should transition to RUNNING state on ArrowRight key press', () => {
-    standingState.handleInput(['ArrowRight'], []);
+    standingState.handleInput(['ArrowRight'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 
   test('should transition to RUNNING state on ArrowRight joystick move', () => {
-    standingState.handleInput([], ['ArrowRight']);
+    standingState.handleInput([], ['ArrowRight'], []);
     expect(player.setState).toHaveBeenCalledWith(states.RUNNING);
   });
 
   test('should transition to JUMPING state on ArrowUp key press', () => {
-    standingState.handleInput(['ArrowUp'], []);
+    standingState.handleInput(['ArrowUp'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
   test('should transition to JUMPING state on ArrowUp joystick move', () => {
-    standingState.handleInput([], ['ArrowUp']);
+    standingState.handleInput([], ['ArrowUp'], []);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
-  test('should correctly transition to ATTACK1 on "a" press or "shift + A"', () => {
+  test('should correctly transition to ATTACK1 on "a" or "shift + A" key presses', () => {
     player.facingRight = 1;
-    standingState.handleInput(['a'], []);
+    standingState.handleInput(['a'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
     expect(player.facingRight).toBe(1);
-    standingState.handleInput(['Shift', 'A'], []);
+    standingState.handleInput(['Shift', 'A'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
     expect(player.facingRight).toBe(-1);
+  });
+
+  test('should correctly transition to ATTACK1 on "a" control pad press', () => {
+    standingState.handleInput([], [], ['a']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 
   test('should correctly transition to ATTACK2 on "s" press or "shift + S"', () => {
     player.facingRight = 1;
-    standingState.handleInput(['s'], []);
+    standingState.handleInput(['s'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     expect(player.facingRight).toBe(1);
-    standingState.handleInput(['Shift', 'S'], []);
+    standingState.handleInput(['Shift', 'S'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     expect(player.facingRight).toBe(-1);
   });
 
+  test('should correctly transition to ATTACK2 on "s" control pad press', () => {
+    standingState.handleInput([], [], ['s']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+  });
+
   test('should correctly transition to ATTACK3 on "d" press or "shift + D"', () => {
     player.facingRight = 1;
-    standingState.handleInput(['d'], []);
+    standingState.handleInput(['d'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
     expect(player.facingRight).toBe(1);
-    standingState.handleInput(['Shift', 'D'], []);
+    standingState.handleInput(['Shift', 'D'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
     expect(player.facingRight).toBe(-1);
+  });
+
+  test('should correctly transition to ATTACK3 on "d" control pad press', () => {
+    standingState.handleInput([], [], ['d']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
   });
 });
 
@@ -130,56 +145,71 @@ describe('Running State', () => {
   });
 
   test('should transition to STANDING state on no arrow key press', () => {
-    runningState.handleInput([], []);
+    runningState.handleInput([], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 
   test('should set facingRight to -1 and speed to -maxSpeed on ArrowLeft key press', () => {
-    runningState.handleInput(['ArrowLeft'], []);
+    runningState.handleInput(['ArrowLeft'], [], []);
     expect(player.facingRight).toBe(-1);
     expect(player.speed).toBe(-player.maxSpeed);
   });
 
   test('should set facingRight to -1 and speed to -maxSpeed on ArrowLeft joystick move', () => {
-    runningState.handleInput([], ['ArrowLeft']);
+    runningState.handleInput([], ['ArrowLeft'], []);
     expect(player.facingRight).toBe(-1);
     expect(player.speed).toBe(-player.maxSpeed);
   });
 
   test('should set facingRight to 1 and speed to +maxSpeed on ArrowRight key press', () => {
-    runningState.handleInput(['ArrowRight'], []);
+    runningState.handleInput(['ArrowRight'], [], []);
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
   });
 
   test('should set facingRight to 1 and speed to +maxSpeed on ArrowRight joystick move', () => {
-    runningState.handleInput([], ['ArrowRight']);
+    runningState.handleInput([], ['ArrowRight'], []);
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
   });
 
   test('should transition to JUMPING state on ArrowUp key press', () => {
-    runningState.handleInput(['ArrowUp'], []);
+    runningState.handleInput(['ArrowUp'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
   test('should transition to JUMPING state on ArrowUp joystick move', () => {
-    runningState.handleInput([], ['ArrowUp']);
+    runningState.handleInput([], ['ArrowUp'], []);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
   test('should transition to ATTACK1 on "a" key press', () => {
-    runningState.handleInput(['a'], []);
+    runningState.handleInput(['a'], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+  });
+
+  test('should transition to ATTACK1 on "a" control pad press', () => {
+    runningState.handleInput([], [], ['a']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 
   test('should transition to ATTACK2 on "s" key press', () => {
-    runningState.handleInput(['s'], []);
+    runningState.handleInput(['s'], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+  });
+
+  test('should transition to ATTACK2 on "s" control pad press', () => {
+    runningState.handleInput([], [], ['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
   test('should transition to ATTACK3 on "d" key press', () => {
-    runningState.handleInput(['d'], []);
+    runningState.handleInput(['d'], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+  });
+
+  test('should transition to ATTACK3 on "d" control pad press', () => {
+    runningState.handleInput([], [], ['d']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
   });
 });

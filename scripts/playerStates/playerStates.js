@@ -31,20 +31,20 @@ export class Standing extends State {
     this.player.facingRight = 1;
     this.player.speed = 0;
   }
-  handleInput(inputKeys, joystickKeys) {
+  handleInput(inputKeys, joystickKeys, controlPadKeys) {
     if (inputKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowLeft')) {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowRight')) {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
-    } else if (inputKeys.includes('a') || inputKeys.includes('A')) {
+    } else if (inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK1);
-    } else if (inputKeys.includes('s') || inputKeys.includes('S')) {
+    } else if (inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK2);
-    } else if (inputKeys.includes('d') || inputKeys.includes('D')) {
+    } else if (inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) {
       if (inputKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
     }
@@ -60,7 +60,7 @@ export class Running extends State {
     this.player.maxFrame = 7;
     this.player.frameY = 1;
   }
-  handleInput(inputKeys, joystickKeys) {
+  handleInput(inputKeys, joystickKeys, controlPadKeys) {
     // No horizontal arrow pressed
     if (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight') && !joystickKeys.includes('ArrowLeft') && !joystickKeys.includes('ArrowRight')) {
       this.player.setState(states.STANDING);
@@ -76,9 +76,9 @@ export class Running extends State {
     // ArrowUp pressed
     if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
     // Attack buttons
-    else if (inputKeys.includes('a') || inputKeys.includes('A')) this.player.setState(states.ATTACK1);
-    else if (inputKeys.includes('s') || inputKeys.includes('S')) this.player.setState(states.ATTACK2);
-    else if (inputKeys.includes('d') || inputKeys.includes('D')) this.player.setState(states.ATTACK3);
+    else if (inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) this.player.setState(states.ATTACK1);
+    else if (inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) this.player.setState(states.ATTACK2);
+    else if (inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) this.player.setState(states.ATTACK3);
   }
 }
 

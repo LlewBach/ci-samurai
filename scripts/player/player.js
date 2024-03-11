@@ -45,7 +45,7 @@ export class Player {
       else if (this.game.health > 0) this.game.health = 0;
     }
     // Update based on currentState
-    this.currentState.handleInput(this.game.input.keys, this.game.joystick.keys);
+    this.currentState.handleInput(this.game.input.keys, this.game.joystick.keys, this.game.controlPad.keys);
     // Update game.speed based on player moves
     this.game.speed = this.speed;
     // Update vertical position

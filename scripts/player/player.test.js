@@ -24,6 +24,9 @@ describe('Player class', () => {
       },
       joystick: {
         keys: []
+      },
+      controlPad: {
+        keys: []
       }
     };
     player = new Player(game);
@@ -128,7 +131,7 @@ describe('Player class', () => {
   test('.update should enact currentState.handleInput()', () => {
     player.currentState.handleInput = jest.fn();
     player.update(16);
-    expect(player.currentState.handleInput).toHaveBeenCalledWith(game.input.keys, game.joystick.keys);
+    expect(player.currentState.handleInput).toHaveBeenCalledWith(game.input.keys, game.joystick.keys, game.controlPad.keys);
   });
 
   test('.update should set game.speed to current player.speed', () => {
