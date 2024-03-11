@@ -1,6 +1,6 @@
 import { Game } from './main.js';
 import { Background } from '../background/background.js';
-import { Joystick, InputHandler } from '../input/input.js';
+import { Joystick, ControlPad, InputHandler } from '../input/input.js';
 import { UI } from '../UI/UI.js';
 import { Player } from '../player/player.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
@@ -76,11 +76,13 @@ describe('Game class', () => {
     expect(game).toHaveProperty('health');
     expect(game).toHaveProperty('gameOver');
     expect(game).toHaveProperty('isPaused');
+    expect(game).toHaveProperty('isTouchScreen');
   });
 
-  test('should initialize with Background and Player instances', () => {
+  test('should initialize with class instances', () => {
     expect(game.background).toBeInstanceOf(Background);
     expect(game.joystick).toBeInstanceOf(Joystick);
+    expect(game.controlPad).toBeInstanceOf(ControlPad);
     expect(game.input).toBeInstanceOf(InputHandler);
     expect(game.UI).toBeInstanceOf(UI);
     expect(game.player).toBeInstanceOf(Player);
@@ -89,15 +91,16 @@ describe('Game class', () => {
   test('class instances should initialize correctly', () => {
     expect(Background).toHaveBeenCalledWith(game);
     expect(Joystick).toHaveBeenCalledWith(90, 200, canvas1);
+    expect(ControlPad).toHaveBeenCalledWith(game.width - 90, game.height / 3, canvas1);
     expect(UI).toHaveBeenCalledWith(game);
     expect(Player).toHaveBeenCalledWith(game);
   });
 
-  test('.update should call .update on background, joystick, player, particles and enemies array', () => {
+  test('.update should call .update on background, player, particles and enemies array', () => {
     const deltaTime = 16; // The average value
     game.update(deltaTime);
     expect(game.background.update).toHaveBeenCalled();
-    expect(game.joystick.update).toHaveBeenCalled();
+    expect(game.joystick.update).not.toHaveBeenCalled();
     expect(game.player.update).toHaveBeenCalledWith(deltaTime);
     game.enemies.forEach(enemy => {
       expect(enemy.update).toHaveBeenCalledWith(deltaTime);
@@ -108,6 +111,12 @@ describe('Game class', () => {
     game.floatingText.forEach(message => {
       expect(message.update).toHaveBeenCalled();
     });
+  });
+
+  test('.update should call joystick.update if game.isTouchScreen is true', () => {
+    game.isTouchScreen = true;
+    game.update(16);
+    expect(game.joystick.update).toHaveBeenCalled();
   });
 
   test('.update should call .addEnemy', () => {
@@ -146,6 +155,13 @@ describe('Game class', () => {
       expect(message.draw).toHaveBeenCalledWith(mockContext);
     });
     expect(game.UI.draw).toHaveBeenCalledWith(mockContext);
+    expect(game.joystick.draw).not.toHaveBeenCalledWith(mockContext);
+    expect(game.controlPad.draw).not.toHaveBeenCalledWith(mockContext);
+  });
+
+  test('.draw should call joystick and controlPad draw methods if game.isTouchScreen is true', () => {
+    game.isTouchScreen = true;
+    game.draw(mockContext);
     expect(game.joystick.draw).toHaveBeenCalledWith(mockContext);
     expect(game.controlPad.draw).toHaveBeenCalledWith(mockContext);
   });

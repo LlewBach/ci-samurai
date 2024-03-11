@@ -27,10 +27,11 @@ export class Game {
     this.health = 100;
     this.gameOver = false;
     this.isPaused = false;
+    this.isTouchScreen = false;
   }
   update(deltaTime) {
     this.background.update();
-    this.joystick.update();
+    if (this.isTouchScreen) this.joystick.update();
     this.player.update(deltaTime);
     // this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
@@ -48,8 +49,8 @@ export class Game {
     this.particles.forEach(particle => particle.draw(context));
     this.floatingText.forEach(message => message.draw(context));
     this.UI.draw(context);
-    this.joystick.draw(context);
-    this.controlPad.draw(context);
+    if (this.isTouchScreen) this.joystick.draw(context);
+    if (this.isTouchScreen) this.controlPad.draw(context);
   }
   addEnemy(deltaTime) {
     if (this.enemies.length === 0) {
@@ -135,6 +136,10 @@ window.addEventListener('load', function () {
     canvas2.width = window.innerWidth;
     canvas2.height = window.innerHeight;
     matrix.resize(canvas2.width, canvas2.height);
+  });
+
+  window.addEventListener('touchstart', () => {
+    game.isTouchScreen = true;
   });
 });
 
