@@ -162,21 +162,63 @@ Enemies have the following possible states: standing, walking, dying, spawning, 
 
 ### Particles
 
+Blood - As the zombies inflict damage on the player, they will trigger a spatter of player blood, and vice versa.
+
 ### Floating messages
 
+When zombies are killed, a message 'git some!' will appear and float towards to player's score stat.
+
 ### Game controls
+
+Keyboard - gameplay is controlled by the arrow keys for motion and 'a', 's', and 'd' keys for attacks.
+
+Touchscreen - touchscreen controls are activated once a 'touch' event is detected on the window. These include a joystick for motion and control pad for attack options.
 
 ## Technologies used
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
-
+- HTML5
+- CSS3
+- Bootstrap framework
+- Vanilla JavaScript
+- Jest
+- GPT-4 for help with debugging and looking things up
+- VSC
+- Windows PowerShell terminal
+- git and GitHub
 
 ## Testing
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
+### Automated testing
 
+#### Jest installation
+
+Getting Jest set up so that it would work with VSC and modules actually proved to be quite difficult, but in the end I managed it by following these steps:
+
+- Console command: npm init
+- Console command: npm install --save-dev jest
+- Console command: npm install --save-dev @babel/preset-env babel-jest
+- Add to package.json: 
+"babel": {
+  "presets": ["@babel/preset-env"]
+},
+"type": "module"
+- Console command: npm install --save-dev jest-environment-jsdom
+- Add to package.json:
+"jest": {
+  "testEnvironment": "jsdom"
+}
+
+I also added the node_modules folder to the gitignore to not overload the git system.
+
+#### Jest tests
+
+#### Lighthouse
+
+### Behavioural testing
 
 ## Deployment
 
@@ -188,7 +230,35 @@ Enemies have the following possible states: standing, walking, dying, spawning, 
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
+### Code
 
+First and foremost, I would like to credit this amazing [JavaScript Game Development Course for Beginners](https://www.youtube.com/watch?v=GFO_txvwK_c). It was featured on freeCodeCamp.org's channel and the content came from the channel [Franks laboratory](https://www.youtube.com/c/Frankslaboratory).
+
+To get a quick sense of the scope of this course, skip to 9:36:45 right at the end for an example of game play.
+
+This course taught me the following:
+- How to use sprite sheets and animate sprites on a canvas element
+- How to use timestamps and deltaTime to make sure the game runs at the same speed on different machines
+- How to create endlessly scrolling parallax backgrounds
+- Object Orientated Programming
+- State design pattern
+- Collision detection
+- Particle and floating text effects
+- How to add touch events
+
+A second tutorial by Frank that I followed was [Matrix Rain Experiments in JavaScript](https://www.youtube.com/watch?v=f5ZswIE_SgY). I took what I learned from this and used it as the background for my project. The only feature I added was to make it react to game play and state, by changing colour and intensity.
+
+Thirdly, I would like to credit this tutorial on [Creating Analog Controller](https://www.youtube.com/watch?v=Wcml7OF6DNI) which got me started on creating the mobile joystick. I ended up redesigning this to work in a way I understood and added snapping behaviour. I also had to figure out myself how to make the touch coordinates translate into canvas coordinates if the canvas had been scaled down due to screen size.
+
+Finally, I would like to credit GPT-4 for teaching me most of what I know about Jest testing.
+
+### Art
+
+The [samurai sprite sheet](https://chierit.itch.io/elementals-lightning-ronin) was bought from the artist 'chierit'.
+
+The [zombie sprite sheets](https://ggoolmool.itch.io/zombie) was bought from the artist 'ggoolmool'.
+
+The [background layers](https://bevouliin.com/science-laboratory-game-background/) were bought from the artist 'bevouliin'.
 
 ## Acknowledgements
 
