@@ -33,7 +33,7 @@ export class Game {
     this.background.update();
     if (this.isTouchScreen) this.joystick.update();
     this.player.update(deltaTime);
-    // this.addEnemy(deltaTime);
+    this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
     this.particles.forEach(particle => particle.update());
