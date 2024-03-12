@@ -170,7 +170,7 @@ When zombies are killed, a message 'git some!' will appear and float towards to 
 
 ### Game controls
 
-Keyboard - gameplay is controlled by the arrow keys for motion and 'a', 's', and 'd' keys for attacks.
+Keyboard - gameplay is controlled by the arrow keys for motion and 'a', 's', and 'd' keys for attacks. Spacebar pauses the game. 'r' resets the game if the game is over.
 
 Touchscreen - touchscreen controls are activated once a 'touch' event is detected on the window. These include a joystick for motion and control pad for attack options.
 
@@ -215,6 +215,8 @@ Getting Jest set up so that it would work with VSC and modules actually proved t
 I also added the node_modules folder to the gitignore to not overload the git system.
 
 #### Jest tests
+
+All aspects of the scripting is tested with Jest, except for functionality involving event listeners which will be tested for behaviourly.
 
 #### Lighthouse
 
