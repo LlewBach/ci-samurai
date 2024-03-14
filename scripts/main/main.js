@@ -26,7 +26,7 @@ export class Game {
     this.winningScore = 20;
     this.health = 100;
     this.gameOver = false;
-    this.isPaused = false;
+    this.isPaused = true;
     this.isTouchScreen = false;
   }
   update(deltaTime) {
