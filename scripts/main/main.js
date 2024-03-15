@@ -96,9 +96,6 @@ window.addEventListener('load', function () {
     lastTime1 = timestamp;
     game.update(deltaTime);
     game.draw(ctx1);
-    // debugging
-    ctx1.strokeStyle = 'black';
-    ctx1.strokeRect(0, 0, 90, 300);
     if (!game.isPaused) requestAnimationFrame(animate);
   }
 
