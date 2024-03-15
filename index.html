@@ -7,6 +7,7 @@
   <title>CI Samurai</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://kit.fontawesome.com/3aeb5c4f62.js" crossorigin="anonymous"></script>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
@@ -17,37 +18,67 @@
 <body>
   <canvas id="canvas2"></canvas>
 
-  <h1>CI Samurai</h1>
+  <h1>Code Eye Samurai</h1>
+  <p>2D side scroll fighting game</p>
 
   <ul class="nav nav-pills justify-content-center mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="pills-intro-tab" data-bs-toggle="pill" data-bs-target="#pills-intro" type="button"
-        role="tab" aria-controls="pills-intro" aria-selected="true">Intro</button>
+      <button class="nav-link active" id="pills-intro-tab" data-bs-toggle="pill" data-bs-target="#pills-intro"
+        type="button" role="tab" aria-controls="pills-intro" aria-selected="true">Intro</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="pills-controls-tab" data-bs-toggle="pill" data-bs-target="#pills-controls"
         type="button" role="tab" aria-controls="pills-controls" aria-selected="false">Controls</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="pills-game-tab" data-bs-toggle="pill" data-bs-target="#pills-game"
-        type="button" role="tab" aria-controls="pills-game" aria-selected="false">Game</button>
+      <button class="nav-link" id="pills-game-tab" data-bs-toggle="pill" data-bs-target="#pills-game" type="button"
+        role="tab" aria-controls="pills-game" aria-selected="false">Game</button>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade" id="pills-intro" role="tabpanel" aria-labelledby="pills-intro-tab">
-      <h2>Intro</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab adipisci eligendi fuga veritatis. Est voluptatibus
-        mollitia consequuntur blanditiis architecto ipsa dolorem labore numquam sapiente quaerat doloremque, saepe
-        voluptate, sunt ducimus quidem placeat iure expedita? Autem illo voluptas quod velit recusandae fugit earum
-        provident dicta molestiae repudiandae natus omnis id quasi perferendis, aut accusamus obcaecati esse, impedit
-        reprehenderit ullam. Quidem, quaerat accusamus fugit quasi itaque dolorem facere eligendi tempore at voluptas
-        repudiandae veritatis. Inventore eveniet veniam, maiores saepe quidem nulla nobis consequatur voluptate illum
-        exercitationem error magni eaque. Nihil tempore esse incidunt quaerat, amet quod quibusdam temporibus officiis,
-        quis veniam minus.</p>
+    <div class="tab-pane fade show active" id="pills-intro" role="tabpanel" aria-labelledby="pills-intro-tab">
+      <p>In 2024...</p>
+      <p>The Shogun of Code Institute Dojo, had set an assignment
+        to dominate JavaScript and return with honour.</p>
+      <p>One coder, suffering defeats from the smallest bugs, closed himself off from the outside world...</p>
+      <p>completely.</p>
+      <p>Normal people would never see his face...</p>
+      <p>for he only had eyes for a sweet-ass codebase.</p>
+      <p>For at that time, code eyes were considered sub-human...</p>
+      <p>Pitiable, bug-infested, obsessed.</p>
+      <p>From this era arose a legend</p>
+      <p>of a coder,</p>
+      <p>of a debugging sesh,</p>
+      <p>of revenge.</p>
+      <p>The Code Eye Samurai</p>
+
+      <!-- <h2>classHopper, do you hear the bugs which are at your feet?</h2>
+      <p>In ancient times, maybe the eighties, computers were first discovered. At first their power promised to free
+        the
+        masses from menial labour and the burden of thinking.</p>
+      <p>As time passed however, the coder guardians of this new
+        technology began to fall sick, deranged. We realised that this technology was not a panacea,
+        but rather a Pandora's Box,
+        and we had released a plague of bugs into the world.</p>
+      <p>To respond to this threat, we the Code Eye Samurai have fought to release these lost comrades from their hell,
+        and now, young Samurai, your time has come.</p> -->
     </div>
     <div class="tab-pane fade" id="pills-controls" role="tabpanel" aria-labelledby="pills-controls-tab">
-      <h2>Controls</h2>
+      <h2>Keyboard</h2>
       <div class="container">
+        <div class="row">
+          <div class="col">
+            <h3 class="text-center">Game Controls</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <p>Spacebar - Start/Pause</p>
+          </div>
+          <div class="col-6">
+            <p><i class="fa-solid fa-r"></i> - Reset Game</p>
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <h3 class="text-center">Movement</h3>
@@ -55,43 +86,71 @@
         </div>
         <div class="row">
           <div class="col-3">
-            <p>Left Arrow - Run Left</p>
+            <p><i class="fa-solid fa-square-caret-left"></i> - Run Left</p>
           </div>
           <div class="col-3">
-            <p>Right Arrow - Run Right</p>
+            <p><i class="fa-solid fa-square-caret-right"></i> - Run Right</p>
           </div>
           <div class="col-3">
-            <p>Up Arrow - Jump</p>
+            <p><i class="fa-solid fa-square-caret-up"></i> - Jump</p>
           </div>
           <div class="col-3">
-            <p>Down Arrow - Hold to roll</p>
+            <p><i class="fa-solid fa-square-caret-down"></i> - Hold to roll</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h3 class="text-center">Attacks</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <p><i class="fa-solid fa-a"></i> - Attack 1</p>
+          </div>
+          <div class="col-4">
+            <p><i class="fa-solid fa-s"></i> - Attack 2</p>
+          </div>
+          <div class="col-4">
+            <p><i class="fa-solid fa-d"></i> - Attack 3</p>
+          </div>
+          <p>If standing, hold Shift to attack left</p>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h2>Touchscreen</h2>
+            <p>Tap to activate joystick and control buttons <i class="fa-solid fa-gamepad"></i></p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h2>How to play</h2>
+              <p>If you are being hit, roll out of it!</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="tab-pane fade show active" id="pills-game" role="tabpanel" aria-labelledby="pills-game-tab">
+    <div class="tab-pane fade" id="pills-game" role="tabpanel" aria-labelledby="pills-game-tab">
       <!-- <button id='control1' class="control">1</button>
-      <button id='control2' class="control">2</button>
-      <button id='control3' class="control">3</button>
-      <button id='control4' class="control">4</button> -->
+    <button id='control2' class="control">2</button>
+    <button id='control3' class="control">3</button>
+    <button id='control4' class="control">4</button> -->
       <button id='fullScreenButton'>Toggle fullscreen</button>
       <canvas id="canvas1"></canvas>
     </div>
-  </div>
 
-  <!-- Images put here so that they load first -->
-  <img id="player" src="assets/images/player.png" />
-  <img id="layer1" src="assets/images/layer-1-wall.png" />
-  <img id="layer2" src="assets/images/layer-2-machines.png" />
-  <img id="layer3" src="assets/images/layer-3-workspace.png" />
-  <img id="layer4" src="assets/images/layer-4-floor.png" />
-  <img id="zombie1" src="assets/images/zombie1.png" />
-  <img id="zombie2" src="assets/images/zombie2.png" />
+    <!-- Images put here so that they load first -->
+    <img id="player" src="assets/images/player.png" />
+    <img id="layer1" src="assets/images/layer-1-wall.png" />
+    <img id="layer2" src="assets/images/layer-2-machines.png" />
+    <img id="layer3" src="assets/images/layer-3-workspace.png" />
+    <img id="layer4" src="assets/images/layer-4-floor.png" />
+    <img id="zombie1" src="assets/images/zombie1.png" />
+    <img id="zombie2" src="assets/images/zombie2.png" />
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-  <script type="module" src="scripts/main/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"></script>
+    <script type="module" src="scripts/main/main.js"></script>
 </body>
 
 </html>

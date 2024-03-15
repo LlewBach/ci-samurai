@@ -22,6 +22,7 @@ body {
 
 h1,
 h2,
+h3,
 p {
   text-align: center;
   color: white;
@@ -38,6 +39,10 @@ h1 {
 
 .tab-pane {
   border: 1px solid purple;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Going to have to media query the fuck out of this */
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 #canvas1 {
