@@ -347,18 +347,33 @@ describe('Stun State', () => {
     expect(player.speed).toBe(0);
   });
 
-  test('should transition state correctly depending on frameX and onGround status', () => {
+  test('should transition state correctly depending on frameX and onGround status and keys pressed', () => {
     player.frameX = player.maxFrame;
     jest.spyOn(player, 'onGround').mockReturnValue(true);
-    stunState.handleInput([]);
+    stunState.handleInput([], []);
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
     jest.spyOn(player, 'onGround').mockReturnValue(false);
-    stunState.handleInput([]);
+    stunState.handleInput([], []);
     expect(player.setState).toHaveBeenCalledWith(states.FALLING);
     jest.spyOn(player, 'onGround').mockReturnValue(true);
-    stunState.handleInput(['ArrowUp']);
+    stunState.handleInput(['ArrowUp'], []);
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
-    stunState.handleInput(['ArrowDown']);
+    stunState.handleInput(['ArrowDown'], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ROLLING);
+  });
+
+  test('should transition state correctly depending on frameX and onGround status and joystick moves', () => {
+    player.frameX = player.maxFrame;
+    jest.spyOn(player, 'onGround').mockReturnValue(true);
+    stunState.handleInput([], []);
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+    jest.spyOn(player, 'onGround').mockReturnValue(false);
+    stunState.handleInput([], []);
+    expect(player.setState).toHaveBeenCalledWith(states.FALLING);
+    jest.spyOn(player, 'onGround').mockReturnValue(true);
+    stunState.handleInput([], ['ArrowUp']);
+    expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
+    stunState.handleInput([], ['ArrowDown']);
     expect(player.setState).toHaveBeenCalledWith(states.ROLLING);
   });
 

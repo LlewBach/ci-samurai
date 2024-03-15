@@ -42,6 +42,7 @@ h1 {
   background-color: rgba(0, 0, 0, 0.5);
   /* Going to have to media query the fuck out of this */
   max-height: 200px;
+  /* max-width: 500px; */
   overflow-y: auto;
 }
 
