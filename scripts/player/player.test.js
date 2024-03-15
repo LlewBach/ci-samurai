@@ -27,7 +27,8 @@ describe('Player class', () => {
       },
       controlPad: {
         keys: []
-      }
+      },
+      annotateMode: false
     };
     player = new Player(game);
     mockContext = {
@@ -356,6 +357,14 @@ describe('Player class', () => {
     game.gameOver = false;
     player.winCheck();
     expect(setStateSpy).toHaveBeenCalledWith(10);
+  });
+
+  test('.draw should call strokeRect context method if game.annotateMode is true', () => {
+    player.draw(mockContext);
+    expect(mockContext.strokeRect).not.toHaveBeenCalled();
+    game.annotateMode = true;
+    player.draw(mockContext);
+    expect(mockContext.strokeRect).toHaveBeenCalled();
   });
 
   test('.draw should call context.drawImage correctly', () => {

@@ -246,7 +246,8 @@ export class InputHandler {
         e.key === 'D' ||
         e.key === 'Shift' ||
         e.key === ' ' ||
-        e.key === 'r'
+        e.key === 'r' ||
+        e.key === 'p'
       ) && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
       }
@@ -266,7 +267,8 @@ export class InputHandler {
         e.key === 'D' ||
         e.key === 'Shift' ||
         e.key === ' ' ||
-        e.key === 'r'
+        e.key === 'r' ||
+        e.key === 'p'
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
       }

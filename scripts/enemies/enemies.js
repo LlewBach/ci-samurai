@@ -47,12 +47,14 @@ class Zombie {
   }
   draw(context) {
     context.save();
-    // Sprite boundary box
-    context.strokeStyle = 'black';
-    context.strokeRect(this.x, this.y, this.width, this.height);
-    // Hit box
-    context.strokeStyle = 'blue';
-    context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin), this.height - this.yContactMargin);
+    if (this.game.annotateMode) {
+      // Sprite boundary box
+      context.strokeStyle = 'black';
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      // Hit box
+      context.strokeStyle = 'blue';
+      context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin), this.height - this.yContactMargin);
+    }
     // Sprite
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);

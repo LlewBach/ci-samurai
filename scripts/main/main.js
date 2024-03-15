@@ -28,6 +28,7 @@ export class Game {
     this.gameOver = false;
     this.isPaused = true;
     this.isTouchScreen = false;
+    this.annotateMode = false;
   }
   update(deltaTime) {
     this.background.update();
@@ -127,6 +128,7 @@ window.addEventListener('load', function () {
         animate();
       }
     } else if (e.key === 'r' && game.gameOver) game.restart();
+    else if (e.key === 'p') game.annotateMode = !game.annotateMode;
   });
 
   window.addEventListener('resize', e => {

@@ -8,7 +8,9 @@ describe('Zombie1 class', () => {
   let mockImage = {};
 
   beforeEach(() => {
-    game = {};
+    game = {
+      annotateMode: false
+    };
     zombie1 = new Zombie1(game);
     zombie2 = new Zombie2(game);
     mockContext = {
@@ -110,6 +112,14 @@ describe('Zombie1 class', () => {
     expect(zombie1.currentState).toBeInstanceOf(Walking);
     expect(zombie1.currentState).toBe(zombie1.states[1]);
     expect(zombie1.frameY).toBe(3);
+  });
+
+  test('.draw should call strokeRect context method if game.annotateMode is true', () => {
+    zombie1.draw(mockContext);
+    expect(mockContext.strokeRect).not.toHaveBeenCalled();
+    game.annotateMode = true;
+    zombie1.draw(mockContext);
+    expect(mockContext.strokeRect).toHaveBeenCalled();
   });
 
   test('.draw should call context.drawImage correctly', () => {

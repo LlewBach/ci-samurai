@@ -255,8 +255,8 @@ describe('InputHandler class', () => {
     expect(inputHandler.keys.filter(key => key === 'ArrowLeft').length).toBe(1);
   });
 
-  test('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a', () => {
-    simulateEvent('keydown', 'p');
+  test('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a, A, s, S, d, D, Shift, space, r, p', () => {
+    simulateEvent('keydown', 't');
     expect(inputHandler.keys).toEqual([]);
   });
 

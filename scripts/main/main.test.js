@@ -77,6 +77,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('gameOver');
     expect(game).toHaveProperty('isPaused');
     expect(game).toHaveProperty('isTouchScreen');
+    expect(game).toHaveProperty('annotateMode');
   });
 
   test('should initialize with class instances', () => {
@@ -218,3 +219,5 @@ describe('Game class', () => {
     expect(game.isPaused).toBe(false);
   });
 });
+
+// Manually test event listener code
