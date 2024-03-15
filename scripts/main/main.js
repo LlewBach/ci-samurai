@@ -120,6 +120,8 @@ window.addEventListener('load', function () {
   animateMatrix(0);
   animate(0);
 
+  // Below detects controls for pause/restart/annotate
+
   window.addEventListener('keydown', e => {
     if (e.key === ' ') {
       if (game.isPaused === false) game.isPaused = true;
@@ -131,14 +133,40 @@ window.addEventListener('load', function () {
     else if (e.key === 'p') game.annotateMode = !game.annotateMode;
   });
 
+  // Below resets matrix canvas width upon screen resizing
+
   window.addEventListener('resize', e => {
     canvas2.width = window.innerWidth;
     canvas2.height = window.innerHeight;
     matrix.resize(canvas2.width, canvas2.height);
   });
 
-  window.addEventListener('touchstart', () => {
+  // Below is for touch screen pause/restart functionality
+
+  const swipeThreshold = 180;
+  let touchY;
+
+  window.addEventListener('touchstart', e => {
     game.isTouchScreen = true;
+    touchY = e.changedTouches[0].clientY;
+    console.log(touchY);
+  });
+
+  window.addEventListener('touchend', e => {
+    const endTouchY = e.changedTouches[0].clientY;
+    console.log(endTouchY);
+    if ((touchY - endTouchY) > swipeThreshold) {
+      if (!game.gameOver) {
+        if (game.isPaused === false) game.isPaused = true;
+        else {
+          game.isPaused = false;
+          animate();
+        }
+      }
+      else {
+        game.restart();
+      }
+    }
   });
 });
 

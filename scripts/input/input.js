@@ -57,7 +57,7 @@ export class ControlPad {
       } else if (button === 'button3') {
         if (this.keys.indexOf('d') === -1) this.keys.push('d');
       }
-      console.log(this.keys);
+      // console.log(this.keys);
     });
 
     canvas.addEventListener('touchend', e => {
@@ -66,7 +66,7 @@ export class ControlPad {
       if (button === 'button1') this.keys.splice(this.keys.indexOf('a'));
       else if (button === 'button2') this.keys.splice(this.keys.indexOf('s'));
       else if (button === 'button3') this.keys.splice(this.keys.indexOf('d'));
-      console.log(this.keys);
+      // console.log(this.keys);
     });
   }
   draw(context) {
@@ -244,11 +244,8 @@ export class InputHandler {
         e.key === 'S' ||
         e.key === 'd' ||
         e.key === 'D' ||
-        e.key === 'Shift' ||
-        e.key === ' ' ||
-        e.key === 'r' ||
-        e.key === 'p'
-      ) && this.keys.indexOf(e.key) === -1) {
+        e.key === 'Shift')
+        && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
       }
     });
@@ -265,10 +262,7 @@ export class InputHandler {
         e.key === 'S' ||
         e.key === 'd' ||
         e.key === 'D' ||
-        e.key === 'Shift' ||
-        e.key === ' ' ||
-        e.key === 'r' ||
-        e.key === 'p'
+        e.key === 'Shift'
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
       }
