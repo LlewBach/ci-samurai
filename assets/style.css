@@ -45,6 +45,12 @@ h1 {
   overflow-y: auto;
 }
 
+.divider {
+  border: 1px solid white;
+  margin: 10px auto;
+  max-width: 500px;
+}
+
 #canvas1 {
   position: absolute;
   top: 50%;
