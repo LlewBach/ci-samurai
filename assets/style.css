@@ -86,6 +86,8 @@ h2 {
 
 /* Default is for 360 x 740 (Galaxy S8) */
 
+/* iPhone 12 Pro */
+
 @media (max-width: 395px) and (min-height: 820px) {
   h1 {
     color: blue;
@@ -99,6 +101,7 @@ h2 {
 @media (max-height: 395px) and (min-width: 820px) and (orientation: landscape) {
   h1 {
     color: orange;
+    margin-top: 5px;
   }
 
   .nav-link {
@@ -107,6 +110,119 @@ h2 {
   }
 
   .tab-pane {
-    max-height: 150px;
+    max-height: 200px;
+  }
+}
+
+/* Samsung Galaxy S20 Ultra, iPhone 14 Pro Max */
+
+@media (max-width: 430px) and (min-height: 900px) {
+  h1 {
+    color: blue;
+  }
+
+  .tab-pane {
+    max-height: none;
+  }
+}
+
+@media (max-height: 430px) and (min-width: 900px) and (orientation: landscape) {
+  h1 {
+    color: green;
+    margin-top: 5px;
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .nav-link {
+    margin: 0 15px;
+    font-size: 15px;
+  }
+
+  .tab-pane {
+    max-height: 250px;
+  }
+}
+
+/* iPad Mini */
+
+@media (min-height: 1000px) {
+  h1 {
+    color: pink;
+  }
+
+  .tab-pane {
+    max-height: none;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 1000px) and (orientation: landscape) {
+  h1 {
+    color: green;
+    margin-top: 10px;
+    /* font-size: 36px; */
+  }
+
+  h2 {
+    /* font-size: 24px; */
+  }
+
+  .nav-link {
+    /* margin: 0 15px;
+    font-size: 15px; */
+  }
+
+  .tab-pane {
+    max-height: none;
+    margin-top: 50px;
+  }
+
+  #canvas1 {
+    top: 58%;
+  }
+}
+
+/* iPad Pro */
+
+@media (min-height: 1300px) {
+  h1 {
+    color: yellow;
+  }
+
+  .tab-pane {
+    /* max-height: none; */
+    margin-top: 200px;
+  }
+}
+
+@media (min-height: 1000px) and (min-width: 1300px) and (orientation: landscape) {
+  h1 {
+    color: red;
+    margin-bottom: 20px;
+    font-size: 48px;
+  }
+
+  h2 {
+    /* font-size: 24px; */
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .nav-link {
+    /* margin: 0 15px;
+    font-size: 15px; */
+  }
+
+  .tab-pane {
+    margin-top: 60px;
+  }
+
+  #canvas1 {
+    top: 58%;
   }
 }
