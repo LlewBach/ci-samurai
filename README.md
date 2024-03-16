@@ -271,6 +271,8 @@ A second tutorial by Frank that I followed was [Matrix Rain Experiments in JavaS
 
 Thirdly, I would like to credit this tutorial on [Creating Analog Controller](https://www.youtube.com/watch?v=Wcml7OF6DNI) which got me started on creating the mobile joystick. I ended up redesigning this to work in a way I understood and added snapping behaviour. I also had to figure out myself how to make the touch coordinates translate into canvas coordinates if the canvas had been scaled down due to screen size.
 
+Fourthly, I directly took what I learned from this tutorial, [How to Create and Display a Loading Spinner on Page Load](https://www.youtube.com/watch?v=q76TexbMXJg) and used it to create my spinner, making only minute changes.
+
 Finally, I would like to credit GPT-4 for teaching me most of what I know about Jest testing.
 
 ### Art

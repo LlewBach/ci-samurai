@@ -82,6 +82,14 @@ export class Game {
 }
 
 window.addEventListener('load', function () {
+  // The code relating to the loader is 99% directly from a tutorial
+  const loader = document.querySelector('.loader');
+  loader.classList.add('loader-hidden');
+  loader.addEventListener('transitionend', () => {
+    document.body.removeChild(loader);
+  });
+  // Below is my code
+
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
   canvas1.width = 800;
