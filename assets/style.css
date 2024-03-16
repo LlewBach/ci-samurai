@@ -196,7 +196,7 @@ h2 {
   }
 }
 
-/* iPad Mini landscape */
+/* Redmi 10 portrait */
 @media (min-height: 700px) {
   h1 {
     color: lightblue;
@@ -204,7 +204,7 @@ h2 {
   }
 
   .tab-pane {
-    max-height: none;
+    max-height: 400px;
     margin-top: 50px;
   }
 
