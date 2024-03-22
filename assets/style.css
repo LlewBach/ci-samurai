@@ -128,6 +128,59 @@ h2 {
   display: none;
 }
 
+/* 404 PAGE */
+
+.no-page-header {
+  height: 100vh;
+  /* background-color: red; */
+  background-image: url(./images/coder-samurai.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.hero-text {
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  color: white;
+}
+
+.hero-text h2 {
+  font-size: 36px;
+  color: red;
+  margin: 30px auto;
+}
+
+.hero-text a {
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+}
+
+.hero-text a:hover {
+  color: yellow;
+  text-decoration: none;
+}
+
 /* MEDIA QUERIES IN MIN-HEIGHT ORDER */
 
 /* Galaxy S8 landscape*/
