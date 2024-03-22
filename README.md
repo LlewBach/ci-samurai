@@ -273,7 +273,7 @@ Thirdly, I would like to credit this tutorial on [Creating Analog Controller](ht
 
 Fourthly, I directly took what I learned from this tutorial, [How to Create and Display a Loading Spinner on Page Load](https://www.youtube.com/watch?v=q76TexbMXJg) and used it to create my spinner, making only minute changes.
 
-Finally, I would like to credit GPT-4 for teaching me most of what I know about Jest testing.
+Finally, I would like to credit GPT-4 for teaching me most of what I know about Jest testing, and for the HTML script element that provides the dropdown menu link functionality.
 
 ### Art
 
