@@ -210,7 +210,7 @@ export class Joystick {
 
       this.x = this.X + Math.cos(this.angleRadians) * this.R;
       this.y = this.Y + Math.sin(this.angleRadians) * this.R;
-    }
+    } else if (this.pressed) this.keys.push('Shift');
   }
   draw(context) {
     // Outer circle

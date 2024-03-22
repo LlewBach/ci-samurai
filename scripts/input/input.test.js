@@ -190,6 +190,11 @@ describe('Joystick class', () => {
     joystick.y = joystick.Y + 80;
     joystick.update();
     expect(joystick.keys).toContain('ArrowRight', 'ArrowDown');
+    joystick.x = joystick.X + 10;
+    joystick.y = joystick.Y + 10;
+    joystick.pressed = true;
+    joystick.update();
+    expect(joystick.keys).toContain('Shift');
   });
 
   test('.update should empty keys array each time it runs', () => {

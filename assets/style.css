@@ -221,7 +221,7 @@ h2 {
   }
 
   .tab-pane {
-    max-height: 350px;
+    /* max-height: 350px; */
   }
 }
 
@@ -233,7 +233,7 @@ h2 {
 
   .tab-pane {
     margin-top: 5px;
-    max-height: 500;
+    max-height: none;
   }
 }
 

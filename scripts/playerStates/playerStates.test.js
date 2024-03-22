@@ -98,6 +98,9 @@ describe('Standing State', () => {
   test('should correctly transition to ATTACK1 on "a" control pad press', () => {
     standingState.handleInput([], [], ['a']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+    standingState.handleInput([], ['Shift'], ['a']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
+    expect(player.facingRight).toBe(-1);
   });
 
   test('should correctly transition to ATTACK2 on "s" press or "shift + S"', () => {
@@ -113,6 +116,9 @@ describe('Standing State', () => {
   test('should correctly transition to ATTACK2 on "s" control pad press', () => {
     standingState.handleInput([], [], ['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+    standingState.handleInput([], ['Shift'], ['s']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
+    expect(player.facingRight).toBe(-1);
   });
 
   test('should correctly transition to ATTACK3 on "d" press or "shift + D"', () => {
@@ -128,6 +134,9 @@ describe('Standing State', () => {
   test('should correctly transition to ATTACK3 on "d" control pad press', () => {
     standingState.handleInput([], [], ['d']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+    standingState.handleInput([], ['Shift'], ['d']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+    expect(player.facingRight).toBe(-1);
   });
 });
 

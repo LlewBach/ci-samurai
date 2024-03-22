@@ -39,13 +39,13 @@ export class Standing extends State {
     } else if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
     } else if (inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) {
-      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK1);
     } else if (inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) {
-      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK2);
     } else if (inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) {
-      if (inputKeys.includes('Shift')) this.player.facingRight = -1;
+      if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
     }
   }
