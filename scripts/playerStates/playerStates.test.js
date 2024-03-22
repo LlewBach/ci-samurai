@@ -16,7 +16,7 @@ const states = {
 }
 let player;
 
-beforeEach(() => { //Change to beforeAll?
+beforeEach(() => {
   player = {
     frameX: undefined,
     maxFrame: undefined,
@@ -25,6 +25,9 @@ beforeEach(() => { //Change to beforeAll?
     maxSpeed: 7,
     setState: jest.fn(),
     onGround: jest.fn(),
+    game: {
+      health: 100
+    },
   };
 });
 
@@ -312,6 +315,13 @@ describe('Rolling State', () => {
     player.speed = 0;
     rollingState.handleInput([], ['ArrowLeft']);
     expect(player.speed).toBe(-player.maxSpeed);
+  });
+
+  test('should transition to SEPPAKU if frameX === maxFrame && health === 0', () => {
+    player.frameX = player.maxFrame;
+    player.game.health = 0;
+    rollingState.handleInput([], []);
+    expect(player.setState).toHaveBeenCalledWith(states.SEPPAKU);
   });
 
   test('should transition to STANDING if frameX === maxFrame && no horizontal arrow pressed', () => {

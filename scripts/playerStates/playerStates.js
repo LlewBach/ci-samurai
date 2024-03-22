@@ -131,7 +131,8 @@ export class Rolling extends State {
         this.player.speed = this.player.maxSpeed;
       }
     }
-    if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight') && !joystickKeys.includes('ArrowLeft') && !joystickKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
+    if (this.player.frameX === this.player.maxFrame && this.player.game.health === 0) this.player.setState(states.SEPPAKU);
+    else if (this.player.frameX === this.player.maxFrame && (!inputKeys.includes('ArrowLeft') && !inputKeys.includes('ArrowRight') && !joystickKeys.includes('ArrowLeft') && !joystickKeys.includes('ArrowRight'))) this.player.setState(states.STANDING);
     else if (this.player.frameX === this.player.maxFrame && (inputKeys.includes('ArrowLeft') || inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowRight'))) this.player.setState(states.RUNNING);
   }
 }
