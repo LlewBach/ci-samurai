@@ -27,22 +27,24 @@ beforeEach(() => {
     onGround: jest.fn(),
     game: {
       health: 100,
-      energy: 0
+      energy: 0,
+      trainingMode: false,
+      score: 0,
     },
   };
 });
 
-afterEach(() => {
-  player = {
-    frameX: undefined,
-    maxFrame: undefined,
-    frameY: undefined,
-    speed: undefined,
-    maxSpeed: 7,
-    setState: jest.fn(),
-    onGround: jest.fn(),
-  };
-});
+// afterEach(() => {
+//   player = {
+//     frameX: undefined,
+//     maxFrame: undefined,
+//     frameY: undefined,
+//     speed: undefined,
+//     maxSpeed: 7,
+//     setState: jest.fn(),
+//     onGround: jest.fn(),
+//   };
+// });
 
 describe('Standing State', () => {
   let standingState;
@@ -164,6 +166,13 @@ describe('Standing State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
     expect(player.facingRight).toBe(-1);
   });
+
+  test('should correctly transition to TRANSCENDING if in training mode and at certain score', () => {
+    player.game.trainingMode = true;
+    player.game.score = 3;
+    standingState.handleInput([], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.TRANSCENDING);
+  });
 });
 
 describe('Running State', () => {
@@ -206,6 +215,16 @@ describe('Running State', () => {
     runningState.handleInput([], ['ArrowRight'], []);
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
+  });
+
+  test('running right and left should increment game.score if in training mode and at appropriate scores', () => {
+    player.game.trainingMode = true;
+    player.game.score = 1;
+    runningState.handleInput(['ArrowRight'], [], []);
+    expect(player.game.score).toBe(1);
+    player.game.score = 2;
+    runningState.handleInput(['ArrowRight'], [], []);
+    expect(player.game.score).toBe(3);
   });
 
   test('should transition to JUMPING state on ArrowUp key press', () => {
@@ -286,6 +305,16 @@ describe('Jumping State', () => {
     expect(player.vy).toBe(-24);
   });
 
+  test('should increment game score if in training mode and at certain score', () => {
+    player.game.trainingMode = true;
+    player.game.score = 1;
+    jumpingState.enter();
+    expect(player.game.score).toBe(1);
+    player.game.score = 0;
+    jumpingState.enter();
+    expect(player.game.score).toBe(1);
+  });
+
   test('should transition to FALLING state at jump peak', () => {
     // jumpingState.enter();
     player.vy = -1;
@@ -348,6 +377,16 @@ describe('Rolling State', () => {
   test('should configure some player properties on .enter()', () => {
     expect(player.maxFrame).toBe(7);
     expect(player.frameY).toBe(6);
+  });
+
+  test('should increment game score if in training mode and at certain score', () => {
+    player.game.trainingMode = true;
+    player.game.score = 0;
+    rollingState.enter();
+    expect(player.game.score).toBe(0);
+    player.game.score = 1;
+    rollingState.enter();
+    expect(player.game.score).toBe(2);
   });
 
   test('should roll left if landing straight down and ArrowLeft key pressed', () => {

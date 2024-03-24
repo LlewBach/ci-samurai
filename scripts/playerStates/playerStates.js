@@ -47,6 +47,8 @@ export class Standing extends State {
     } else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
+    } else if (this.player.game.trainingMode && this.player.game.score === 3) {
+      this.player.setState(states.TRANSCENDING);
     }
   }
 }
@@ -72,6 +74,7 @@ export class Running extends State {
     } else if ((inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowRight')) && !inputKeys.includes('ArrowLeft')) {
       this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
+      if (this.player.game.trainingMode && this.player.game.score === 2) this.player.game.score++;
     }
     // ArrowUp pressed
     if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
@@ -91,6 +94,7 @@ export class Jumping extends State {
     this.player.maxFrame = 2;
     this.player.frameY = 2;
     this.player.vy = -24;
+    if (this.player.game.trainingMode && this.player.game.score === 0) this.player.game.score++;
   }
   handleInput() {
     if (this.player.vy >= 0) this.player.setState(states.FALLING);
@@ -122,6 +126,7 @@ export class Rolling extends State {
     this.player.frameX = 0;
     this.player.maxFrame = 7;
     this.player.frameY = 6;
+    if (this.player.game.trainingMode && this.player.game.score === 1) this.player.game.score++;
   }
   handleInput(inputKeys, joystickKeys) {
     if (this.player.speed === 0) {

@@ -30,12 +30,14 @@ export class Game {
     this.isPaused = true;
     this.isTouchScreen = false;
     this.annotateMode = false;
+    this.trainingMode = false;
+    this.isFreshGame = true;
   }
   update(deltaTime) {
     this.background.update();
     if (this.isTouchScreen) this.joystick.update();
     this.player.update(deltaTime);
-    this.addEnemy(deltaTime);
+    if (!this.trainingMode) this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
     this.particles.forEach(particle => particle.update());
@@ -55,7 +57,8 @@ export class Game {
     if (this.isTouchScreen) this.controlPad.draw(context);
   }
   addEnemy(deltaTime) {
-    if (this.enemies.length === 0) {
+    // Requiring deltaTime to be > 20 prevents creating single enemy in training mode
+    if (this.enemies.length === 0 && deltaTime > 20) {
       this.enemies.push(new Zombie1(this));
     }
     if (this.enemyTimer < this.enemyInterval) this.enemyTimer += deltaTime;
@@ -79,7 +82,9 @@ export class Game {
     this.health = 100;
     this.energy = 0;
     this.gameOver = false;
-    this.isPaused = false;
+    this.isPaused = true;
+    this.trainingMode = false;
+    this.isFreshGame = true;
   }
 }
 
@@ -137,10 +142,17 @@ window.addEventListener('load', function () {
       if (game.isPaused === false) game.isPaused = true;
       else {
         game.isPaused = false;
+        game.isFreshGame = false;
         animate();
       }
-    } else if (e.key === 'r' && game.gameOver) game.restart();
+    } else if (e.key === 'r' && (game.gameOver || (game.trainingMode))) game.restart();
     else if (e.key === 'p') game.annotateMode = !game.annotateMode;
+    else if (e.key === 't' && game.isFreshGame) {
+      game.isFreshGame = false;
+      game.trainingMode = true;
+      game.isPaused = false;
+      animate();
+    }
   });
 
   // Below resets matrix canvas width upon screen resizing

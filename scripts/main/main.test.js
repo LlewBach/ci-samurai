@@ -71,6 +71,8 @@ describe('Game class', () => {
     expect(game).toHaveProperty('isPaused');
     expect(game).toHaveProperty('isTouchScreen');
     expect(game).toHaveProperty('annotateMode');
+    expect(game).toHaveProperty('trainingMode');
+    expect(game).toHaveProperty('isFreshGame');
   });
 
   test('should initialize with class instances', () => {
@@ -113,8 +115,12 @@ describe('Game class', () => {
     expect(game.joystick.update).toHaveBeenCalled();
   });
 
-  test('.update should call .addEnemy', () => {
+  test('.update should call .addEnemy if game.trainingMode is false', () => {
+    game.trainingMode = true;
     const addEnemySpy = jest.spyOn(game, 'addEnemy');
+    game.update(16);
+    expect(addEnemySpy).not.toHaveBeenCalled();
+    game.trainingMode = false;
     game.update(16);
     expect(addEnemySpy).toHaveBeenCalled();
   });
@@ -160,20 +166,21 @@ describe('Game class', () => {
     expect(game.controlPad.draw).toHaveBeenCalledWith(mockContext);
   });
 
-  test('.addEnemy should add a Zombie1 instance to enemies if empty', () => {
+  test('.addEnemy should add a Zombie1 instance to enemies if empty and deltaTime is greater than 20', () => {
+    // console.log(game.trainingMode);
     game.enemies = [];
     expect(game.enemies.length).toBe(0);
-    game.addEnemy(16);
+    game.addEnemy(25);
     expect(game.enemies.length).toBe(1);
     expect(game.enemies[0]).toBeInstanceOf(Zombie1);
   });
 
-  test('.addEnemy should add a Zombie2 instance to enemies at certain intervals with 50% chance', () => {
+  test('.addEnemy should add a Zombie2 instance to enemies at certain intervals with 50% chance if deltaTime > 20', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0.4);
     game.enemyTimer = 1000;
     game.enemyInterval = 1000;
     game.enemies = [];
-    game.addEnemy(16);
+    game.addEnemy(25);
     expect(Zombie1).toHaveBeenCalled();
     expect(Zombie2).toHaveBeenCalled();
     jest.clearAllMocks();
@@ -211,7 +218,7 @@ describe('Game class', () => {
     expect(game.health).toBe(100);
     expect(game.energy).toBe(0);
     expect(game.gameOver).toBe(false);
-    expect(game.isPaused).toBe(false);
+    expect(game.isPaused).toBe(true);
   });
 });
 

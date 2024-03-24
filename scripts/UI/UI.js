@@ -10,6 +10,7 @@ export class UI {
     this.fontColour = 'black';
     this.text1 = '';
     this.text2 = '';
+    this.text3 = '';
   }
   draw(context) {
     context.font = this.fontSize + 'px ' + this.fontFamily;
@@ -75,27 +76,60 @@ export class UI {
     // Label 3
     context.fillText('3', this.x + (2 * this.spacing), this.y);
 
+    // New game message
+    if (this.game.isFreshGame) {
+      this.text1 = 'The goal is not survival, but revenge';
+      this.text2 = 'Press spacebar or swipe up to start/pause';
+      this.text3 = 'Or press t for Training Mode';
+    }
+    // Training Mode Messages
+    else if (this.game.trainingMode) {
+      if (this.game.score === 0) {
+        this.text1 = "Jump";
+        if (!this.game.isTouchScreen) this.text2 = "Press i key ";
+        else this.text2 = "Push joystick up"
+        this.text3 = 'Jumping gives you energy!';
+      } else if (this.game.score === 1) {
+        this.text1 = "Learn to roll";
+        if (!this.game.isTouchScreen) this.text2 = "Press k key ";
+        else this.text2 = "Push joystick down"
+        this.text3 = 'Roll to land safely and escape attacks!';
+      } else if (this.game.score === 2) {
+        this.text1 = "Run right";
+        if (!this.game.isTouchScreen) this.text2 = "Press l key ";
+        else this.text2 = "Push joystick right"
+        this.text3 = '';
+      }
+
+    }
     // Game Over
-    if (this.game.gameOver) {
+    else if (this.game.gameOver) {
       context.textAlign = 'center';
-      if (this.game.score > 5) {
+      if (this.game.score >= this.game.winningScore) {
         this.text1 = 'Coder-san';
         this.text2 = 'You brought honour upon your cojo';
       }
       else {
         this.text1 = 'If you can\'t beat them...';
-        this.text2 = 'Join them, Class-hopper';
+        this.text2 = 'Join them, Coder-san';
       }
-      context.fillStyle = 'white';
-      context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
-      context.fillText(this.text1, this.game.width / 2, 150);
-      context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
-      context.fillText(this.text2, this.game.width / 2, 190);
-      context.fillStyle = 'black';
-      context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
-      context.fillText(this.text1, this.game.width / 2 + 2, 152);
-      context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
-      context.fillText(this.text2, this.game.width / 2 + 2, 192);
+    } else {
+      this.text1 = '';
+      this.text2 = '';
+      this.text3 = '';
     }
+
+    context.fillStyle = 'white';
+    context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
+    context.fillText(this.text1, this.game.width / 2, 150);
+    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
+    context.fillText(this.text2, this.game.width / 2, 200);
+    context.fillText(this.text3, this.game.width / 2, 240);
+    context.fillStyle = 'darkred';
+    context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
+    context.fillText(this.text1, this.game.width / 2 + 2, 152);
+    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
+    context.fillText(this.text2, this.game.width / 2 + 2, 202);
+    context.fillText(this.text3, this.game.width / 2 + 2, 242);
   }
 }
