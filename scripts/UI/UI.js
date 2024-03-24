@@ -1,6 +1,10 @@
 export class UI {
   constructor(game) {
     this.game = game;
+    this.x = 340;
+    this.y = 450;
+    this.r = 12;
+    this.spacing = 60;
     this.fontSize = 30;
     this.fontFamily = 'Helvetica';
     this.fontColour = 'black';
@@ -14,9 +18,63 @@ export class UI {
     // Score
     context.fillText('Score: ' + this.game.score, 20, 50);
     // Health Bar
-    context.fillText('Health: ' + this.game.health, 420, 50);
+    context.fillText('Health: ' + this.game.health, 520, 50);
     context.fillStyle = 'green';
-    context.fillRect(580, 29, this.game.health * 2, 20);
+    context.fillRect(680, 29, this.game.health, 20);
+    // Energy Bar
+    context.fillStyle = 'black';
+    context.fillText('Energy: ' + this.game.energy, 210, 50);
+    context.fillStyle = 'blue';
+    context.fillRect(380, 29, this.game.energy, 20);
+
+    // Outer circle 1
+    context.beginPath();
+    context.arc(this.x, this.y, this.r + 1, 0, Math.PI * 2);
+    context.strokeStyle = 'black';
+    context.lineWidth = 3;
+    context.stroke();
+    // Outer circle 2
+    context.beginPath();
+    context.arc(this.x + this.spacing, this.y, this.r + 1, 0, Math.PI * 2);
+    context.stroke();
+    // Outer circle 3
+    context.beginPath();
+    context.arc(this.x + (2 * this.spacing), this.y, this.r + 1, 0, Math.PI * 2);
+    context.stroke();
+
+    // Indicator 1
+    context.beginPath();
+    context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    if (this.game.energy >= 1) {
+      context.fillStyle = 'pink';
+    } else context.fillStyle = 'lightgray';
+    context.fill();
+    // Indicator 2
+    context.beginPath();
+    context.arc(this.x + this.spacing, this.y, this.r, 0, Math.PI * 2);
+    if (this.game.energy >= 5) {
+      context.fillStyle = 'lightgreen';
+    } else context.fillStyle = 'lightgray';
+    context.fill();
+    // Indicator 3
+    context.beginPath();
+    context.arc(this.x + (2 * this.spacing), this.y, this.r, 0, Math.PI * 2);
+    if (this.game.energy >= 30) {
+      context.fillStyle = 'lightblue';
+    } else context.fillStyle = 'lightgray';
+    context.fill();
+
+    // Label 1
+    context.font = '20px Arial';
+    context.fillStyle = 'black';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('1', this.x, this.y);
+    // Label 2
+    context.fillText('2', this.x + this.spacing, this.y);
+    // Label 3
+    context.fillText('3', this.x + (2 * this.spacing), this.y);
+
     // Game Over
     if (this.game.gameOver) {
       context.textAlign = 'center';

@@ -1,11 +1,12 @@
 export class ControlPad {
-  constructor(x, y, canvas) {
+  constructor(x, y, canvas, game) {
     this.keys = [];
     this.x = x;
     this.y = y;
     this.r = 30;
     this.scaledX = 0;
     this.scaledY = 0;
+    this.game = game;
     this.addListeners(canvas);
   }
   // Manually test addListeners method
@@ -50,13 +51,9 @@ export class ControlPad {
     canvas.addEventListener('touchstart', e => {
       translateCoords(e);
       let button = checkWhichButton(this.scaledX, this.scaledY);
-      if (button === 'button1') {
-        if (this.keys.indexOf('a') === -1) this.keys.push('a');
-      } else if (button === 'button2') {
-        if (this.keys.indexOf('s') === -1) this.keys.push('s');
-      } else if (button === 'button3') {
-        if (this.keys.indexOf('d') === -1) this.keys.push('d');
-      }
+      if (button === 'button1' && this.keys.indexOf('a') === -1) this.keys.push('a');
+      else if (button === 'button2' && this.keys.indexOf('s') === -1) this.keys.push('s');
+      else if (button === 'button3' && this.keys.indexOf('d') === -1) this.keys.push('d');
       // console.log(this.keys);
     });
 
@@ -88,17 +85,20 @@ export class ControlPad {
     // Button 1
     context.beginPath();
     context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    context.fillStyle = 'red';
+    if (this.game.energy >= 1) context.fillStyle = 'red';
+    else context.fillStyle = 'lightgray';
     context.fill();
     // Button 2
     context.beginPath();
     context.arc(this.x, this.y - 80, this.r, 0, Math.PI * 2);
-    context.fillStyle = 'green';
+    if (this.game.energy >= 5) context.fillStyle = 'green';
+    else context.fillStyle = 'lightgray';
     context.fill();
     // Button 3
     context.beginPath();
     context.arc(this.x, this.y + 80, this.r, 0, Math.PI * 2);
-    context.fillStyle = 'blue';
+    if (this.game.energy >= 30) context.fillStyle = 'blue';
+    else context.fillStyle = 'lightgray';
     context.fill();
 
     // Label 1

@@ -7,6 +7,7 @@ describe('UI class', () => {
 
   beforeEach(() => {
     game = {
+      gameOver: false,
       score: 123,
       text1: '',
       text2: '',
@@ -18,6 +19,10 @@ describe('UI class', () => {
       fillStyle: '',
       fillText: jest.fn(),
       fillRect: jest.fn(),
+      beginPath: jest.fn(),
+      arc: jest.fn(),
+      stroke: jest.fn(),
+      fill: jest.fn(),
     };
 
     ui = new UI(game);
@@ -29,6 +34,10 @@ describe('UI class', () => {
 
   test('should contain necessary keys', () => {
     expect(ui).toHaveProperty('game');
+    expect(ui).toHaveProperty('x');
+    expect(ui).toHaveProperty('y');
+    expect(ui).toHaveProperty('r');
+    expect(ui).toHaveProperty('spacing');
     expect(ui).toHaveProperty('fontSize');
     expect(ui).toHaveProperty('fontFamily');
     expect(ui).toHaveProperty('fontColour');
@@ -36,19 +45,20 @@ describe('UI class', () => {
     expect(ui).toHaveProperty('text2');
   });
 
-  test('.draw method should set correct font properties and draw score', () => {
+  test('.draw method should call correct context methods', () => {
     ui.draw(mockContext);
-    expect(mockContext.font).toBe(ui.fontSize + 'px ' + ui.fontFamily);
-    expect(mockContext.textAlign).toBe('left');
-    // expect(mockContext.fillStyle).toBe('black');
-    expect(mockContext.fillText).toHaveBeenCalledWith('Score: ' + game.score, 20, 50);
+    expect(mockContext.fillText).toHaveBeenCalledTimes(6);
+    expect(mockContext.fillRect).toHaveBeenCalledTimes(2);
+    expect(mockContext.beginPath).toHaveBeenCalledTimes(6);
+    expect(mockContext.arc).toHaveBeenCalledTimes(6);
+    expect(mockContext.stroke).toHaveBeenCalledTimes(3);
+    expect(mockContext.fill).toHaveBeenCalledTimes(3);
   });
 
-  test('.draw method should draw health bar', () => {
+  test('.draw method should call correct number of context.fillText methods if gameOver is true', () => {
+    game.gameOver = true;
     ui.draw(mockContext);
-    expect(mockContext.fillText).toHaveBeenCalledWith('Health: ' + game.health, 420, 50);
-    // expect(mockContext.fillStyle).toBe('green');
-    expect(mockContext.fillRect).toHaveBeenCalledWith(580, 29, game.health * 2, 20);
+    expect(mockContext.fillText).toHaveBeenCalledTimes(10);
   });
 
   test('.draw method should set text1 and text2 if gameOver is true and depending on score', () => {

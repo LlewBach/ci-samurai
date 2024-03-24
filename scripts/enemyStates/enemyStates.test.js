@@ -25,9 +25,9 @@ beforeEach(() => {
       attackMargin: 5,
       hitMargin: 10,
       onGround: jest.fn(),
-      health: 100,
     },
     score: 0,
+    energy: 0,
     particles: [],
     floatingText: [],
     gameOver: false,
@@ -211,7 +211,7 @@ describe('Dying state', () => {
     expect(enemy.frameY).toBe(10);
   });
 
-  test('should unshift 10 zombieBloodDrops to game.particles array for duration of frameY', () => {
+  test('.update should unshift 10 zombieBloodDrops to game.particles array for duration of frameY', () => {
     dyingState.update();
     expect(game.particles[0]).toBeInstanceOf(ZombieBlood);
     expect(game.particles[9]).toBeInstanceOf(ZombieBlood);
@@ -221,7 +221,7 @@ describe('Dying state', () => {
     expect(game.particles[19]).toBeInstanceOf(ZombieBlood);
   });
 
-  test('should push one floating message', () => {
+  test('.update should push one floating message', () => {
     enemy.frameX = 11;
     dyingState.update();
     expect(game.floatingText.length).toBe(1);
@@ -236,6 +236,7 @@ describe('Dying state', () => {
     dyingState.update();
     expect(enemy.markedForDeletion).toBe(true);
     expect(game.score).toBe(1);
+    expect(game.energy).toBe(5);
   });
 });
 
@@ -282,14 +283,14 @@ describe('Turning state', () => {
     expect(enemy.frameY).toBe(3);
   });
 
-  test('should modify the standard animate algorithm', () => {
+  test('.update should modify the standard animate algorithm', () => {
     enemy.frameX = 11;
     turningState.update();
     expect(enemy.frameX).toBe(0);
     expect(enemy.frameY).toBe(4);
   });
 
-  test('should correctly transition to WALKING if frameX is 4', () => {
+  test('.update should correctly transition to WALKING if frameX is 4', () => {
     enemy.frameX = 4;
     turningState.update();
     expect(enemy.facingRight).toBe(1);
@@ -311,14 +312,14 @@ describe('Attack1 state', () => {
     expect(enemy.frameY).toBe(4);
   });
 
-  test('should modify the standard animate algorithm', () => {
+  test('.update should modify the standard animate algorithm', () => {
     enemy.frameX = 11;
     attack1State.update();
     expect(enemy.frameX).toBe(0);
     expect(enemy.frameY).toBe(5);
   });
 
-  test('should subtract from health, and cause PlayerBlood spatter if frameX is 10 and player.onGround', () => {
+  test('.update should subtract from health, and cause PlayerBlood spatter if frameX is 10 and player.onGround', () => {
     enemy.frameX = 10;
     game.health = 10;
     game.player.onGround.mockReturnValue(true);

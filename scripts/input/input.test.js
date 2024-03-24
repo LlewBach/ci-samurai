@@ -1,11 +1,12 @@
 import { ControlPad, Joystick, InputHandler } from './input.js';
 
 describe('ControlPad class', () => {
-  let controlPad, mockCanvas, mockContext;
+  let controlPad, mockCanvas, mockContext, game;
 
   beforeEach(() => {
     mockCanvas = { addEventListener: jest.fn() };
-    controlPad = new ControlPad(200, 200, mockCanvas);
+    game = { energy: 0 };
+    controlPad = new ControlPad(200, 200, mockCanvas, game);
     mockContext = {
       beginPath: jest.fn(),
       arc: jest.fn(),
@@ -21,6 +22,7 @@ describe('ControlPad class', () => {
     expect(controlPad).toHaveProperty('r');
     expect(controlPad).toHaveProperty('scaledX');
     expect(controlPad).toHaveProperty('scaledY');
+    expect(controlPad).toHaveProperty('game');
   });
 
   // Manually test .addListeners method
@@ -34,6 +36,8 @@ describe('ControlPad class', () => {
     expect(mockContext.fill).toHaveBeenCalledTimes(3);
     expect(mockContext.fillText).toHaveBeenCalledTimes(3);
   });
+
+  // Manually test that the button light up/go out according to energy
 });
 
 describe('Joystick class', () => {

@@ -26,7 +26,8 @@ beforeEach(() => {
     setState: jest.fn(),
     onGround: jest.fn(),
     game: {
-      health: 100
+      health: 100,
+      energy: 0
     },
   };
 });
@@ -88,8 +89,11 @@ describe('Standing State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
-  test('should correctly transition to ATTACK1 on "a" or "shift + A" key presses', () => {
+  test('should correctly transition to ATTACK1 on "a" or "shift + A" key presses if game.energy >= 1', () => {
     player.facingRight = 1;
+    standingState.handleInput(['a'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK1);
+    player.game.energy = 1;
     standingState.handleInput(['a'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
     expect(player.facingRight).toBe(1);
@@ -98,7 +102,10 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK1 on "a" control pad press', () => {
+  test('should correctly transition to ATTACK1 on "a" control pad press if game.energy >= 1', () => {
+    standingState.handleInput([], [], ['a']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK1);
+    player.game.energy = 1;
     standingState.handleInput([], [], ['a']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
     standingState.handleInput([], ['Shift'], ['a']);
@@ -106,8 +113,12 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK2 on "s" press or "shift + S"', () => {
+  test('should correctly transition to ATTACK2 on "s" press or "shift + S" key presses if game.energy >= 5', () => {
     player.facingRight = 1;
+    player.game.energy = 4;
+    standingState.handleInput(['s'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
+    player.game.energy = 5;
     standingState.handleInput(['s'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     expect(player.facingRight).toBe(1);
@@ -116,7 +127,11 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK2 on "s" control pad press', () => {
+  test('should correctly transition to ATTACK2 on "s" control pad press if game.energy >= 5', () => {
+    player.game.energy = 4;
+    standingState.handleInput([], [], ['s']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
+    player.game.energy = 5
     standingState.handleInput([], [], ['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     standingState.handleInput([], ['Shift'], ['s']);
@@ -124,8 +139,12 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK3 on "d" press or "shift + D"', () => {
+  test('should correctly transition to ATTACK3 on "d" or "shift + D" key presses if game.energy >= 30', () => {
     player.facingRight = 1;
+    player.game.energy = 29;
+    standingState.handleInput(['d'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK3);
+    player.game.energy = 30;
     standingState.handleInput(['d'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
     expect(player.facingRight).toBe(1);
@@ -134,7 +153,11 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK3 on "d" control pad press', () => {
+  test('should correctly transition to ATTACK3 on "d" control pad press if game.energy >= 30', () => {
+    player.game.energy = 29;
+    standingState.handleInput([], [], ['d']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK3);
+    player.game.energy = 30;
     standingState.handleInput([], [], ['d']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
     standingState.handleInput([], ['Shift'], ['d']);
@@ -195,32 +218,54 @@ describe('Running State', () => {
     expect(player.setState).toHaveBeenCalledWith(states.JUMPING);
   });
 
-  test('should transition to ATTACK1 on "a" key press', () => {
+  test('should transition to ATTACK1 on "a" key press if game.energy >= 1', () => {
+    runningState.handleInput(['a'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK1);
+    player.game.energy = 1;
     runningState.handleInput(['a'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 
-  test('should transition to ATTACK1 on "a" control pad press', () => {
+  test('should transition to ATTACK1 on "a" control pad press if game.energy >= 1', () => {
+    runningState.handleInput([], [], ['a']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK1);
+    player.game.energy = 1;
     runningState.handleInput([], [], ['a']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK1);
   });
 
-  test('should transition to ATTACK2 on "s" key press', () => {
+  test('should transition to ATTACK2 on "s" key press if game.energy >= 5', () => {
+    player.game.energy = 4;
+    runningState.handleInput(['s'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
+    player.game.energy = 5;
     runningState.handleInput(['s'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
-  test('should transition to ATTACK2 on "s" control pad press', () => {
+  test('should transition to ATTACK2 on "s" control pad press if game.energy >= 5', () => {
+    player.game.energy = 4;
+    runningState.handleInput([], [], ['s']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
+    player.game.energy = 5;
     runningState.handleInput([], [], ['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
   });
 
-  test('should transition to ATTACK3 on "d" key press', () => {
+  test('should transition to ATTACK3 on "d" key press if game.energy >= 30', () => {
+    player.game.energy = 29;
+    runningState.handleInput(['d'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK3);
+    player.game.energy = 30;
     runningState.handleInput(['d'], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
   });
 
-  test('should transition to ATTACK3 on "d" control pad press', () => {
+  test('should transition to ATTACK3 on "d" control pad press if game.energy >= 30', () => {
+    player.game.energy = 29;
+    runningState.handleInput([], [], ['d']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK3);
+    player.game.energy = 30;
     runningState.handleInput([], [], ['d']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
   });
@@ -262,9 +307,9 @@ describe('Falling State', () => {
   });
 
   test('should configure some player properties on .enter()', () => {
-    // fallingState.enter();
     expect(player.maxFrame).toBe(2);
     expect(player.frameY).toBe(3);
+    expect(player.game.energy).toBe(1);
   });
 
   test('should transition to STANDING if player.onGround() and no horizontal arrow pressed', () => {
@@ -408,7 +453,8 @@ describe('Attack1 State', () => {
         { inShortRange: 1, setState: jest.fn() },
         { inShortRange: -1, setState: jest.fn() },
         { inShortRange: 1, setState: jest.fn() },
-      ]
+      ],
+      energy: 10
     };
     player.facingRight = 1;
     attack1State = new Attack1(player, game);
@@ -418,6 +464,10 @@ describe('Attack1 State', () => {
   test('.enter should configure some player properties', () => {
     expect(player.maxFrame).toBe(7);
     expect(player.frameY).toBe(9);
+  });
+
+  test('.enter should update game.energy', () => {
+    expect(game.energy).toBe(9);
   });
 
   test('.enter should set change max 1 x enemy state based on enemy.inShortRange status and player.facingRight', () => {
@@ -450,7 +500,8 @@ describe('Attack2 State', () => {
         { inShortRange: 1, setState: jest.fn() },
         { inShortRange: -1, setState: jest.fn() },
         { inShortRange: 1, setState: jest.fn() },
-      ]
+      ],
+      energy: 10
     };
     player.facingRight = 1;
     attack2State = new Attack2(player, game);
@@ -460,6 +511,10 @@ describe('Attack2 State', () => {
   test('.enter should configure some player properties', () => {
     expect(player.maxFrame).toBe(9);
     expect(player.frameY).toBe(10);
+  });
+
+  test('.enter should update game.energy', () => {
+    expect(game.energy).toBe(5);
   });
 
   test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
@@ -492,7 +547,8 @@ describe('Attack3 State', () => {
         { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
         { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
         { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
-      ]
+      ],
+      energy: 30
     };
     player.facingRight = 1;
     attack3State = new Attack3(player, game);
@@ -502,6 +558,10 @@ describe('Attack3 State', () => {
   test('.enter should configure some player properties', () => {
     expect(player.maxFrame).toBe(18);
     expect(player.frameY).toBe(11);
+  });
+
+  test('.enter should update game.energy', () => {
+    expect(game.energy).toBe(0);
   });
 
   test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {

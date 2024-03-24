@@ -38,13 +38,13 @@ export class Standing extends State {
       this.player.setState(states.RUNNING);
     } else if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) {
       this.player.setState(states.JUMPING);
-    } else if (inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) {
+    } else if ((inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) && this.player.game.energy >= 1) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK1);
-    } else if (inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) {
+    } else if ((inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) && this.player.game.energy >= 5) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK2);
-    } else if (inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) {
+    } else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
     }
@@ -76,9 +76,9 @@ export class Running extends State {
     // ArrowUp pressed
     if (inputKeys.includes('ArrowUp') || joystickKeys.includes('ArrowUp')) this.player.setState(states.JUMPING);
     // Attack buttons
-    else if (inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) this.player.setState(states.ATTACK1);
-    else if (inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) this.player.setState(states.ATTACK2);
-    else if (inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) this.player.setState(states.ATTACK3);
+    else if ((inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) && this.player.game.energy >= 1) this.player.setState(states.ATTACK1);
+    else if ((inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) && this.player.game.energy >= 5) this.player.setState(states.ATTACK2);
+    else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) this.player.setState(states.ATTACK3);
   }
 }
 
@@ -105,6 +105,7 @@ export class Falling extends State {
     this.player.frameX = 0;
     this.player.maxFrame = 2;
     this.player.frameY = 3;
+    this.player.game.energy++;
   }
   handleInput(inputKeys, joystickKeys) {
     if (this.player.onGround() && (inputKeys.includes('ArrowDown') || joystickKeys.includes('ArrowDown'))) this.player.setState(states.ROLLING);
@@ -169,6 +170,7 @@ export class Attack1 extends State {
     this.player.maxFrame = 7;
     this.player.frameY = 9;
     this.player.speed = 0;
+    this.game.energy--;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);
@@ -194,6 +196,7 @@ export class Attack2 extends State {
     this.player.maxFrame = 9;
     this.player.frameY = 10;
     this.player.speed = 0;
+    this.game.energy -= 5;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);
@@ -217,6 +220,7 @@ export class Attack3 extends State {
     this.player.maxFrame = 18;
     this.player.frameY = 11;
     this.player.speed = 0;
+    this.game.energy -= 30;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);

@@ -109,6 +109,7 @@ export class Dying extends State {
     } else if (this.enemy.frameX === 3) {
       this.enemy.markedForDeletion = true;
       this.game.score++;
+      this.game.energy += 5;
     }
   }
 }

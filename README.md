@@ -283,6 +283,8 @@ The [zombie sprite sheets](https://ggoolmool.itch.io/zombie) was bought from the
 
 The [background layers](https://bevouliin.com/science-laboratory-game-background/) were bought from the artist 'bevouliin'.
 
+The 404 page background image was created my GPT-4.
+
 ## Acknowledgements
 
 [Back to top](#milestone-2-project---code-eye-samurai)

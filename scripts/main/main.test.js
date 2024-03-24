@@ -11,14 +11,6 @@ jest.mock('../input/input.js');
 jest.mock('../UI/UI.js');
 jest.mock('../player/player.js');
 jest.mock('../enemies/enemies.js');
-// jest.mock('../enemies/enemies.js', () => ({
-//   Zombie1: jest.fn().mockImplementation(() => ({})),
-//   Zombie2: jest.fn().mockImplementation(() => ({})),
-// }));
-
-// afterEach(() => {
-//   jest.restoreAllMocks();
-// });
 
 describe('Game class', () => {
   let game, mockContext, canvas1;
@@ -74,6 +66,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('score');
     expect(game).toHaveProperty('winningScore');
     expect(game).toHaveProperty('health');
+    expect(game).toHaveProperty('energy');
     expect(game).toHaveProperty('gameOver');
     expect(game).toHaveProperty('isPaused');
     expect(game).toHaveProperty('isTouchScreen');
@@ -92,7 +85,7 @@ describe('Game class', () => {
   test('class instances should initialize correctly', () => {
     expect(Background).toHaveBeenCalledWith(game);
     expect(Joystick).toHaveBeenCalledWith(90, 200, canvas1);
-    expect(ControlPad).toHaveBeenCalledWith(game.width - 90, game.height / 3, canvas1);
+    expect(ControlPad).toHaveBeenCalledWith(game.width - 90, 180, canvas1, game);
     expect(UI).toHaveBeenCalledWith(game);
     expect(Player).toHaveBeenCalledWith(game);
   });
@@ -206,6 +199,7 @@ describe('Game class', () => {
     game.enemies = ['enemy0'];
     game.score = 10;
     game.health = 50;
+    game.energy = 30;
     game.gameOver = true;
     game.isPaused = true;
     game.restart();
@@ -215,6 +209,7 @@ describe('Game class', () => {
     expect(game.enemies).toEqual([]);
     expect(game.score).toBe(0);
     expect(game.health).toBe(100);
+    expect(game.energy).toBe(0);
     expect(game.gameOver).toBe(false);
     expect(game.isPaused).toBe(false);
   });

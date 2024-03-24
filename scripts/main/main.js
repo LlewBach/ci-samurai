@@ -13,7 +13,7 @@ export class Game {
     this.speed = 0;
     this.background = new Background(this);
     this.joystick = new Joystick(90, this.height / 3, canvas);
-    this.controlPad = new ControlPad(this.width - 90, this.height / 3, canvas);
+    this.controlPad = new ControlPad(this.width - 90, 180, canvas, this);
     this.input = new InputHandler();
     this.UI = new UI(this);
     this.player = new Player(this);
@@ -25,6 +25,7 @@ export class Game {
     this.score = 0;
     this.winningScore = 20;
     this.health = 100;
+    this.energy = 0;
     this.gameOver = false;
     this.isPaused = true;
     this.isTouchScreen = false;
@@ -76,6 +77,7 @@ export class Game {
     this.enemies = [];
     this.score = 0;
     this.health = 100;
+    this.energy = 0;
     this.gameOver = false;
     this.isPaused = false;
   }
