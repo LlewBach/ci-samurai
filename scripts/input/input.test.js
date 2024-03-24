@@ -247,24 +247,24 @@ describe('InputHandler class', () => {
     expect(inputHandler).toHaveProperty('keys');
   });
 
-  test('add ArrowLeft to keys on keydown', () => {
-    simulateEvent('keydown', 'ArrowLeft');
+  test('add ArrowLeft to keys on j key press', () => {
+    simulateEvent('keydown', 'j');
     expect(inputHandler.keys).toContain('ArrowLeft');
   });
 
-  test('removes ArrowLeft from keys on keyup', () => {
-    simulateEvent('keydown', 'ArrowLeft');
-    simulateEvent('keyup', 'ArrowLeft');
+  test('removes ArrowLeft from keys on j keyup', () => {
+    simulateEvent('keydown', 'j');
+    simulateEvent('keyup', 'j');
     expect(inputHandler.keys).not.toContain('ArrowLeft');
   });
 
   test('does not add duplicates of ArrowLeft', () => {
-    simulateEvent('keydown', 'ArrowLeft');
-    simulateEvent('keydown', 'ArrowLeft');
-    expect(inputHandler.keys.filter(key => key === 'ArrowLeft').length).toBe(1);
+    simulateEvent('keydown', 'j');
+    simulateEvent('keydown', 'j');
+    expect(inputHandler.keys.length).toBe(1);
   });
 
-  test('ignores keys other than ArrowLeft, ArrowRight, ArrowUp, ArrowDown, a, A, s, S, d, D, Shift, space, r, p', () => {
+  test('ignores keys other than j, J, l, L, k, K, i, I, a, A, s, S, d, D, Shift, space, r, p', () => {
     simulateEvent('keydown', 't');
     expect(inputHandler.keys).toEqual([]);
   });

@@ -234,10 +234,6 @@ export class InputHandler {
 
     window.addEventListener('keydown', e => {
       if ((
-        e.key === 'ArrowLeft' ||
-        e.key === 'ArrowRight' ||
-        e.key === 'ArrowUp' ||
-        e.key === 'ArrowDown' ||
         e.key === 'a' ||
         e.key === 'A' ||
         e.key === 's' ||
@@ -247,15 +243,24 @@ export class InputHandler {
         e.key === 'Shift')
         && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
+      } else if ((e.key === 'j' || e.key === 'J') && this.keys.indexOf('ArrowLeft') === -1) {
+        this.keys.push('ArrowLeft');
+      } else if ((e.key === 'l' || e.key === 'L') && this.keys.indexOf('ArrowRight') === -1) {
+        this.keys.push('ArrowRight');
+      } else if ((e.key === 'i' || e.key === 'I') && this.keys.indexOf('ArrowUp') === -1) {
+        this.keys.push('ArrowUp');
+      } else if ((e.key === 'k' || e.key === 'K') && this.keys.indexOf('ArrowDown') === -1) {
+        this.keys.push('ArrowDown');
       }
+      // console.log('Before: ', this.keys);
     });
 
     window.addEventListener('keyup', e => {
       if (
-        e.key === 'ArrowLeft' ||
-        e.key === 'ArrowRight' ||
-        e.key === 'ArrowUp' ||
-        e.key === 'ArrowDown' ||
+        // e.key === 'ArrowLeft' ||
+        // e.key === 'ArrowRight' ||
+        // e.key === 'ArrowUp' ||
+        // e.key === 'ArrowDown' ||
         e.key === 'a' ||
         e.key === 'A' ||
         e.key === 's' ||
@@ -265,7 +270,16 @@ export class InputHandler {
         e.key === 'Shift'
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
+      } else if (e.key === 'j' || e.key === 'J') {
+        this.keys.splice(this.keys.indexOf('ArrowLeft'), 1);
+      } else if (e.key === 'l' || e.key === 'L') {
+        this.keys.splice(this.keys.indexOf('ArrowRight'), 1);
+      } else if (e.key === 'i' || e.key === 'I') {
+        this.keys.splice(this.keys.indexOf('ArrowUp'), 1);
+      } else if (e.key === 'k' || e.key === 'K') {
+        this.keys.splice(this.keys.indexOf('ArrowDown'), 1);
       }
+      // console.log('After: ', this.keys);
     });
   }
 }
