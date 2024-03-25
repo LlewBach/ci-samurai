@@ -47,7 +47,7 @@ export class Standing extends State {
     } else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
-    } else if (this.player.game.trainingMode && this.player.game.score === 3) {
+    } else if (this.player.game.trainingMode && this.player.game.score === 10) {
       this.player.setState(states.TRANSCENDING);
     }
   }
@@ -71,6 +71,7 @@ export class Running extends State {
     if ((inputKeys.includes('ArrowLeft') || joystickKeys.includes('ArrowLeft')) && !inputKeys.includes('ArrowRight')) {
       this.player.facingRight = -1;
       this.player.speed = -this.player.maxSpeed;
+      if (this.player.game.trainingMode && this.player.game.score === 3) this.player.game.score++;
     } else if ((inputKeys.includes('ArrowRight') || joystickKeys.includes('ArrowRight')) && !inputKeys.includes('ArrowLeft')) {
       this.player.facingRight = 1;
       this.player.speed = this.player.maxSpeed;
@@ -176,6 +177,8 @@ export class Attack1 extends State {
     this.player.frameY = 9;
     this.player.speed = 0;
     this.game.energy--;
+    if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 4) this.game.score++;
+    else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 5) this.game.score++;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);
@@ -202,6 +205,8 @@ export class Attack2 extends State {
     this.player.frameY = 10;
     this.player.speed = 0;
     this.game.energy -= 5;
+    if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 6) this.game.score++;
+    else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 7) this.game.score++;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);
@@ -226,6 +231,8 @@ export class Attack3 extends State {
     this.player.frameY = 11;
     this.player.speed = 0;
     this.game.energy -= 30;
+    if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
+    else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) this.game.score++;
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         this.game.enemies[i].setState(2);

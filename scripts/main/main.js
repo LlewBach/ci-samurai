@@ -151,6 +151,7 @@ window.addEventListener('load', function () {
       game.isFreshGame = false;
       game.trainingMode = true;
       game.isPaused = false;
+      game.energy = 100;
       animate();
     }
   });
@@ -182,6 +183,7 @@ window.addEventListener('load', function () {
         if (game.isPaused === false) game.isPaused = true;
         else {
           game.isPaused = false;
+          game.isFreshGame = false;
           animate();
         }
       }

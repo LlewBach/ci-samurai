@@ -78,7 +78,7 @@ export class UI {
 
     // New game message
     if (this.game.isFreshGame) {
-      this.text1 = 'The goal is not survival, but revenge';
+      this.text1 = 'Fight well, Coder-san';
       this.text2 = 'Press spacebar or swipe up to start/pause';
       this.text3 = 'Or press t for Training Mode';
     }
@@ -86,20 +86,60 @@ export class UI {
     else if (this.game.trainingMode) {
       if (this.game.score === 0) {
         this.text1 = "Jump";
-        if (!this.game.isTouchScreen) this.text2 = "Press i key ";
-        else this.text2 = "Push joystick up"
+        if (!this.game.isTouchScreen) this.text2 = "Press i key";
+        else this.text2 = "Push joystick up";
         this.text3 = 'Jumping gives you energy!';
       } else if (this.game.score === 1) {
         this.text1 = "Learn to roll";
-        if (!this.game.isTouchScreen) this.text2 = "Press k key ";
-        else this.text2 = "Push joystick down"
+        if (!this.game.isTouchScreen) this.text2 = "Press k key";
+        else this.text2 = "Push joystick down";
         this.text3 = 'Roll to land safely and escape attacks!';
       } else if (this.game.score === 2) {
         this.text1 = "Run right";
-        if (!this.game.isTouchScreen) this.text2 = "Press l key ";
-        else this.text2 = "Push joystick right"
+        if (!this.game.isTouchScreen) this.text2 = "Press l key";
+        else this.text2 = "Push joystick right";
+        this.text3 = '';
+      } else if (this.game.score === 3) {
+        this.text1 = "Run left";
+        if (!this.game.isTouchScreen) this.text2 = "Press j key";
+        else this.text2 = "Push joystick left";
+        this.text3 = '';
+      } else if (this.game.score === 4) {
+        this.text1 = "Attack1 right";
+        if (!this.game.isTouchScreen) this.text2 = "Press a key";
+        else this.text2 = "Press button 1";
+        this.text3 = '';
+      } else if (this.game.score === 5) {
+        this.text1 = "Attack1 left";
+        if (!this.game.isTouchScreen) this.text2 = "Press shift + a key";
+        else this.text2 = "Hold down joystick and press button 1";
+        this.text3 = '';
+      } else if (this.game.score === 6) {
+        this.text1 = "Attack2 right";
+        if (!this.game.isTouchScreen) this.text2 = "Press s key";
+        else this.text2 = "Press button 2";
+        this.text3 = '';
+      } else if (this.game.score === 7) {
+        this.text1 = "Attack2 left";
+        if (!this.game.isTouchScreen) this.text2 = "Press shift + s key";
+        else this.text2 = "Hold down joystick and press button 2";
+        this.text3 = '';
+      } else if (this.game.score === 8) {
+        this.text1 = "Attack3 right";
+        if (!this.game.isTouchScreen) this.text2 = "Press d key";
+        else this.text2 = "Press button 3";
+        this.text3 = '';
+      } else if (this.game.score === 9) {
+        this.text1 = "Attack3 left";
+        if (!this.game.isTouchScreen) this.text2 = "Press shift + d key";
+        else this.text2 = "Hold down joystick and press button 3";
+        this.text3 = '';
+      } else if (this.game.score === 10) {
+        this.text1 = 'Your training is complete';
+        this.text2 = 'Press r to go to start screen';
         this.text3 = '';
       }
+
 
     }
     // Game Over

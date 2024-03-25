@@ -169,7 +169,7 @@ describe('Standing State', () => {
 
   test('should correctly transition to TRANSCENDING if in training mode and at certain score', () => {
     player.game.trainingMode = true;
-    player.game.score = 3;
+    player.game.score = 10;
     standingState.handleInput([], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.TRANSCENDING);
   });
@@ -199,10 +199,24 @@ describe('Running State', () => {
     expect(player.speed).toBe(-player.maxSpeed);
   });
 
+  test('should increment game score if ArrowLeft pressed, game.trainingMode is true and score is 3', () => {
+    player.game.trainingMode = true;
+    player.game.score = 3;
+    runningState.handleInput(['ArrowLeft'], [], []);
+    expect(player.game.score).toBe(4);
+  });
+
   test('should set facingRight to -1 and speed to -maxSpeed on ArrowLeft joystick move', () => {
     runningState.handleInput([], ['ArrowLeft'], []);
     expect(player.facingRight).toBe(-1);
     expect(player.speed).toBe(-player.maxSpeed);
+  });
+
+  test('should increment game score on ArrowLeft joystick move, game.trainingMode is true and score is 3', () => {
+    player.game.trainingMode = true;
+    player.game.score = 3;
+    runningState.handleInput([], ['ArrowLeft'], []);
+    expect(player.game.score).toBe(4);
   });
 
   test('should set facingRight to 1 and speed to +maxSpeed on ArrowRight key press', () => {
@@ -211,10 +225,24 @@ describe('Running State', () => {
     expect(player.speed).toBe(player.maxSpeed);
   });
 
+  test('should increment game score if ArrowRight pressed, game.trainingMode is true and score is 2', () => {
+    player.game.trainingMode = true;
+    player.game.score = 2;
+    runningState.handleInput(['ArrowRight'], [], []);
+    expect(player.game.score).toBe(3);
+  });
+
   test('should set facingRight to 1 and speed to +maxSpeed on ArrowRight joystick move', () => {
     runningState.handleInput([], ['ArrowRight'], []);
     expect(player.facingRight).toBe(1);
     expect(player.speed).toBe(player.maxSpeed);
+  });
+
+  test('should increment game score on ArrowRight joystick move, game.trainingMode is true and score is 2', () => {
+    player.game.trainingMode = true;
+    player.game.score = 2;
+    runningState.handleInput([], ['ArrowRight'], []);
+    expect(player.game.score).toBe(3);
   });
 
   test('running right and left should increment game.score if in training mode and at appropriate scores', () => {
@@ -509,6 +537,22 @@ describe('Attack1 State', () => {
     expect(game.energy).toBe(9);
   });
 
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is 1, and score is 4', () => {
+    game.trainingMode = true;
+    game.score = 4;
+    player.facingRight = 1;
+    attack1State.enter();
+    expect(game.score).toBe(5);
+  });
+
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is -1, and score is 5', () => {
+    game.trainingMode = true;
+    game.score = 5;
+    player.facingRight = -1;
+    attack1State.enter();
+    expect(game.score).toBe(6);
+  });
+
   test('.enter should set change max 1 x enemy state based on enemy.inShortRange status and player.facingRight', () => {
     expect(game.enemies[0].setState).not.toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalled();
@@ -556,6 +600,22 @@ describe('Attack2 State', () => {
     expect(game.energy).toBe(5);
   });
 
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is 1, and score is 6', () => {
+    game.trainingMode = true;
+    game.score = 6;
+    player.facingRight = 1;
+    attack2State.enter();
+    expect(game.score).toBe(7);
+  });
+
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is -1, and score is 7', () => {
+    game.trainingMode = true;
+    game.score = 7;
+    player.facingRight = -1;
+    attack2State.enter();
+    expect(game.score).toBe(8);
+  });
+
   test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
     expect(game.enemies[0].setState).not.toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalled();
@@ -601,6 +661,22 @@ describe('Attack3 State', () => {
 
   test('.enter should update game.energy', () => {
     expect(game.energy).toBe(0);
+  });
+
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is 1, and score is 8', () => {
+    game.trainingMode = true;
+    game.score = 8;
+    player.facingRight = 1;
+    attack3State.enter();
+    expect(game.score).toBe(9);
+  });
+
+  test('.enter should update game.score if game.trainingMode is true, player.facingRight is -1, and score is 9', () => {
+    game.trainingMode = true;
+    game.score = 9;
+    player.facingRight = -1;
+    attack3State.enter();
+    expect(game.score).toBe(10);
   });
 
   test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
