@@ -679,15 +679,15 @@ describe('Attack3 State', () => {
     expect(game.score).toBe(10);
   });
 
-  test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
-    expect(game.enemies[0].setState).not.toHaveBeenCalled();
-    expect(game.enemies[1].setState).toHaveBeenCalled();
-    expect(game.enemies[2].setState).not.toHaveBeenCalled();
-    expect(game.enemies[3].setState).toHaveBeenCalled();
-    player.facingRight = -1;
-    attack3State.enter();
-    expect(game.enemies[2].setState).toHaveBeenCalled();
-  });
+  // test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
+  //   expect(game.enemies[0].setState).not.toHaveBeenCalled();
+  //   expect(game.enemies[1].setState).toHaveBeenCalled();
+  //   expect(game.enemies[2].setState).not.toHaveBeenCalled();
+  //   expect(game.enemies[3].setState).toHaveBeenCalled();
+  //   player.facingRight = -1;
+  //   attack3State.enter();
+  //   expect(game.enemies[2].setState).toHaveBeenCalled();
+  // });
 
   test('.handleInput should set change multiple enemies states based on enemy.inLongRange status, player.facingRight and frameX', () => {
     player.frameX = player.maxFrame;

@@ -226,20 +226,20 @@ export class Attack3 extends State {
     this.game = game;
   }
   enter() {
-    this.player.frameX = 0;
+    this.player.frameX = 9;
     this.player.maxFrame = 18;
     this.player.frameY = 11;
     this.player.speed = 0;
     this.game.energy -= 30;
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) this.game.score++;
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
-        this.game.enemies[i].setState(2);
-      } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
-        this.game.enemies[i].setState(2);
-      }
-    }
+    // for (let i = 0; i < this.game.enemies.length; i++) {
+    //   if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
+    //     this.game.enemies[i].setState(2);
+    //   } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
+    //     this.game.enemies[i].setState(2);
+    //   }
+    // }
   }
   handleInput(inputKeys) {
     if (this.player.frameX === this.player.maxFrame) {
