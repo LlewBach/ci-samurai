@@ -145,7 +145,7 @@ window.addEventListener('load', function () {
         game.isFreshGame = false;
         animate();
       }
-    } else if (e.key === 'r' && (game.gameOver || (game.trainingMode))) game.restart();
+    } else if (e.key === 'r') game.restart();
     else if (e.key === 'p') game.annotateMode = !game.annotateMode;
     else if (e.key === 't' && game.isFreshGame) {
       game.isFreshGame = false;
@@ -178,6 +178,7 @@ window.addEventListener('load', function () {
   window.addEventListener('touchend', e => {
     const endTouchY = e.changedTouches[0].clientY;
     // console.log(endTouchY);
+    // Swipe up
     if ((touchY - endTouchY) > swipeThreshold) {
       if (!game.gameOver) {
         if (game.isPaused === false) game.isPaused = true;
@@ -189,6 +190,7 @@ window.addEventListener('load', function () {
       } else {
         game.restart();
       }
+      // Swipe down
     } else if ((endTouchY - touchY) > swipeThreshold && game.isFreshGame) {
       game.isFreshGame = false;
       game.trainingMode = true;
@@ -196,6 +198,8 @@ window.addEventListener('load', function () {
       game.energy = 100;
       animate();
     } else if ((endTouchY - touchY) > swipeThreshold && game.trainingMode) {
+      game.restart();
+    } else if ((endTouchY - touchY) > swipeThreshold && !game.trainingMode && !game.isFreshGame) {
       game.restart();
     }
   });
