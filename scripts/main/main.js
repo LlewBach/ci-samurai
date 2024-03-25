@@ -23,7 +23,7 @@ export class Game {
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
     this.score = 0;
-    this.winningScore = 20;
+    // this.winningScore = 20;
     this.health = 100;
     this.energy = 5;
     this.gameOver = false;

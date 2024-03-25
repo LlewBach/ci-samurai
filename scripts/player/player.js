@@ -29,7 +29,7 @@ export class Player {
     this.currentState.enter();
   }
   update(deltaTime) {
-    this.winCheck();
+    // this.winCheck();
     // Check enemy range status
     this.shortRangeCheck();
     this.longRangeCheck();
@@ -132,12 +132,12 @@ export class Player {
       })
     )
   }
-  winCheck() {
-    if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
-      this.setState(10);
-      this.game.gameOver = true;
-    }
-  }
+  // winCheck() {
+  //   if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
+  //     this.setState(10);
+  //     this.game.gameOver = true;
+  //   }
+  // }
   draw(context) {
     context.save();
     if (this.game.annotateMode) {
