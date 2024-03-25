@@ -143,9 +143,14 @@ export class UI {
       // Pause screen message
     } else if (!this.game.trainingMode && !this.game.isFreshGame && this.game.isPaused) {
       this.text1 = "Game Paused";
-      if (!this.game.isTouchScreen) this.text2 = "Press spacebar to continue";
-      else this.text2 = "Swipe up to continue";
-      this.text3 = '';
+      if (!this.game.isTouchScreen) {
+        this.text2 = "Press spacebar to continue";
+        this.text3 = "Remember r key is restart";
+      }
+      else {
+        this.text2 = "Swipe up to continue";
+        this.text3 = "Remember swipe down to restart";
+      }
       // Game Over screen messages
     } else if (this.game.gameOver) {
       context.textAlign = 'center';

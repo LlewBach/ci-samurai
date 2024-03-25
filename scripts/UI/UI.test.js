@@ -175,9 +175,11 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Game Paused');
     expect(ui.text2).toEqual('Press spacebar to continue');
+    expect(ui.text3).toEqual('Remember r key is restart');
     game.isTouchScreen = true;
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Swipe up to continue');
+    expect(ui.text3).toEqual('Remember swipe down to restart');
   });
 
   test('.draw method should set text1 and text2 if gameOver is true and depending on score', () => {
