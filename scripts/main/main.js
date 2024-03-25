@@ -25,7 +25,7 @@ export class Game {
     this.score = 0;
     this.winningScore = 20;
     this.health = 100;
-    this.energy = 0;
+    this.energy = 5;
     this.gameOver = false;
     this.isPaused = true;
     this.isTouchScreen = false;
@@ -80,7 +80,7 @@ export class Game {
     this.enemies = [];
     this.score = 0;
     this.health = 100;
-    this.energy = 0;
+    this.energy = 5;
     this.gameOver = false;
     this.isPaused = true;
     this.trainingMode = false;

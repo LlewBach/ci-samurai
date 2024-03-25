@@ -216,7 +216,7 @@ describe('Game class', () => {
     expect(game.enemies).toEqual([]);
     expect(game.score).toBe(0);
     expect(game.health).toBe(100);
-    expect(game.energy).toBe(0);
+    expect(game.energy).toBe(5);
     expect(game.gameOver).toBe(false);
     expect(game.isPaused).toBe(true);
   });
