@@ -80,7 +80,7 @@ export class UI {
     if (this.game.isFreshGame) {
       this.text1 = 'Fight well, Coder-san';
       this.text2 = 'Press spacebar or swipe up to start/pause';
-      this.text3 = 'Or press t for Training Mode';
+      this.text3 = 'Press t or swipe down for Training Mode';
     }
     // Training Mode Messages
     else if (this.game.trainingMode) {
@@ -108,35 +108,36 @@ export class UI {
         this.text1 = "Attack1 right";
         if (!this.game.isTouchScreen) this.text2 = "Press a key";
         else this.text2 = "Press button 1";
-        this.text3 = '';
+        this.text3 = 'Attack1 takes 1 energy';
       } else if (this.game.score === 5) {
         this.text1 = "Attack1 left";
         if (!this.game.isTouchScreen) this.text2 = "Press shift + a key";
         else this.text2 = "Hold down joystick and press button 1";
-        this.text3 = '';
+        this.text3 = 'Attack 1 kills one enemy in short range';
       } else if (this.game.score === 6) {
         this.text1 = "Attack2 right";
         if (!this.game.isTouchScreen) this.text2 = "Press s key";
         else this.text2 = "Press button 2";
-        this.text3 = '';
+        this.text3 = 'Attack2 takes 5 energy';
       } else if (this.game.score === 7) {
         this.text1 = "Attack2 left";
         if (!this.game.isTouchScreen) this.text2 = "Press shift + s key";
         else this.text2 = "Hold down joystick and press button 2";
-        this.text3 = '';
+        this.text3 = 'Attack2 kills all enemies in short range';
       } else if (this.game.score === 8) {
         this.text1 = "Attack3 right";
         if (!this.game.isTouchScreen) this.text2 = "Press d key";
         else this.text2 = "Press button 3";
-        this.text3 = '';
+        this.text3 = 'Attack3 takes 30 energy';
       } else if (this.game.score === 9) {
         this.text1 = "Attack3 left";
         if (!this.game.isTouchScreen) this.text2 = "Press shift + d key";
         else this.text2 = "Hold down joystick and press button 3";
-        this.text3 = '';
+        this.text3 = 'Attack3 kills all enemies in long range';
       } else if (this.game.score === 10) {
         this.text1 = 'Your training is complete';
-        this.text2 = 'Press r to go to start screen';
+        if (!this.game.isTouchScreen) this.text2 = 'Press r to go to start screen';
+        else this.text2 = "Swipe down to go to start screen";
         this.text3 = '';
       }
 

@@ -172,12 +172,12 @@ window.addEventListener('load', function () {
   window.addEventListener('touchstart', e => {
     game.isTouchScreen = true;
     touchY = e.changedTouches[0].clientY;
-    console.log(touchY);
+    // console.log(touchY);
   });
 
   window.addEventListener('touchend', e => {
     const endTouchY = e.changedTouches[0].clientY;
-    console.log(endTouchY);
+    // console.log(endTouchY);
     if ((touchY - endTouchY) > swipeThreshold) {
       if (!game.gameOver) {
         if (game.isPaused === false) game.isPaused = true;
@@ -186,10 +186,17 @@ window.addEventListener('load', function () {
           game.isFreshGame = false;
           animate();
         }
-      }
-      else {
+      } else {
         game.restart();
       }
+    } else if ((endTouchY - touchY) > swipeThreshold && game.isFreshGame) {
+      game.isFreshGame = false;
+      game.trainingMode = true;
+      game.isPaused = false;
+      game.energy = 100;
+      animate();
+    } else if ((endTouchY - touchY) > swipeThreshold && game.trainingMode) {
+      game.restart();
     }
   });
 });

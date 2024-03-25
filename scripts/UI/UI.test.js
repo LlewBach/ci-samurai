@@ -66,7 +66,7 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Fight well, Coder-san');
     expect(ui.text2).toEqual('Press spacebar or swipe up to start/pause');
-    expect(ui.text3).toEqual('Or press t for Training Mode');
+    expect(ui.text3).toEqual('Press t or swipe down for Training Mode');
   });
 
   test('.draw method should set text1, text2 and text3 if game.trainingMode is true and game.isTouchScreen is false, depending on the score', () => {
@@ -96,32 +96,32 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack1 right');
     expect(ui.text2).toEqual('Press a key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack1 takes 1 energy');
     game.score = 5;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack1 left');
     expect(ui.text2).toEqual('Press shift + a key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack 1 kills one enemy in short range');
     game.score = 6;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack2 right');
     expect(ui.text2).toEqual('Press s key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack2 takes 5 energy');
     game.score = 7;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack2 left');
     expect(ui.text2).toEqual('Press shift + s key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack2 kills all enemies in short range');
     game.score = 8;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack3 right');
     expect(ui.text2).toEqual('Press d key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack3 takes 30 energy');
     game.score = 9;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack3 left');
     expect(ui.text2).toEqual('Press shift + d key');
-    expect(ui.text3).toEqual('');
+    expect(ui.text3).toEqual('Attack3 kills all enemies in long range');
     game.score = 10;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Your training is complete');
@@ -163,6 +163,9 @@ describe('UI class', () => {
     game.score = 9;
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Hold down joystick and press button 3');
+    game.score = 10;
+    ui.draw(mockContext);
+    expect(ui.text2).toEqual('Swipe down to go to start screen');
   });
 
   test('.draw method should set text1 and text2 if gameOver is true and depending on score', () => {
