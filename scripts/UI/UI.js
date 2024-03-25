@@ -80,7 +80,7 @@ export class UI {
     if (this.game.isFreshGame) {
       this.text1 = 'Fight well, Coder-san';
       this.text2 = 'Press spacebar or swipe up to start/pause';
-      this.text3 = 'Press t or swipe down for Training Mode';
+      this.text3 = 'Press t or swipe left for Training Mode';
     }
     // Training Mode Messages
     else if (this.game.trainingMode) {
@@ -137,7 +137,7 @@ export class UI {
       } else if (this.game.score === 10) {
         this.text1 = 'Your training is complete';
         if (!this.game.isTouchScreen) this.text2 = 'Press r to go to start screen';
-        else this.text2 = "Swipe down to go to start screen";
+        else this.text2 = "Swipe left to go to start screen";
         this.text3 = '';
       }
       // Pause screen message
@@ -149,7 +149,7 @@ export class UI {
       }
       else {
         this.text2 = "Swipe up to continue";
-        this.text3 = "Remember swipe down to restart";
+        this.text3 = "Remember swipe left to restart";
       }
       // Game Over screen messages
     } else if (this.game.gameOver) {

@@ -66,7 +66,7 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Fight well, Coder-san');
     expect(ui.text2).toEqual('Press spacebar or swipe up to start/pause');
-    expect(ui.text3).toEqual('Press t or swipe down for Training Mode');
+    expect(ui.text3).toEqual('Press t or swipe left for Training Mode');
   });
 
   test('.draw method should set text1, text2 and text3 if game.trainingMode is true and game.isTouchScreen is false, depending on the score', () => {
@@ -165,7 +165,7 @@ describe('UI class', () => {
     expect(ui.text2).toEqual('Hold down joystick and press button 3');
     game.score = 10;
     ui.draw(mockContext);
-    expect(ui.text2).toEqual('Swipe down to go to start screen');
+    expect(ui.text2).toEqual('Swipe left to go to start screen');
   });
 
   test('.draw method should set text1 and text2 if game.isPaused is true, game.isFreshGame is false and game.trainingMode is false', () => {
@@ -179,7 +179,7 @@ describe('UI class', () => {
     game.isTouchScreen = true;
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Swipe up to continue');
-    expect(ui.text3).toEqual('Remember swipe down to restart');
+    expect(ui.text3).toEqual('Remember swipe left to restart');
   });
 
   test('.draw method should set text1 and text2 if gameOver is true and depending on score', () => {

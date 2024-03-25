@@ -167,15 +167,17 @@ window.addEventListener('load', function () {
   // Below is for touch screen pause/restart functionality
 
   const swipeThreshold = 180;
-  let touchY;
+  let touchX, touchY;
 
   window.addEventListener('touchstart', e => {
     game.isTouchScreen = true;
+    touchX = e.changedTouches[0].clientX;
     touchY = e.changedTouches[0].clientY;
     // console.log(touchY);
   });
 
   window.addEventListener('touchend', e => {
+    const endTouchX = e.changedTouches[0].clientX;
     const endTouchY = e.changedTouches[0].clientY;
     // console.log(endTouchY);
     // Swipe up
@@ -190,16 +192,14 @@ window.addEventListener('load', function () {
       } else {
         game.restart();
       }
-      // Swipe down
-    } else if ((endTouchY - touchY) > swipeThreshold && game.isFreshGame) {
+      // Swipe left
+    } else if ((touchX - endTouchX) > swipeThreshold && game.isFreshGame) {
       game.isFreshGame = false;
       game.trainingMode = true;
       game.isPaused = false;
       game.energy = 100;
       animate();
-    } else if ((endTouchY - touchY) > swipeThreshold && game.trainingMode) {
-      game.restart();
-    } else if ((endTouchY - touchY) > swipeThreshold && !game.trainingMode && !game.isFreshGame) {
+    } else if ((touchX - endTouchX) > swipeThreshold) {
       game.restart();
     }
   });
