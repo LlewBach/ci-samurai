@@ -140,11 +140,14 @@ export class UI {
         else this.text2 = "Swipe down to go to start screen";
         this.text3 = '';
       }
-
-
-    }
-    // Game Over
-    else if (this.game.gameOver) {
+      // Pause screen message
+    } else if (!this.game.trainingMode && !this.game.isFreshGame && this.game.isPaused) {
+      this.text1 = "Game Paused";
+      if (!this.game.isTouchScreen) this.text2 = "Press spacebar to continue";
+      else this.text2 = "Swipe up to continue";
+      this.text3 = '';
+      // Game Over screen messages
+    } else if (this.game.gameOver) {
       context.textAlign = 'center';
       if (this.game.score >= this.game.winningScore) {
         this.text1 = 'Coder-san';

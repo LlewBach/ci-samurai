@@ -168,6 +168,18 @@ describe('UI class', () => {
     expect(ui.text2).toEqual('Swipe down to go to start screen');
   });
 
+  test('.draw method should set text1 and text2 if game.isPaused is true, game.isFreshGame is false and game.trainingMode is false', () => {
+    game.isFreshGame = false;
+    game.trainingMode = false;
+    game.isPaused = true;
+    ui.draw(mockContext);
+    expect(ui.text1).toEqual('Game Paused');
+    expect(ui.text2).toEqual('Press spacebar to continue');
+    game.isTouchScreen = true;
+    ui.draw(mockContext);
+    expect(ui.text2).toEqual('Swipe up to continue');
+  });
+
   test('.draw method should set text1 and text2 if gameOver is true and depending on score', () => {
     game.isFreshGame = false;
     game.score = 4;
