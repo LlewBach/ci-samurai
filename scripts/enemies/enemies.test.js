@@ -1,7 +1,7 @@
 import { Zombie1, Zombie2 } from './enemies.js';
 import { Walking } from '../enemyStates/enemyStates.js';
 
-describe('Zombie1 class', () => {
+describe('Zombie class', () => {
   let game;
   let zombie1, zombie2;
   let mockContext;
@@ -11,8 +11,8 @@ describe('Zombie1 class', () => {
     game = {
       annotateMode: false
     };
-    zombie1 = new Zombie1(game);
-    zombie2 = new Zombie2(game);
+    zombie1 = new Zombie1(game, 0);
+    zombie2 = new Zombie2(game, 3);
     mockContext = {
       drawImage: jest.fn(),
       save: jest.fn(),
@@ -22,7 +22,7 @@ describe('Zombie1 class', () => {
     };
   });
 
-  test('should create an instance of Zombie1', () => {
+  test('should create an instances of Zombie', () => {
     expect(zombie1).toBeInstanceOf(Zombie1);
     expect(zombie2).toBeInstanceOf(Zombie2);
   });
@@ -53,15 +53,15 @@ describe('Zombie1 class', () => {
     expect(zombie1).toHaveProperty('fps');
     expect(zombie1).toHaveProperty('frameInterval');
     expect(zombie1).toHaveProperty('frameTimer');
+    expect(zombie1).toHaveProperty('states');
+    expect(zombie1).toHaveProperty('currentState');
   });
 
   test('should correctly initialize with the given game dimensions', () => {
     expect(zombie1.x).toBe(game.width);
+    expect(zombie2.x).not.toBe(game.width);
     expect(zombie1.y).toBe(game.height - game.groundMargin - zombie1.height);
   });
-
-  // test('should initialize with correct state', () => {
-  // });
 
   test('.update should enact currentState.update()', () => {
     zombie1.currentState.update = jest.fn();

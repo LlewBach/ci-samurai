@@ -22,6 +22,7 @@ export class Game {
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
+    this.enemyRandomFactor = 0.5;
     this.score = 0;
     // this.winningScore = 20;
     this.health = 100;
@@ -56,15 +57,22 @@ export class Game {
     if (this.isTouchScreen) this.joystick.draw(context);
     if (this.isTouchScreen) this.controlPad.draw(context);
   }
+  // Need to test addEnemy
   addEnemy(deltaTime) {
-    // Requiring deltaTime to be > 20 prevents creating single enemy in training mode
-    if (this.enemies.length === 0 && deltaTime > 20) {
-      this.enemies.push(new Zombie1(this));
-    }
+    const randomEnemyType = () => Math.floor(Math.random() * 2) + 1 === 1 ? Zombie1 : Zombie2;
+    let type = randomEnemyType();
+
     if (this.enemyTimer < this.enemyInterval) this.enemyTimer += deltaTime;
     else {
       this.enemyTimer = 0;
-      if (Math.random() < 0.5) this.enemies.push(new Zombie2(this));
+      if (Math.random() < this.enemyRandomFactor) {
+        this.enemies.push(new type(this, 0));
+        this.enemyRandomFactor += 0.02;
+      }
+      if (Math.random() < this.enemyRandomFactor) {
+        this.enemies.push(new type(this, 3));
+        this.enemyRandomFactor += 0.05;
+      }
     }
   }
   healthCheck() {

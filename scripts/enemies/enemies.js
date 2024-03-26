@@ -4,12 +4,13 @@ const zombie1 = document.getElementById('zombie1');
 const zombie2 = document.getElementById('zombie2');
 
 class Zombie {
-  constructor(game) {
+  constructor(game, startingState) {
     this.game = game;
     this.spriteWidth = 130;
     this.spriteHeight = 70;
     this.width = this.spriteWidth * 2;
     this.height = this.spriteHeight * 2;
+    this.x = startingState === 0 ? this.game.width : this.game.width * Math.random();
     this.y = this.game.height - this.game.groundMargin - this.height;
     this.hitMargin = 100;
     this.yContactMargin = 20;
@@ -20,6 +21,8 @@ class Zombie {
     this.jumpAttacking = false;
     this.markedForDeletion = false;
     this.speed = 0;
+    this.maxSpeed = 1;
+    this.jumpSpeed = 6;
     this.frameX = 0;
     this.maxFrame;
     this.frameY;
@@ -27,6 +30,8 @@ class Zombie {
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
     this.states = [new Standing(this.game, this), new Walking(this.game, this), new Dying(this.game, this), new Spawning(this.game, this), new Turning(this.game, this), new Attack1(this.game, this), new Attack2(this.game, this)];
+    this.currentState = this.states[startingState];
+    this.currentState.enter();
   }
   update(deltaTime) {
     // currentState update
@@ -63,37 +68,15 @@ class Zombie {
 }
 
 export class Zombie1 extends Zombie {
-  constructor(game) {
-    super(game);
+  constructor(game, startingState) {
+    super(game, startingState);
     this.image = zombie1;
-    this.x = this.game.width;
-    this.maxSpeed = 1;
-    this.jumpSpeed = 6;
-    this.currentState = this.states[0];
-    this.currentState.enter();
-  }
-  update(deltaTime) {
-    super.update(deltaTime);
-  }
-  draw(context) {
-    super.draw(context);
   }
 }
 
 export class Zombie2 extends Zombie {
-  constructor(game) {
-    super(game);
+  constructor(game, startingState) {
+    super(game, startingState);
     this.image = zombie2;
-    this.x = this.game.width * Math.random();
-    this.maxSpeed = 1;
-    this.jumpSpeed = 6;
-    this.currentState = this.states[3];
-    this.currentState.enter();
-  }
-  update(deltaTime) {
-    super.update(deltaTime);
-  }
-  draw(context) {
-    super.draw(context);
   }
 }
