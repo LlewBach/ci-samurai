@@ -54,12 +54,12 @@ describe('UI class', () => {
 
   test('.draw method should call correct context methods', () => {
     ui.draw(mockContext);
-    expect(mockContext.fillText).toHaveBeenCalledTimes(12);
+    expect(mockContext.fillText).toHaveBeenCalledTimes(13);
     expect(mockContext.fillRect).toHaveBeenCalledTimes(2);
-    expect(mockContext.beginPath).toHaveBeenCalledTimes(6);
-    expect(mockContext.arc).toHaveBeenCalledTimes(6);
-    expect(mockContext.stroke).toHaveBeenCalledTimes(3);
-    expect(mockContext.fill).toHaveBeenCalledTimes(3);
+    expect(mockContext.beginPath).toHaveBeenCalledTimes(8);
+    expect(mockContext.arc).toHaveBeenCalledTimes(8);
+    expect(mockContext.stroke).toHaveBeenCalledTimes(4);
+    expect(mockContext.fill).toHaveBeenCalledTimes(4);
   });
 
   test('.draw method should set text1, text2 and text3 if isFreshGame', () => {
@@ -124,6 +124,11 @@ describe('UI class', () => {
     expect(ui.text3).toEqual('Attack3 kills all enemies in long range');
     game.score = 10;
     ui.draw(mockContext);
+    expect(ui.text1).toEqual('Attack4');
+    expect(ui.text2).toEqual('Press f key');
+    expect(ui.text3).toEqual('The nuclear option');
+    game.score = 11;
+    ui.draw(mockContext);
     expect(ui.text1).toEqual('Your training is complete');
     expect(ui.text2).toEqual('Press r to go to start screen');
     expect(ui.text3).toEqual('');
@@ -164,6 +169,9 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Hold down joystick and press button 3');
     game.score = 10;
+    ui.draw(mockContext);
+    expect(ui.text2).toEqual('Press button 4');
+    game.score = 11;
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Swipe left to go to start screen');
   });

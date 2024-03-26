@@ -29,12 +29,11 @@ describe('ControlPad class', () => {
 
   test('.draw should correctly call context methods', () => {
     controlPad.draw(mockContext);
-    expect(mockContext.beginPath).toHaveBeenCalledTimes(6);
-    expect(mockContext.arc).toHaveBeenCalledTimes(6);
-    expect(mockContext.arc).toHaveBeenCalledTimes(6);
-    expect(mockContext.stroke).toHaveBeenCalledTimes(3);
-    expect(mockContext.fill).toHaveBeenCalledTimes(3);
-    expect(mockContext.fillText).toHaveBeenCalledTimes(3);
+    expect(mockContext.beginPath).toHaveBeenCalledTimes(8);
+    expect(mockContext.arc).toHaveBeenCalledTimes(8);
+    expect(mockContext.stroke).toHaveBeenCalledTimes(4);
+    expect(mockContext.fill).toHaveBeenCalledTimes(4);
+    expect(mockContext.fillText).toHaveBeenCalledTimes(4);
   });
 
   // Manually test that the button light up/go out according to energy

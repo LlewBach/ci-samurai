@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,7 +24,7 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this), new Attack4(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }

@@ -46,6 +46,14 @@ export class ControlPad {
       ) {
         return 'button3';
       }
+      else if (
+        scaledX > (this.x - 90 - this.r) &&
+        scaledX < (this.x - 90 + this.r) &&
+        scaledY > (this.y - this.r) &&
+        scaledY < (this.y + this.r)
+      ) {
+        return 'button4';
+      }
     };
 
     canvas.addEventListener('touchstart', e => {
@@ -54,6 +62,7 @@ export class ControlPad {
       if (button === 'button1' && this.keys.indexOf('a') === -1) this.keys.push('a');
       else if (button === 'button2' && this.keys.indexOf('s') === -1) this.keys.push('s');
       else if (button === 'button3' && this.keys.indexOf('d') === -1) this.keys.push('d');
+      else if (button === 'button4' && this.keys.indexOf('f') === -1) this.keys.push('f');
       // console.log(this.keys);
     });
 
@@ -63,6 +72,7 @@ export class ControlPad {
       if (button === 'button1') this.keys.splice(this.keys.indexOf('a'));
       else if (button === 'button2') this.keys.splice(this.keys.indexOf('s'));
       else if (button === 'button3') this.keys.splice(this.keys.indexOf('d'));
+      else if (button === 'button4') this.keys.splice(this.keys.indexOf('f'));
       // console.log(this.keys);
     });
   }
@@ -80,6 +90,10 @@ export class ControlPad {
     // Outer circle 3
     context.beginPath();
     context.arc(this.x, this.y + 80, this.r + 1, 0, Math.PI * 2);
+    context.stroke();
+    // Outer circle 4
+    context.beginPath();
+    context.arc(this.x - 90, this.y, this.r + 1, 0, Math.PI * 2);
     context.stroke();
 
     // Button 1
@@ -100,6 +114,12 @@ export class ControlPad {
     if (this.game.energy >= 30) context.fillStyle = 'blue';
     else context.fillStyle = 'lightgray';
     context.fill();
+    // Button 4
+    context.beginPath();
+    context.arc(this.x - 90, this.y, this.r, 0, Math.PI * 2);
+    if (this.game.energy >= 50) context.fillStyle = 'yellow';
+    else context.fillStyle = 'lightgray';
+    context.fill();
 
     // Label 1
     context.font = '20px Arial';
@@ -111,6 +131,8 @@ export class ControlPad {
     context.fillText('2', this.x, this.y - 80);
     // Label 3
     context.fillText('3', this.x, this.y + 80);
+    // Label 4
+    context.fillText('4', this.x - 90, this.y);
   }
 }
 
@@ -240,6 +262,8 @@ export class InputHandler {
         e.key === 'S' ||
         e.key === 'd' ||
         e.key === 'D' ||
+        e.key === 'f' ||
+        e.key === 'F' ||
         e.key === 'Shift')
         && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
@@ -267,6 +291,8 @@ export class InputHandler {
         e.key === 'S' ||
         e.key === 'd' ||
         e.key === 'D' ||
+        e.key === 'f' ||
+        e.key === 'F' ||
         e.key === 'Shift'
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);

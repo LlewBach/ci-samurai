@@ -12,6 +12,7 @@ const states = {
   ATTACK3: 8,
   SEPPAKU: 9,
   TRANSCENDING: 10,
+  ATTACK4: 11,
 }
 
 class State {
@@ -47,7 +48,9 @@ export class Standing extends State {
     } else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) {
       if (inputKeys.includes('Shift') || joystickKeys.includes('Shift')) this.player.facingRight = -1;
       this.player.setState(states.ATTACK3);
-    } else if (this.player.game.trainingMode && this.player.game.score === 10) {
+    } else if ((inputKeys.includes('f') || inputKeys.includes('F') || controlPadKeys.includes('f')) && this.player.game.energy >= 50) {
+      this.player.setState(states.ATTACK4);
+    } else if (this.player.game.trainingMode && this.player.game.score === 11) {
       this.player.setState(states.TRANSCENDING);
     }
   }
@@ -83,6 +86,7 @@ export class Running extends State {
     else if ((inputKeys.includes('a') || inputKeys.includes('A') || controlPadKeys.includes('a')) && this.player.game.energy >= 1) this.player.setState(states.ATTACK1);
     else if ((inputKeys.includes('s') || inputKeys.includes('S') || controlPadKeys.includes('s')) && this.player.game.energy >= 5) this.player.setState(states.ATTACK2);
     else if ((inputKeys.includes('d') || inputKeys.includes('D') || controlPadKeys.includes('d')) && this.player.game.energy >= 30) this.player.setState(states.ATTACK3);
+    else if ((inputKeys.includes('f') || inputKeys.includes('F') || controlPadKeys.includes('f')) && this.player.game.energy >= 50) this.player.setState(states.ATTACK4);
   }
 }
 
@@ -232,7 +236,10 @@ export class Attack3 extends State {
     this.player.speed = 0;
     this.game.energy -= 30;
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
-    else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) this.game.score++;
+    else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) {
+      this.game.score++;
+      this.game.energy = 50;
+    }
     // for (let i = 0; i < this.game.enemies.length; i++) {
     //   if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
     //     this.game.enemies[i].setState(2);
@@ -287,5 +294,30 @@ export class Transcending extends State {
   }
   handleInput() {
 
+  }
+}
+
+export class Attack4 extends State {
+  constructor(player, game) {
+    super(player);
+    this.game = game;
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 19;
+    this.player.frameY = 12;
+    this.player.speed = 0;
+    this.game.energy -= 50;
+    if (this.game.trainingMode && this.game.score === 10) this.game.score++;
+  }
+  handleInput(inputKeys) {
+    if (this.player.frameX === this.player.maxFrame) {
+      for (let i = 0; i < this.game.enemies.length; i++) {
+        if (this.game.enemies[i].inLongRange === 1 || this.game.enemies[i].inLongRange === -1) {
+          this.game.enemies[i].setState(2);
+        }
+      }
+      this.player.setState(states.STANDING);
+    }
   }
 }

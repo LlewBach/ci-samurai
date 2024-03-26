@@ -1,7 +1,7 @@
 export class UI {
   constructor(game) {
     this.game = game;
-    this.x = 340;
+    this.x = 315;
     this.y = 450;
     this.r = 12;
     this.spacing = 60;
@@ -42,6 +42,10 @@ export class UI {
     context.beginPath();
     context.arc(this.x + (2 * this.spacing), this.y, this.r + 1, 0, Math.PI * 2);
     context.stroke();
+    // Outer circle 4
+    context.beginPath();
+    context.arc(this.x + (3 * this.spacing), this.y, this.r + 1, 0, Math.PI * 2);
+    context.stroke();
 
     // Indicator 1
     context.beginPath();
@@ -64,6 +68,13 @@ export class UI {
       context.fillStyle = 'lightblue';
     } else context.fillStyle = 'lightgray';
     context.fill();
+    // Indicator 4
+    context.beginPath();
+    context.arc(this.x + (3 * this.spacing), this.y, this.r, 0, Math.PI * 2);
+    if (this.game.energy >= 50) {
+      context.fillStyle = 'lightyellow';
+    } else context.fillStyle = 'lightgray';
+    context.fill();
 
     // Label 1
     context.font = '20px Arial';
@@ -75,6 +86,8 @@ export class UI {
     context.fillText('2', this.x + this.spacing, this.y);
     // Label 3
     context.fillText('3', this.x + (2 * this.spacing), this.y);
+    // Label 4
+    context.fillText('4', this.x + (3 * this.spacing), this.y);
 
     // New game message
     if (this.game.isFreshGame) {
@@ -135,6 +148,11 @@ export class UI {
         else this.text2 = "Hold down joystick and press button 3";
         this.text3 = 'Attack3 kills all enemies in long range';
       } else if (this.game.score === 10) {
+        this.text1 = 'Attack4';
+        if (!this.game.isTouchScreen) this.text2 = 'Press f key';
+        else this.text2 = "Press button 4";
+        this.text3 = 'The nuclear option';
+      } else if (this.game.score === 11) {
         this.text1 = 'Your training is complete';
         if (!this.game.isTouchScreen) this.text2 = 'Press r to go to start screen';
         else this.text2 = "Swipe left to go to start screen";

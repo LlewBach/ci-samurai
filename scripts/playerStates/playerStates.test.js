@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 } from './playerStates.js';
 import { PlayerBlood } from '../particles/particles.js';
 
 const states = {
@@ -13,6 +13,7 @@ const states = {
   ATTACK3: 8,
   SEPPAKU: 9,
   TRANSCENDING: 10,
+  ATTACK4: 11,
 }
 let player;
 
@@ -104,7 +105,7 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK1 on "a" control pad press if game.energy >= 1', () => {
+  test('should correctly transition to ATTACK1 on button1 control pad press if game.energy >= 1', () => {
     standingState.handleInput([], [], ['a']);
     expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK1);
     player.game.energy = 1;
@@ -129,7 +130,7 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK2 on "s" control pad press if game.energy >= 5', () => {
+  test('should correctly transition to ATTACK2 on button2 control pad press if game.energy >= 5', () => {
     player.game.energy = 4;
     standingState.handleInput([], [], ['s']);
     expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
@@ -155,7 +156,7 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
-  test('should correctly transition to ATTACK3 on "d" control pad press if game.energy >= 30', () => {
+  test('should correctly transition to ATTACK3 on button3 control pad press if game.energy >= 30', () => {
     player.game.energy = 29;
     standingState.handleInput([], [], ['d']);
     expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK3);
@@ -167,9 +168,29 @@ describe('Standing State', () => {
     expect(player.facingRight).toBe(-1);
   });
 
+  test('should correctly transition to ATTACK4 on f key press if game.energy >= 50', () => {
+    player.facingRight = 1;
+    player.game.energy = 49;
+    standingState.handleInput(['f'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK4);
+    player.game.energy = 50;
+    standingState.handleInput(['f'], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK4);
+    expect(player.facingRight).toBe(1);
+  });
+
+  test('should correctly transition to ATTACK4 on button4 control pad press if game.energy >= 50', () => {
+    player.game.energy = 49;
+    standingState.handleInput([], [], ['f']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK4);
+    player.game.energy = 50;
+    standingState.handleInput([], [], ['f']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK4);
+  });
+
   test('should correctly transition to TRANSCENDING if in training mode and at certain score', () => {
     player.game.trainingMode = true;
-    player.game.score = 10;
+    player.game.score = 11;
     standingState.handleInput([], [], []);
     expect(player.setState).toHaveBeenCalledWith(states.TRANSCENDING);
   });
@@ -315,6 +336,24 @@ describe('Running State', () => {
     player.game.energy = 30;
     runningState.handleInput([], [], ['d']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK3);
+  });
+
+  test('should transition to ATTACK4 on "f" key press if game.energy >= 50', () => {
+    player.game.energy = 49;
+    runningState.handleInput(['f'], [], []);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK4);
+    player.game.energy = 50;
+    runningState.handleInput(['f'], [], []);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK4);
+  });
+
+  test('should transition to ATTACK3 on button4 control pad press if game.energy >= 50', () => {
+    player.game.energy = 49;
+    runningState.handleInput([], [], ['f']);
+    expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK4);
+    player.game.energy = 50;
+    runningState.handleInput([], [], ['f']);
+    expect(player.setState).toHaveBeenCalledWith(states.ATTACK4);
   });
 });
 
@@ -751,5 +790,59 @@ describe('Transcending state', () => {
   test('should configure some player properties', () => {
     expect(player.maxFrame).toBe(19);
     expect(player.frameY).toBe(16);
+  });
+});
+
+describe('Attack4 State', () => {
+  let attack4State, game;
+
+  beforeEach(() => {
+    game = {
+      enemies: [
+        { inShortRange: 0, inLongRange: 0, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+        { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+      ],
+      energy: 50
+    };
+    player.facingRight = 1;
+    attack4State = new Attack4(player, game);
+    attack4State.enter();
+  });
+
+  test('.enter should configure some player properties', () => {
+    expect(player.maxFrame).toBe(19);
+    expect(player.frameY).toBe(12);
+  });
+
+  test('.enter should update game.energy', () => {
+    expect(game.energy).toBe(0);
+  });
+
+  test('.enter should update game.score if game.trainingMode is true and score is 10', () => {
+    game.trainingMode = true;
+    game.score = 10;
+    player.facingRight = 1;
+    attack4State.enter();
+    expect(game.score).toBe(11);
+  });
+
+  test('.handleInput should set change multiple enemies states based on enemy.inLongRange status and frameX', () => {
+    player.frameX = player.maxFrame;
+    attack4State.handleInput();
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalled();
+    expect(game.enemies[2].setState).toHaveBeenCalled();
+    expect(game.enemies[3].setState).toHaveBeenCalled();
+  });
+
+  test('should transition to STANDING if frameX === maxFrame', () => {
+    player.frameX = player.maxFrame - 1;
+    attack4State.handleInput();
+    expect(player.setState).not.toHaveBeenCalled();
+    player.frameX = player.maxFrame;
+    attack4State.handleInput();
+    expect(player.setState).toHaveBeenCalledWith(states.STANDING);
   });
 });
