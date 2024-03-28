@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from './playerStates.js';
 import { PlayerBlood } from '../particles/particles.js';
 
 const states = {
@@ -14,6 +14,7 @@ const states = {
   SEPPAKU: 9,
   TRANSCENDING: 10,
   ATTACK4: 11,
+  DEMON: 12,
 }
 let player;
 
@@ -855,5 +856,50 @@ describe('Attack4 State', () => {
     player.frameX = player.maxFrame;
     attack4State.handleInput();
     expect(player.setState).toHaveBeenCalledWith(states.STANDING);
+  });
+});
+
+describe('Demon state', () => {
+  let demonState, game;
+
+  beforeEach(() => {
+    game = {
+      enemies: [
+        { inShortRange: 0, inLongRange: 0, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+        { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
+        { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
+      ],
+      energy: 10
+    };
+    demonState = new Demon(player, game);
+    demonState.enter();
+  });
+
+  test('should configure some player properties', () => {
+    expect(player.maxFrame).toBe(43);
+    expect(player.frameY).toBe(17);
+  });
+
+  test('should set enemies state if in long range', () => {
+    player.frameX = 10;
+    demonState.handleInput();
+    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[1].setState).toHaveBeenCalledWith(2);
+    expect(game.enemies[2].setState).toHaveBeenCalledWith(2);
+    expect(game.enemies[3].setState).toHaveBeenCalledWith(2);
+  });
+
+  test('should increment frameY once maxFrame reached', () => {
+    player.frameX = player.maxFrame;
+    demonState.handleInput();
+    expect(player.frameY).toBe(18);
+  });
+
+  test('should reset frameX once reaches 8 if frameY is 18', () => {
+    player.frameY = 18;
+    player.frameX = 8;
+    demonState.handleInput();
+    expect(player.frameX).toBe(0);
   });
 });

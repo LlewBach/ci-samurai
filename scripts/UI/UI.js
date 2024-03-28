@@ -146,12 +146,12 @@ export class UI {
         this.text1 = "Attack3 left";
         if (!this.game.isTouchScreen) this.text2 = "Press shift + d key";
         else this.text2 = "Hold down joystick and press button 3";
-        this.text3 = 'Attack3 kills all enemies in long range';
+        this.text3 = 'Long range and generates +5 health';
       } else if (this.game.score === 10) {
         this.text1 = 'Attack4';
         if (!this.game.isTouchScreen) this.text2 = 'Press f key';
         else this.text2 = "Press button 4";
-        this.text3 = 'The nuclear option';
+        this.text3 = 'Generates +25 health';
       } else if (this.game.score === 11) {
         this.text1 = 'Your training is complete';
         if (!this.game.isTouchScreen) this.text2 = 'Press r to go to start screen';
@@ -173,13 +173,17 @@ export class UI {
     } else if (this.game.gameOver) {
       context.textAlign = 'center';
       if (this.game.score >= this.game.winningScore) {
-        this.text1 = 'Coder-san';
-        this.text2 = 'You brought honour upon your cojo';
-      }
-      else {
+        this.text1 = 'Your code is cleansed!';
+        this.text2 = 'You are the Chosen One';
+      } else if (this.game.score >= 150) {
+        this.text1 = 'Your rage is strong';
+        this.text2 = 'Redemption is within reach';
+      } else {
         this.text1 = 'If you can\'t beat them...';
         this.text2 = 'Join them, Coder-san';
       }
+      if (!this.game.isTouchScreen) this.text3 = 'Press r key to restart';
+      else this.text3 = 'Swipe up to restart'
     } else {
       this.text1 = '';
       this.text2 = '';

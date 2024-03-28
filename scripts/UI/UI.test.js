@@ -13,7 +13,7 @@ describe('UI class', () => {
       text2: '',
       text3: '',
       isFreshGame: true,
-      winningScore: 20,
+      winningScore: 333,
       trainingMode: false,
       isFreshGame: true,
       isTouchScreen: false,
@@ -121,12 +121,12 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack3 left');
     expect(ui.text2).toEqual('Press shift + d key');
-    expect(ui.text3).toEqual('Attack3 kills all enemies in long range');
+    expect(ui.text3).toEqual('Long range and generates +5 health');
     game.score = 10;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Attack4');
     expect(ui.text2).toEqual('Press f key');
-    expect(ui.text3).toEqual('The nuclear option');
+    expect(ui.text3).toEqual('Generates +25 health');
     game.score = 11;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Your training is complete');
@@ -199,10 +199,24 @@ describe('UI class', () => {
     ui.draw(mockContext);
     expect(ui.text1).toEqual('If you can\'t beat them...');
     expect(ui.text2).toEqual('Join them, Coder-san');
+    game.score = 150;
+    ui.draw(mockContext);
+    expect(ui.text1).toEqual('Your rage is strong');
+    expect(ui.text2).toEqual('Redemption is within reach');
     game.score = game.winningScore;
     ui.draw(mockContext);
-    expect(ui.text1).toEqual('Coder-san');
-    expect(ui.text2).toEqual('You brought honour upon your cojo');
+    expect(ui.text1).toEqual('Your code is cleansed!');
+    expect(ui.text2).toEqual('You are the Chosen One');
+  });
+
+  test('.draw method should set text3 messages if gameOver is true and according to .isTouchScreen status', () => {
+    game.isFreshGame = false;
+    game.gameOver = true;
+    ui.draw(mockContext);
+    expect(ui.text3).toEqual('Press r key to restart');
+    game.isTouchScreen = true;
+    ui.draw(mockContext);
+    expect(ui.text3).toEqual('Swipe up to restart');
   });
 });
 

@@ -65,7 +65,7 @@ describe('Game class', () => {
     expect(game).toHaveProperty('enemyInterval');
     expect(game).toHaveProperty('enemyRandomFactor');
     expect(game).toHaveProperty('score');
-    // expect(game).toHaveProperty('winningScore');
+    expect(game).toHaveProperty('winningScore');
     expect(game).toHaveProperty('health');
     expect(game).toHaveProperty('energy');
     expect(game).toHaveProperty('gameOver');
@@ -116,9 +116,13 @@ describe('Game class', () => {
     expect(game.joystick.update).toHaveBeenCalled();
   });
 
-  test('.update should call .addEnemy if game.trainingMode is false', () => {
-    game.trainingMode = true;
+  test('.update should call .addEnemy if game.trainingMode is false and score < winningScore', () => {
     const addEnemySpy = jest.spyOn(game, 'addEnemy');
+    game.score = game.winningScore + 1;
+    game.trainingMode = true;
+    game.update(16);
+    expect(addEnemySpy).not.toHaveBeenCalled();
+    game.score = game.winningScore - 1;
     game.update(16);
     expect(addEnemySpy).not.toHaveBeenCalled();
     game.trainingMode = false;
@@ -196,6 +200,8 @@ describe('Game class', () => {
     game.particles = ['particle0'];
     game.floatingText = ['text0'];
     game.enemies = ['enemy0'];
+    game.enemyTimer = 20;
+    game.enemyRandomFactor = 0.35;
     game.score = 10;
     game.health = 50;
     game.energy = 30;
@@ -206,6 +212,8 @@ describe('Game class', () => {
     expect(game.particles).toEqual([]);
     expect(game.floatingText).toEqual([]);
     expect(game.enemies).toEqual([]);
+    expect(game.enemyTimer).toBe(0);
+    expect(game.enemyRandomFactor).toBe(0.3);
     expect(game.score).toBe(0);
     expect(game.health).toBe(100);
     expect(game.energy).toBe(5);

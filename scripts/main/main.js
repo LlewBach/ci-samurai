@@ -24,7 +24,7 @@ export class Game {
     this.enemyInterval = 5000;
     this.enemyRandomFactor = 0.3;
     this.score = 0;
-    // this.winningScore = 20;
+    this.winningScore = 333;
     this.health = 100;
     this.energy = 5;
     this.gameOver = false;
@@ -38,7 +38,7 @@ export class Game {
     this.background.update();
     if (this.isTouchScreen) this.joystick.update();
     this.player.update(deltaTime);
-    if (!this.trainingMode) this.addEnemy(deltaTime);
+    if (!this.trainingMode && this.score < this.winningScore) this.addEnemy(deltaTime);
     this.enemies.forEach(enemy => enemy.update(deltaTime));
     this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
     this.particles.forEach(particle => particle.update());
@@ -86,6 +86,8 @@ export class Game {
     this.particles = [];
     this.floatingText = [];
     this.enemies = [];
+    this.enemyTimer = 0;
+    this.enemyRandomFactor = 0.3;
     this.score = 0;
     this.health = 100;
     this.energy = 5;
@@ -160,6 +162,7 @@ window.addEventListener('load', function () {
       game.trainingMode = true;
       game.isPaused = false;
       game.energy = 100;
+      game.health = 50;
       animate();
     }
   });
@@ -206,6 +209,7 @@ window.addEventListener('load', function () {
       game.trainingMode = true;
       game.isPaused = false;
       game.energy = 100;
+      game.health = 50;
       animate();
     } else if ((touchX - endTouchX) > swipeThreshold) {
       game.restart();

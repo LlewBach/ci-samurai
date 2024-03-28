@@ -13,6 +13,7 @@ const states = {
   SEPPAKU: 9,
   TRANSCENDING: 10,
   ATTACK4: 11,
+  DEMON: 12,
 }
 
 class State {
@@ -321,5 +322,28 @@ export class Attack4 extends State {
       }
       this.player.setState(states.STANDING);
     }
+  }
+}
+
+export class Demon extends State {
+  constructor(player, game) {
+    super(player);
+    this.game = game;
+  }
+  enter() {
+    this.player.frameX = 0;
+    this.player.maxFrame = 43;
+    this.player.frameY = 17;
+    this.player.speed = 0;
+  }
+  handleInput(inputKeys) {
+    if (this.player.frameY === 17 && this.player.frameX === 10) {
+      for (let i = 0; i < this.game.enemies.length; i++) {
+        if (this.game.enemies[i].inLongRange === 1 || this.game.enemies[i].inLongRange === -1) {
+          this.game.enemies[i].setState(2);
+        }
+      }
+    } else if (this.player.frameX === this.player.maxFrame && this.player.frameY === 17) this.player.frameY++;
+    else if (this.player.frameY === 18 && this.player.frameX === 8) this.player.frameX = 0;
   }
 }

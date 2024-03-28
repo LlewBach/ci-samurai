@@ -15,7 +15,7 @@ describe('Player class', () => {
       height: 600,
       groundMargin: 90,
       score: 0,
-      winningScore: 20,
+      winningScore: 333,
       health: 100,
       gameOver: false,
       enemies: [],
@@ -83,11 +83,11 @@ describe('Player class', () => {
     expect(player.speed).toBe(0);
   });
 
-  // test('.update should call winCheck', () => {
-  //   const winCheckSpy = jest.spyOn(player, 'winCheck');
-  //   player.update(16);
-  //   expect(winCheckSpy).toHaveBeenCalled();
-  // });
+  test('.update should call winCheck', () => {
+    const winCheckSpy = jest.spyOn(player, 'winCheck');
+    player.update(16);
+    expect(winCheckSpy).toHaveBeenCalled();
+  });
 
   test('.update should call range checks', () => {
     const shortRangeCheckSpy = jest.spyOn(player, 'shortRangeCheck');
@@ -348,16 +348,16 @@ describe('Player class', () => {
     expect(player.jumpAttackCheck()).toBe(true);
   });
 
-  // test('.winCheck should set player state at certain game.score and if gameOver is false', () => {
-  //   const setStateSpy = jest.spyOn(player, 'setState');
-  //   game.score = game.winningScore;
-  //   game.gameOver = true;
-  //   player.winCheck();
-  //   expect(setStateSpy).not.toHaveBeenCalled();
-  //   game.gameOver = false;
-  //   player.winCheck();
-  //   expect(setStateSpy).toHaveBeenCalledWith(10);
-  // });
+  test('.winCheck should set player state at certain game.score and if gameOver is false', () => {
+    const setStateSpy = jest.spyOn(player, 'setState');
+    game.score = game.winningScore;
+    game.gameOver = true;
+    player.winCheck();
+    expect(setStateSpy).not.toHaveBeenCalled();
+    game.gameOver = false;
+    player.winCheck();
+    expect(setStateSpy).toHaveBeenCalledWith(12);
+  });
 
   test('.draw should call strokeRect context method if game.annotateMode is true', () => {
     player.draw(mockContext);

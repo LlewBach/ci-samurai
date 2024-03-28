@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from '../playerStates/playerStates.js';
 
 export class Player {
   constructor(game) {
@@ -24,12 +24,12 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this), new Attack4(this, this.game)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this), new Attack4(this, this.game), new Demon(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }
   update(deltaTime) {
-    // this.winCheck();
+    this.winCheck();
     // Check enemy range status
     this.shortRangeCheck();
     this.longRangeCheck();
@@ -39,7 +39,8 @@ export class Player {
       this.currentState !== this.states[4] &&
       this.currentState !== this.states[5] &&
       this.currentState !== this.states[9] &&
-      this.currentState !== this.states[10]) {
+      this.currentState !== this.states[10] &&
+      this.currentState !== this.states[12]) {
       this.setState(5);
       if (this.game.health > 3) this.game.health -= 3;
       else if (this.game.health > 0) this.game.health = 0;
@@ -102,6 +103,7 @@ export class Player {
         enemy.x + enemy.width - enemy.hitMargin > this.x &&
         enemy.x + (enemy.width / 2) < this.x + (this.width / 2)
       ) enemy.inLongRange = -1;
+      else enemy.inLongRange = 0;
     });
   }
   hitCheck() {
@@ -132,12 +134,12 @@ export class Player {
       })
     )
   }
-  // winCheck() {
-  //   if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
-  //     this.setState(10);
-  //     this.game.gameOver = true;
-  //   }
-  // }
+  winCheck() {
+    if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
+      this.setState(12);
+      this.game.gameOver = true;
+    }
+  }
   draw(context) {
     context.save();
     if (this.game.annotateMode) {
