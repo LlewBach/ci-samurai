@@ -64,7 +64,7 @@ describe('UI class', () => {
 
   test('.draw method should set text1, text2 and text3 if isFreshGame', () => {
     ui.draw(mockContext);
-    expect(ui.text1).toEqual('Fight well, Coder-san');
+    expect(ui.text1).toEqual('Die well, Coder-san');
     expect(ui.text2).toEqual('Press spacebar or swipe up to start/pause');
     expect(ui.text3).toEqual('Press t or swipe left for Training Mode');
   });
@@ -174,6 +174,13 @@ describe('UI class', () => {
     game.score = 11;
     ui.draw(mockContext);
     expect(ui.text2).toEqual('Swipe left to go to start screen');
+  });
+
+  test('.draw method should set text1 if trainingMode is false and energy is 0', () => {
+    game.isFreshGame = false;
+    game.energy = 0;
+    ui.draw(mockContext);
+    expect(ui.text1).toEqual('Jump for energy!');
   });
 
   test('.draw method should set text1 and text2 if game.isPaused is true, game.isFreshGame is false and game.trainingMode is false', () => {

@@ -91,7 +91,7 @@ export class UI {
 
     // New game message
     if (this.game.isFreshGame) {
-      this.text1 = 'Fight well, Coder-san';
+      this.text1 = 'Die well, Coder-san';
       this.text2 = 'Press spacebar or swipe up to start/pause';
       this.text3 = 'Press t or swipe left for Training Mode';
     }
@@ -158,7 +158,10 @@ export class UI {
         else this.text2 = "Swipe left to go to start screen";
         this.text3 = '';
       }
-      // Pause screen message
+      // Zero energy message
+    } else if (!this.game.trainingMode && this.game.energy === 0) {
+      this.text1 = "Jump for energy!";
+      // Game paused message
     } else if (!this.game.trainingMode && !this.game.isFreshGame && this.game.isPaused) {
       this.text1 = "Game Paused";
       if (!this.game.isTouchScreen) {
