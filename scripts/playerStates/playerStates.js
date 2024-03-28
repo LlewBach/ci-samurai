@@ -114,7 +114,7 @@ export class Falling extends State {
     this.player.frameX = 0;
     this.player.maxFrame = 2;
     this.player.frameY = 3;
-    this.player.game.energy++;
+    if (this.player.game.energy < 100) this.player.game.energy++;
   }
   handleInput(inputKeys, joystickKeys) {
     if (this.player.onGround() && (inputKeys.includes('ArrowDown') || joystickKeys.includes('ArrowDown'))) this.player.setState(states.ROLLING);
@@ -235,6 +235,7 @@ export class Attack3 extends State {
     this.player.frameY = 11;
     this.player.speed = 0;
     this.game.energy -= 30;
+    this.game.health += 5;
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) {
       this.game.score++;
@@ -308,6 +309,7 @@ export class Attack4 extends State {
     this.player.frameY = 12;
     this.player.speed = 0;
     this.game.energy -= 50;
+    this.game.health += 25;
     if (this.game.trainingMode && this.game.score === 10) this.game.score++;
   }
   handleInput(inputKeys) {

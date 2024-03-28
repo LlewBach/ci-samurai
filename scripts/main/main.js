@@ -22,7 +22,7 @@ export class Game {
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
-    this.enemyRandomFactor = 0.5;
+    this.enemyRandomFactor = 0.3;
     this.score = 0;
     // this.winningScore = 20;
     this.health = 100;
@@ -59,7 +59,7 @@ export class Game {
   }
   // Need to test addEnemy
   addEnemy(deltaTime) {
-    const randomEnemyType = () => Math.floor(Math.random() * 2) + 1 === 1 ? Zombie1 : Zombie2;
+    const randomEnemyType = () => Math.random() < 0.5 ? Zombie1 : Zombie2;
     let type = randomEnemyType();
 
     if (this.enemyTimer < this.enemyInterval) this.enemyTimer += deltaTime;
@@ -71,7 +71,7 @@ export class Game {
       }
       if (Math.random() < this.enemyRandomFactor) {
         this.enemies.push(new type(this, 3));
-        this.enemyRandomFactor += 0.05;
+        this.enemyRandomFactor += 0.02;
       }
     }
   }

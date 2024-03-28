@@ -408,6 +408,12 @@ describe('Falling State', () => {
     expect(player.game.energy).toBe(1);
   });
 
+  test('should limit game.energy', () => {
+    player.game.energy = 100;
+    fallingState.enter();
+    expect(player.game.energy).toBe(100);
+  });
+
   test('should transition to STANDING if player.onGround() and no horizontal arrow pressed', () => {
     player.onGround.mockReturnValue(true);
     fallingState.handleInput([], []);
@@ -686,7 +692,8 @@ describe('Attack3 State', () => {
         { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
         { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
       ],
-      energy: 30
+      energy: 30,
+      health: 10,
     };
     player.facingRight = 1;
     attack3State = new Attack3(player, game);
@@ -698,8 +705,9 @@ describe('Attack3 State', () => {
     expect(player.frameY).toBe(11);
   });
 
-  test('.enter should update game.energy', () => {
+  test('.enter should update game.energy and game.health', () => {
     expect(game.energy).toBe(0);
+    expect(game.health).toBe(15);
   });
 
   test('.enter should update game.score if game.trainingMode is true, player.facingRight is 1, and score is 8', () => {
@@ -804,7 +812,8 @@ describe('Attack4 State', () => {
         { inShortRange: -1, inLongRange: -1, setState: jest.fn() },
         { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
       ],
-      energy: 50
+      energy: 50,
+      health: 25
     };
     player.facingRight = 1;
     attack4State = new Attack4(player, game);
@@ -816,8 +825,10 @@ describe('Attack4 State', () => {
     expect(player.frameY).toBe(12);
   });
 
-  test('.enter should update game.energy', () => {
+  test('.enter should update game.energy and game.health', () => {
+
     expect(game.energy).toBe(0);
+    expect(game.health).toBe(50);
   });
 
   test('.enter should update game.score if game.trainingMode is true and score is 10', () => {

@@ -29,7 +29,7 @@ export class Standing extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
-    if (this.enemy.x < this.game.width - this.enemy.width) this.enemy.setState(states.WALKING);
+    if (this.enemy.x < this.game.width - this.enemy.width / 2) this.enemy.setState(states.WALKING);
   }
 }
 
@@ -109,7 +109,8 @@ export class Dying extends State {
     } else if (this.enemy.frameX === 3) {
       this.enemy.markedForDeletion = true;
       this.game.score++;
-      this.game.energy += 5;
+      if (this.game.energy <= 95) this.game.energy += 5;
+      else this.game.energy = 100;
     }
   }
 }

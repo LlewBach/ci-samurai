@@ -238,6 +238,13 @@ describe('Dying state', () => {
     expect(game.score).toBe(1);
     expect(game.energy).toBe(5);
   });
+
+  test('should limit player\'s energy score', () => {
+    enemy.frameX = 3;
+    game.energy = 97;
+    dyingState.update();
+    expect(game.energy).toBe(100);
+  });
 });
 
 describe('Spawning state', () => {
