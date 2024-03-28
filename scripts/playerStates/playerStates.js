@@ -1,4 +1,5 @@
 import { PlayerBlood } from '../particles/particles.js';
+import { FloatingText } from '../floatingText/floatingText.js';
 
 const states = {
   STANDING: 0,
@@ -108,14 +109,16 @@ export class Jumping extends State {
 }
 
 export class Falling extends State {
-  constructor(player) {
+  constructor(player, game) {
     super(player);
+    this.game = game;
   }
   enter() {
     this.player.frameX = 0;
     this.player.maxFrame = 2;
     this.player.frameY = 3;
     if (this.player.game.energy < 100) this.player.game.energy++;
+    this.game.floatingText.push(new FloatingText('+1', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 380, 50));
   }
   handleInput(inputKeys, joystickKeys) {
     if (this.player.onGround() && (inputKeys.includes('ArrowDown') || joystickKeys.includes('ArrowDown'))) this.player.setState(states.ROLLING);
@@ -237,6 +240,7 @@ export class Attack3 extends State {
     this.player.speed = 0;
     this.game.energy -= 30;
     this.game.health += 5;
+    this.game.floatingText.push(new FloatingText('+5', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) {
       this.game.score++;
@@ -311,6 +315,7 @@ export class Attack4 extends State {
     this.player.speed = 0;
     this.game.energy -= 50;
     this.game.health += 25;
+    this.game.floatingText.push(new FloatingText('+25', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
     if (this.game.trainingMode && this.game.score === 10) this.game.score++;
   }
   handleInput(inputKeys) {

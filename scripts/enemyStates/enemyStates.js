@@ -105,7 +105,8 @@ export class Dying extends State {
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;
-      this.game.floatingText.push(new FloatingText('git some!', this.enemy.x, this.enemy.y, 0, 0));
+      this.game.floatingText.push(new FloatingText('+1', this.enemy.x, this.enemy.y, 110, 50));
+      this.game.floatingText.push(new FloatingText('+5', this.enemy.x, this.enemy.y, 380, 50));
     } else if (this.enemy.frameX === 3) {
       this.enemy.markedForDeletion = true;
       this.game.score++;

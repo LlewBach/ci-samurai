@@ -224,7 +224,7 @@ describe('Dying state', () => {
   test('.update should push one floating message', () => {
     enemy.frameX = 11;
     dyingState.update();
-    expect(game.floatingText.length).toBe(1);
+    expect(game.floatingText.length).toBe(2);
     expect(game.floatingText[0]).toBeInstanceOf(FloatingText);
   });
 

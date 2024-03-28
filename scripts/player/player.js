@@ -24,7 +24,7 @@ export class Player {
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this), new Attack4(this, this.game), new Demon(this, this.game)];
+    this.states = [new Standing(this), new Running(this), new Jumping(this), new Falling(this, this.game), new Rolling(this), new Stun(this, this.game), new Attack1(this, this.game), new Attack2(this, this.game), new Attack3(this, this.game), new Seppaku(this, this.game), new Transcending(this), new Attack4(this, this.game), new Demon(this, this.game)];
     this.currentState = this.states[0];
     this.currentState.enter();
   }

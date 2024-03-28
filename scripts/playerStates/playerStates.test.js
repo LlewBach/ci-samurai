@@ -1,5 +1,7 @@
 import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from './playerStates.js';
 import { PlayerBlood } from '../particles/particles.js';
+import { FloatingText } from '../floatingText/floatingText.js';
+
 
 const states = {
   STANDING: 0,
@@ -396,10 +398,11 @@ describe('Jumping State', () => {
 });
 
 describe('Falling State', () => {
-  let fallingState;
+  let fallingState, game;
 
   beforeEach(() => {
-    fallingState = new Falling(player);
+    game = { floatingText: [] }
+    fallingState = new Falling(player, game);
     fallingState.enter();
   });
 
@@ -407,6 +410,11 @@ describe('Falling State', () => {
     expect(player.maxFrame).toBe(2);
     expect(player.frameY).toBe(3);
     expect(player.game.energy).toBe(1);
+  });
+
+  test('.enter should push one floating message', () => {
+    expect(game.floatingText.length).toBe(1);
+    expect(game.floatingText[0]).toBeInstanceOf(FloatingText);
   });
 
   test('should limit game.energy', () => {
@@ -695,6 +703,7 @@ describe('Attack3 State', () => {
       ],
       energy: 30,
       health: 10,
+      floatingText: []
     };
     player.facingRight = 1;
     attack3State = new Attack3(player, game);
@@ -709,6 +718,11 @@ describe('Attack3 State', () => {
   test('.enter should update game.energy and game.health', () => {
     expect(game.energy).toBe(0);
     expect(game.health).toBe(15);
+  });
+
+  test('.enter should push one floating message', () => {
+    expect(game.floatingText.length).toBe(1);
+    expect(game.floatingText[0]).toBeInstanceOf(FloatingText);
   });
 
   test('.enter should update game.score if game.trainingMode is true, player.facingRight is 1, and score is 8', () => {
@@ -814,7 +828,8 @@ describe('Attack4 State', () => {
         { inShortRange: 1, inLongRange: 1, setState: jest.fn() },
       ],
       energy: 50,
-      health: 25
+      health: 25,
+      floatingText: []
     };
     player.facingRight = 1;
     attack4State = new Attack4(player, game);
@@ -830,6 +845,11 @@ describe('Attack4 State', () => {
 
     expect(game.energy).toBe(0);
     expect(game.health).toBe(50);
+  });
+
+  test('.enter should push one floating message', () => {
+    expect(game.floatingText.length).toBe(1);
+    expect(game.floatingText[0]).toBeInstanceOf(FloatingText);
   });
 
   test('.enter should update game.score if game.trainingMode is true and score is 10', () => {
