@@ -62,19 +62,25 @@ Unique selling proposition
 
 US1 - "As a site visitor, I want to know what the purpose of this site is and what kind of game it is so I can decide whether it's for me."
 
-AC1 - "Users can immediately identify the game name, theme and type. Users are initially directed to the intro tab, where they can learn more about the game's lore".
+US2 - "As an interested player, I want to be able to navigate intuitively through the site."
 
-US2 - "As an interested player, I want to know how to play."
+AC2 - "Users can navigate to any tab from any tab."
 
-AC2 - "Users can navigate to the controls tab for instructions on gameplay."
+US3 - "As a convinced player, I want to learn to play the game."
 
-US3 - "As a convinced player, I want to play the game."
+AC3 - "Users are able to go through Training Mode to learn the game controls."
 
-AC3 - "Users can navigate to the game tab and start playing."
-
-US4 - "As a hardcore game, I want a reward for beating the game."
+US4 - "As a hardcore gamer, I want a reward for beating the game."
 
 AC4 - "Users are able to beat the game after reaching a sufficiently high score."
+
+US5 - "As a touchscreen player, I want to be able to play the game on my touchscreen device."
+
+AC5 - "Controls are set up to accomodate touchscreen users and the game's UI will tailor messages based on this automatically."
+
+US6 - "As a user, I want the site to respond well to the dimensions of my screen."
+
+AC6 - "The website will be made responsive to mobile screens (both portrait and landscape), tablets and desktops."
 
 #### Information and features scope
 
@@ -124,25 +130,43 @@ From Google Fonts, I chose two fonts; "Kaushan Script" for larger text and "Open
 
 #### Colour palette
 
-#### Images used
+I used Coolors.co to consider different colour palettes, and despite your probable protests, I settled on the following.
+
+![Colour palette](assets/captures/capture-2.PNG)
+
+I wanted the black and white elemental colours, along with three 'cyber' colours that support the 'coder' theme of the game.
 
 ## Features
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
+### Loader
+
+While the site is loading, a 'loader' animation will be shown and disappear once the page has loaded.
+
+![Loader capture](assets/captures/capture-3.PNG)
+
 ### HTML and website structure
 
-The website is one page with a Bootstrap tab menu, containing three tabs. 
+The website is one page with a Bootstrap tab menu, containing three tabs, 'Intro', 'Controls' and 'Game'. One advantage of this is that the game can be paused whilst the player navigates away, then returned to, thus avoiding page refreshes.
 
-The 'Intro' tab - 
+The Intro and Controls tab panes have limited heights which means the user has to scroll through the content within a static box. This works better with the background effect.
 
-The 'Controls' tab - 
+The 'Intro' tab pane - introduces the game 'lore'.
 
-The 'Game' tab - contains an absolutely positioned canvas element.
+The 'Controls' tab pane - introduces controls for keyboard players and touchscreen players as well as a section on gameplay.
+
+The 'Game' tab pane - contains an absolutely positioned canvas element which will never have a width or height greater than the viewport. There is also an absolutely positioned dropdown menu in the top left corner. This is because the game canvas will sometimes cover the main tabs, when played on a landscape mobile for example. This extra dropdown thus provides a handy navigation alternative which doesn't get in the way of the game.
+
+![Backup navbar capture](assets/captures/capture-4.PNG)
 
 ### Website background 
 
 This is made up of a single canvas element, with an interactive 'matrix rain' effect. If the player is losing blood, the matrix rain colour will switch to red. If the player dies, the colour switches to white. If the game ends, the 'rain drop' frequency goes down by a factor of ten.
+
+![Matrix capture](assets/captures/capture-5.PNG)
+![Matrix capture](assets/captures/capture-6.PNG)
+![Matrix capture](assets/captures/capture-7.PNG)
 
 ### Game background
 
@@ -150,30 +174,47 @@ This consists of 4 overlaid background images which move at different relative s
 
 ### Game
 
-The game object is the spinal chord of the game, connecting all the different classes and calling their methods. The game can pause by pressing spacebar (NEED MOBILE PAUSE) and resets after game end by pressing 'r' (NEED MOBILE RESET). The game currently has a winning score which ends the game and triggers a victory message. If the player dies before reaching this score, the game ends and triggers a condolence.
+The game begins by offering a choice to start game or start Training Mode. 
 
-The User Interface features a score count and a health bar.
+![Start screen capture](assets/captures/capture-9.PNG)
+
+Training mode provides a space for players to progress through levels if they successfully do what is asked of them, showing that they understand the controls. The player will also see messages that explain more aspects of gameplay.
+
+![Training mode capture](assets/captures/capture-8.PNG)
+
+The User Interface features a score count, an energy level bar and a health level bar.
+
+Spacebar / Swiping up will toggle pause. When the game is paused a paused screen message will appear.
+
+R / NEED TO SET will reset the game.
 
 ### Player
 
 The player always remains in the center of the canvas, meaning that the illusion of motion is conveyed by setting the game speed to move in the opposite direction when 'in motion'.
 
-The player has the following possible states: standing, running, jumping, falling, rolling, stun, attack1, attack2, attack3, seppaku, transcending.
+The player has the following possible states: Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 and 'Demon'.
 
 The player sprite is made bidirectional by setting a 'facingRight' property to either 1 or -1, which is then used to affect the canvas context's scale to flip it horizontally, and also to affect background motion and attack success.
 
-The player has three different contact detection boxes: 
-- the first is the body contact box, used to detect hits from enemies
-- the second is a short-range attack box, used to detect enemies within range of the player's short-range attacks
-- the third is a long-range attack box, used to detect enemies within range of the player's long-range attacks
+P will toggle 'annotate mode' which will display the game's hit boxes, which may be of help in understanding how the game works.
 
-Attack1 kills one enemy only. Attack2 kills all enemies within short-range. Attack3 initially kills all enemies within short-range, then fries all enemies within long-range.
+![Annotate mode capture](assets/captures/capture-10.PNG)
+
+The blue boxes are 'hit' boxes. Red is the player's short-range attack box and black is the long-range attack box. 
+
+You can see that the zombie's blue hitbox is currently outside of the player's short-range, but within the player's long-range. The player is currently outside of the zombie's attack range.
+
+Attack1 kills one enemy only within short-range. Attack2 kills all enemies within short-range. Attack3 fries all enemies within long-range in one direction and provides +5 health. Attack4 fries all enemies in long-range and provides +25 health.
+
+The player has three stats, namely score, energy and health. 
 
 ### Enemies
 
-There are two enemies that behave very similarly, but for differences in spawning modes.
+There are two enemies that behave very similarly, but for differences in spawning modes and attack choice. Enemies have the following possible states: Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2. The fact that zombies can turn via the Turning state allows for more 'realistic' hunting behaviour. On average around a fifth of zombies will use Attack2 (jumping).
 
-Enemies have the following possible states: standing, walking, dying, spawning, turning, attack1, attack2.
+![Enemy Attack2 capture](assets/captures/capture-11.PNG)
+
+As the game progresses, the average frequency of new zombie additions increases.
 
 ### Particles
 
@@ -181,13 +222,33 @@ Blood - As the zombies inflict damage on the player, they will trigger a spatter
 
 ### Floating messages
 
-When zombies are killed, a message 'git some!' will appear and float towards to player's score stat.
+Depending on game events, floating messages such as '+1' will appear and float towards to player's relevant stat. This provides clearer visual feedback of how the game works.
+
+![Floating messages capture](assets/captures/capture-12.PNG)
 
 ### Game controls
 
-Keyboard - gameplay is controlled by the arrow keys for motion and 'a', 's', and 'd' keys for attacks. Spacebar pauses the game. 'r' resets the game if the game is over.
+Keyboard - gameplay is controlled by I, J, K, L for motion and 'A', 'S', 'D' and 'F' keys for attacks.
 
-Touchscreen - touchscreen controls are activated once a 'touch' event is detected on the window. These include a joystick for motion and control pad for attack options.
+Touchscreen - touchscreen controls are activated once a 'touch' event is detected on the window. These include a joystick for motion and control pad for attack options. The attack options will 'light up' if there is enough energy for them.
+
+![Mobile controls capture](assets/captures/capture-14.PNG)
+
+### UI
+
+The User Interface displays game stats - score, energy and health. 
+
+There are also attack option indicators at the bottom of the screen that light up if there is enough energy available to use them.
+
+The UI will also feature messaging for the new game screen, a paused game, and different game endings. The UI messaging will also guide the player through the training mode. The messaging describing game controls will be relevant to keyboard players or touchscreen users. Note the image above instructs the touchscreen player to swipe up to continue, rather than press spacebar.
+
+![Attack option indicators capture](assets/captures/capture-13.PNG)
+
+### 404 Page
+
+This page catches users who try to navigate to a non-existant page. The user can click a link to return to the correct page.
+
+![404 page capture](assets/captures/capture-15.PNG)
 
 ## Technologies used
 
@@ -199,9 +260,21 @@ Touchscreen - touchscreen controls are activated once a 'touch' event is detecte
 - Vanilla JavaScript
 - Jest
 - GPT-4 for help with debugging and looking things up
-- VSC
+- VSC development environment
 - Windows PowerShell terminal
-- git and GitHub
+- Git for version control
+- GitHub for the online repository
+- GitHub Pages to deploy the site
+- Balsamiq for wireframes
+- FontAwesome for icons
+- Google fonts for fonts
+- Coolors.co was used to consider different colour palettes
+
+HAVENT DONE YET!!!! NEED TO INCLUDE JS
+- [The W3C Markup Validation Service](https://validator.w3.org/) was used to check HTML syntax
+- [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to check CSS syntax
+- [WebAIM](https://wave.webaim.org/) was used to examine accessibility
+- Chrome Dev Tools [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) was used to test performance, accessibility, SEO and best practices
 
 ## Testing
 
@@ -231,11 +304,91 @@ I also added the node_modules folder to the gitignore to not overload the git sy
 
 #### Jest tests
 
-All aspects of the scripting is tested with Jest, except for functionality involving event listeners which will be tested for behaviourly.
+All aspects of the scripting is tested with Jest. Functionality involving main.js event listeners will be tested for behaviourly.
+
+Each javascript file has a corresponding test.js file. There are 11 test suites and 233 tests in total, which all pass.
 
 #### Lighthouse
 
-### Behavioural testing
+#### WAVE
+
+### User Stories Testing
+
+US1 - "As a site visitor, I want to know what the purpose of this site is and what kind of game it is so I can decide whether it's for me."
+
+AC1 - "Users can immediately identify the game name, theme and type. Users are initially directed to the intro tab, where they can learn more about the game's lore".
+
+> 1) Navigate to the website in Chrome browser.
+> 2) Check that the game name, (Code Eye Samurai) and descriptive tag (2D side scroll fighting game) are immediately visible.
+> 3) Check that the navigation tabs are visible.
+> 4) Check that the dynamic matrix rain background effect is working.
+> 5) Check that the Intro tab content is visible and scrollable.
+
+Test result: Pass.
+
+US2 - "As an interested player, I want to be able to navigate intuitively through the site."
+
+AC2 - "Users can navigate to any tab from any tab."
+
+> 1) Navigate to the website in Chrome browser.
+> 2) From the Intro tab, click on the Controls tab.
+> 3) Check that the Controls tab pane content is visible and scrollable.
+> 4) From the Controls tab pane, click on the Intro tab.
+> 5) Check that the Intro tab pane content is visible. 
+> 6) From the Intro tab pane, click on the Game tab.
+> 7) Check that the Game canvas is visible, the new game message is showing and the game is paused.
+> 8) From the Game tab, if the Intro tab is still visible, click on it, else skip to step 12.
+> 9) Check that the Intro tab content is showing.
+> 10) Navigate back to the Game tab and repeat for the Controls tab.
+> 11) Navigate back to the Game tab.
+> 12) From the Game tab, click on the dropdown menu and click on 'Intro'.
+> 13) Check that the site navigates to the Intro tab.
+> 14) Navigate back to the Game tab.
+> 15) From the Game tab, click on the dropdown menu and click on 'Controls'.
+> 16) Check that the site navigates to the Controls tab.
+
+Test result: Pass.
+
+US3 - "As a convinced player, I want to learn to play the game."
+
+AC3 - "Users are able to go through Training Mode to learn the game controls."
+
+> 1) Navigate to the website in Chrome browser.
+> 2) Navigate to the Game tab..
+> 3) Follow the UI instructions to begin the game in Training Mode.
+> 4) Check that the Joystick and Control Pad are visible.
+> 5) Follow the Training Mode instructions to pass each step to completion.
+
+Test result: Pass.
+
+US4 - "As a hardcore gamer, I want a reward for beating the game."
+
+AC4 - "Users are able to beat the game after reaching a sufficiently high score."
+
+> 1) Navigate to the website in Chrome browser.
+> 2) Open the Game tab. 
+> 3) Start a new game and play to reach a score of 333.
+> 4) Check to see that a winning ending scene and message display.
+
+Test result: Pass.
+
+US5 - "As a touchscreen player, I want to be able to play the game on my touchscreen device."
+
+AC5 - "A Joystick and Control Pad should be available for touchscreen players."
+
+> 1) Navigate to the website in Chrome browser.
+> 2) Open the Game tab. 
+> 3) Start a new game.
+> 4) Check that the Joystick and Control Pad are visible.
+
+Test result: Pass.
+
+US6 - "As a user, I want the site to respond well to the dimensions of my screen."
+
+AC6 - "The website will be made responsive to mobile screens (both portrait and landscape), tablets and desktops."
+
+CONTINUE HERE!
+
 
 ## Deployment
 

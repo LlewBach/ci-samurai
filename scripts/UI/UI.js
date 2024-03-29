@@ -26,7 +26,7 @@ export class UI {
     // Energy Bar
     context.fillStyle = 'black';
     context.fillText('Energy: ' + this.game.energy, 210, 50);
-    context.fillStyle = 'blue';
+    context.fillStyle = '#2DE1FC';
     context.fillRect(380, 29, this.game.energy, 20);
 
     // Outer circle 1
@@ -178,7 +178,7 @@ export class UI {
       context.textAlign = 'center';
       if (this.game.score >= this.game.winningScore) {
         this.text1 = 'Your code is cleansed!';
-        this.text2 = 'You are the Chosen One';
+        this.text2 = 'You are the One';
       } else if (this.game.score >= 150) {
         this.text1 = 'Your rage is strong';
         this.text2 = 'Redemption is within reach';
