@@ -37,7 +37,8 @@ describe('Game class', () => {
       beginPath: jest.fn(),
       arc: jest.fn(),
       stroke: jest.fn(),
-      fill: jest.fn()
+      fill: jest.fn(),
+      fillRect: jest.fn()
     };
   });
 
@@ -138,6 +139,30 @@ describe('Game class', () => {
     expect(game.enemies.some(enemy => enemy.markedForDeletion)).toBe(false);
     expect(game.particles.some(particle => particle.markedForDeletion)).toBe(false);
     expect(game.floatingText.some(message => message.markedForDeletion)).toBe(false);
+  });
+
+  test('.draw should set fillStyle depending on class boolean values', () => {
+    game.isFreshGame = false;
+    game.isPaused = false;
+    game.gameOver = false;
+    game.trainingMode = false;
+    game.draw(mockContext);
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.1');
+    game.isFreshGame = true;
+    game.draw(mockContext);
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    game.isFreshGame = false;
+    game.isPaused = true;
+    game.draw(mockContext);
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    game.isPaused = false;
+    game.gameOver = true;
+    game.draw(mockContext);
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    game.gameOver = false;
+    game.trainingMode = true;
+    game.draw(mockContext);
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
   });
 
   test('.draw should call draw method on correct game properties', () => {

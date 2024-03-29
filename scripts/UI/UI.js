@@ -6,21 +6,22 @@ export class UI {
     this.r = 12;
     this.spacing = 60;
     this.fontSize = 30;
-    this.fontFamily = 'Helvetica';
+    this.fontFamily1 = 'Kaushan Script';
+    this.fontFamily2 = 'Open Sans';
     this.fontColour = 'black';
     this.text1 = '';
     this.text2 = '';
     this.text3 = '';
   }
   draw(context) {
-    context.font = this.fontSize + 'px ' + this.fontFamily;
+    context.font = this.fontSize + 'px ' + this.fontFamily1;
     context.textAlign = 'left';
     context.fillStyle = this.fontColour;
     // Score
     context.fillText('Score: ' + this.game.score, 20, 50);
     // Health Bar
     context.fillText('Health: ' + this.game.health, 520, 50);
-    context.fillStyle = 'green';
+    context.fillStyle = '#0aff0a';
     context.fillRect(680, 29, this.game.health, 20);
     // Energy Bar
     context.fillStyle = 'black';
@@ -77,7 +78,7 @@ export class UI {
     context.fill();
 
     // Label 1
-    context.font = '20px Arial';
+    context.font = '15px ' + this.fontFamily1;
     context.fillStyle = 'black';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
@@ -193,16 +194,16 @@ export class UI {
       this.text3 = '';
     }
 
-    context.fillStyle = 'white';
-    context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
+    context.fillStyle = 'black';
+    context.font = this.fontSize * 2 + 'px ' + this.fontFamily1;
     context.fillText(this.text1, this.game.width / 2, 150);
-    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
+    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily2;
     context.fillText(this.text2, this.game.width / 2, 200);
     context.fillText(this.text3, this.game.width / 2, 240);
-    context.fillStyle = 'darkred';
-    context.font = this.fontSize * 2 + 'px ' + this.fontFamily;
+    context.fillStyle = '#0aff0a';
+    context.font = this.fontSize * 2 + 'px ' + this.fontFamily1;
     context.fillText(this.text1, this.game.width / 2 + 2, 152);
-    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily;
+    context.font = this.fontSize * 0.7 + 'px ' + this.fontFamily2;
     context.fillText(this.text2, this.game.width / 2 + 2, 202);
     context.fillText(this.text3, this.game.width / 2 + 2, 242);
   }

@@ -22,6 +22,7 @@ By Gareth Llewelyn
 ## Overview
 
 [Back to top](#milestone-2-project---code-eye-samurai)
+
 This is a side scroller fighting game using only vanilla Javascript. The game's shortened name (CI Samurai) is a nod to my code dojo, Code Institute.
 
 ## UX
@@ -32,7 +33,7 @@ This is a side scroller fighting game using only vanilla Javascript. The game's 
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
-The idea for this game was inspired by the rad Netflix show, 'Blue Eye Samurai' and also a deep empathy for my fellow coders battling with bugs on a daily basis. I decided that a game that offered coders sweet payback time in the form of a virtual rampage would be both of psychological benefit to the user, and of societal service by reducing the probability of a real one.
+The idea for this game was inspired by the Netflix show, 'Blue Eye Samurai' and also a deep empathy for my fellow coders battling with bugs on a daily basis. I decided that a game that offered coders sweet payback time in the form of a virtual rampage would be both of psychological benefit to the user, and of societal service by reducing the probability of a real one.
 
 Creator's goals...
 - wants to demonstrate skill with JavaScript
@@ -43,7 +44,7 @@ Player's goals...
 - wants to decompress, and re-energize debugging mojo
 
 Target audience...
-- employers who will be considering the creator's skill and employability
+- employers who will be considering the creator's proficiency
 - seething coders who need their problems to just 'bug-ger off'
 
 Unique selling proposition
@@ -71,13 +72,15 @@ US3 - "As a convinced player, I want to play the game."
 
 AC3 - "Users can navigate to the game tab and start playing."
 
-US4 - "As a potential employer, I want to ??????????????? Should I include this?
+US4 - "As a hardcore game, I want a reward for beating the game."
+
+AC4 - "Users are able to beat the game after reaching a sufficiently high score."
 
 #### Information and features scope
 
 This site will include information about the game, the game lore, game controls and game play. 
 
-In terms of the game's features, it will be limited to a 2d canvas, with only horizontal 'exploration'. The number of player states will allow convincing movement (standing, running, jumping, rolling), three modes of attack, stun state and two end states. There will be two enemy types, with states that allow for more complex and exciting game play. These include two modes of appearance, two distinct forms of attack, hunting behaviour via the turning state and a death state. Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth.
+In terms of the game's features, it will be limited to a 2d canvas, with only horizontal 'exploration'. The number of player states will allow convincing movement (standing, running, jumping, rolling), four modes of attack, a stun state and three end states. There will be two enemy types, with states that allow for more complex and exciting game play. These include two modes of appearance, two distinct forms of attack, hunting behaviour via the turning state and a death state. Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth. The game will also display information relevant to gameplay.
 
 ### Structure
 
@@ -85,7 +88,7 @@ In terms of the game's features, it will be limited to a 2d canvas, with only ho
 
 The information will be structured by three tabs, namely 'Intro', 'Controls' and 'Game'. This order makes sense as the player will want to know whether this is the sort of thing they want to play, how to use it, then use it.
 
-Information relevant to game play will be visible in the game, including stats such as 'score' and 'health', as well as a game result message.
+Information relevant to game play will be visible in the game, including stats such as 'score', 'energy' and 'health', floating stat messages, and UI messages as well. There will be attack option indicators at the bottom of the screen to quickly show which attack options are available based on current energy status.
 
 ### Skeleton
 
@@ -93,7 +96,11 @@ Information relevant to game play will be visible in the game, including stats s
 
 Here are some wireframes of the site.
 
-WIREFRAMES
+[Intro tab wireframe](assets/wireframes/Intro.png)
+
+[Controls tab wireframe](assets/wireframes/Controls.png)
+
+[Game tab wireframe](assets/wireframes/Game.png)
 
 ### Surface
 
@@ -101,11 +108,19 @@ WIREFRAMES
 
 #### Background
 
-The background is a canvas element that creates a dynamic 'matrix rain' effect, that responds to the gameplay. This is reminiscent of 'hacker' and 'Chosen One' vibes from the Matrix films, which add to the theme and feel of the game.
+The background is a canvas element that creates a dynamic 'matrix rain' effect, that responds to the gameplay. This is reminiscent of 'hacker' and 'The One' vibes from the Matrix films, which add to the 'coder' theme and feel of the game.
+
+![Background capture](assets/captures/capture-1.PNG)
 
 #### Favicon
 
-#### Font
+The player spritesheet pack that I bought came with an image of the player's head. I then used a [favicon converter](https://favicon.io/favicon-converter/) to generate the favicon images and link tags.
+
+![Favicon](assets/favicon/favicon-32x32.png)
+
+#### Fonts
+
+From Google Fonts, I chose two fonts; "Kaushan Script" for larger text and "Open Sans" for smaller text. The Kaushan Script conveys more 'Japanese caligraphy' vibes in-line with the samurai theme. Open Sans helps legibility for smaller text.
 
 #### Colour palette
 

@@ -49,6 +49,9 @@ export class Game {
   }
   draw(context) {
     this.background.draw(context);
+    if (this.isFreshGame || this.isPaused || this.gameOver || this.trainingMode) context.fillStyle = 'rgba(0, 0, 0, 0.5';
+    else context.fillStyle = 'rgba(0, 0, 0, 0.1';
+    context.fillRect(0, 0, this.width, this.height);
     this.player.draw(context);
     this.enemies.forEach(enemy => enemy.draw(context));
     this.particles.forEach(particle => particle.draw(context));

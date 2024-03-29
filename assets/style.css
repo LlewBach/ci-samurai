@@ -58,19 +58,26 @@
 
 h1,
 h2,
-h3,
 p {
   text-align: center;
   color: white;
+
 }
 
 h1 {
   margin-top: 50px;
   color: red;
+  font-family: "Kaushan Script", cursive;
+
 }
 
 h2 {
   color: red;
+  font-family: "Kaushan Script", cursive;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
 }
 
 .nav-link {
@@ -105,6 +112,7 @@ h2 {
   position: absolute;
   top: 5px;
   left: 5px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #fullScreenButton {
