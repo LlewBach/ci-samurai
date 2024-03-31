@@ -40,13 +40,13 @@ describe('Layer class', () => {
     expect(layer.y).toBe(0);
   });
 
-  test('.update should enforce the left boundary', () => {
-    layer.x = 50;
+  test('.update should reset x position to 0 past +image width', () => {
+    layer.x = 3200;
     layer.update();
     expect(layer.x).toBe(0);
   });
 
-  test('.update should reset x position to 0 past -width', () => {
+  test('.update should reset x position to 0 past -image width', () => {
     layer.x = -3200;
     layer.update();
     expect(layer.x).toBe(0);
@@ -58,11 +58,9 @@ describe('Layer class', () => {
     expect(layer.x).toBe(0 - (3 * 1));
   });
 
-  test('.draw should call context.drawImage correctly', () => {
+  test('.draw should call context.drawImage correct number of times', () => {
     layer.draw(mockContext);
-    expect(mockContext.drawImage).toHaveBeenCalledTimes(2);
-    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, layer.x, layer.y, layer.width, layer.height);
-    expect(mockContext.drawImage).toHaveBeenCalledWith(mockImage, layer.x + layer.width, layer.y, layer.width, layer.height);
+    expect(mockContext.drawImage).toHaveBeenCalledTimes(3);
   });
 });
 

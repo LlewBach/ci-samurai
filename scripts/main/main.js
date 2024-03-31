@@ -179,7 +179,6 @@ window.addEventListener('load', function () {
   });
 
   // Below is for touch screen pause/restart functionality
-
   const swipeThreshold = 180;
   let touchX, touchY;
 

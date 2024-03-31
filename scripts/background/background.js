@@ -9,16 +9,19 @@ export class Layer {
     this.y = 0;
   }
   update() {
-    // Left boundary
-    if (this.x >= 0) this.x = 0;
-    // Reset
+    // Left Reset
+    if (this.x > this.width) this.x = 0;
+    // Right Reset
     else if (this.x < -this.width) this.x = 0;
     // Motion
     this.x -= this.game.speed * this.speedModifier;
   }
   draw(context) {
+    // This line makes background seem continuous when scrolling left
+    context.drawImage(this.image, this.x - this.width, this.y, this.width, this.height);
+    // This is the central image
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
-    // This line makes background seem continuous
+    // This line makes background seem continuous when scrolling right
     context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
   }
 }
