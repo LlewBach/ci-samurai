@@ -205,15 +205,15 @@ window.addEventListener('load', function () {
       } else {
         game.restart();
       }
-      // Swipe left
-    } else if ((touchX - endTouchX) > swipeThreshold && game.isFreshGame) {
+      // Swipe left (setting upper limit stops game resetting when touching joystick and control pad simultaneously)
+    } else if ((touchX - endTouchX) > swipeThreshold && touchX - endTouchX < swipeThreshold + 100 && game.isFreshGame) {
       game.isFreshGame = false;
       game.trainingMode = true;
       game.isPaused = false;
       game.energy = 100;
       game.health = 50;
       animate();
-    } else if ((touchX - endTouchX) > swipeThreshold && (touchX - endTouchX) < swipeThreshold + 100) {
+    } else if (touchX - endTouchX > swipeThreshold && touchX - endTouchX < swipeThreshold + 100) {
       game.restart();
     }
   });
