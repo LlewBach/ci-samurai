@@ -65,7 +65,7 @@ p {
 }
 
 h1 {
-  margin-top: 50px;
+  margin-top: 5px;
   color: red;
   font-family: "Kaushan Script", cursive;
 
@@ -81,14 +81,14 @@ p {
 }
 
 .nav-link {
-  margin: 15px;
+  margin: 10px;
   font-size: 20px;
 }
 
 .tab-pane {
   /* border: 3px solid purple; */
   background-color: rgba(0, 0, 0, 0.5);
-  /* max-height: 400px; */
+  max-height: 100px;
   overflow-y: auto;
 }
 
@@ -113,17 +113,6 @@ p {
   top: 5px;
   left: 5px;
   font-family: 'Open Sans', sans-serif;
-}
-
-#fullScreenButton {
-  display: none;
-  /* position: absolute;
-  font-size: 20px;
-  padding: 10px;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2; */
 }
 
 #player,
