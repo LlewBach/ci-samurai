@@ -269,8 +269,6 @@ This page catches users who try to navigate to a non-existant page. The user can
 - FontAwesome for icons
 - Google fonts for fonts
 - Coolors.co was used to consider different colour palettes
-
-HAVENT DONE YET!!!! NEED TO INCLUDE JS
 - [The W3C Markup Validation Service](https://validator.w3.org/) was used to check HTML syntax
 - [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to check CSS syntax
 - [WebAIM](https://wave.webaim.org/) was used to examine accessibility
@@ -419,9 +417,25 @@ Chrome: Pass. Edge: Pass. Firefox: Pass.
 
 https://validator.w3.org/
 
+Initially the validator raised issues with the fact that the spritesheet and background layer images had no alt text. Even though this would not be required at all due to how they are used, I gave each image alt text to appease the validator.
+
+Result: Passed.
+
 #### CSS Validator
 
 https://jigsaw.w3.org/css-validator/
+
+Result: Passed.
+
+#### WAVE
+
+I've had a look on WAVE (Web Accessibility Evaluation Tool) and the only issue that catches my eye is that is says low colour contrast, but I don't think the software can take the colour of the canvas background into account and assumes that the background colour of the page is white.
+
+#### Lighthouse 
+
+![Lighthouse capture](assets/captures/capture-16.PNG)
+
+From my discussion with my mentor, a poorer Lighthouse Performance score is to be expected for a game. For this reason I included a 'loader' icon so that the user knows that taking some time to load is normal and to be expected. It also makes the wait a bit more interesting and might help to reduce the bounce rate.
 
 #### Jest installation
 
@@ -445,15 +459,23 @@ I also added the node_modules folder to the gitignore to not overload the git sy
 
 #### Jest tests
 
-All asXpects of the scripting is tested with Jest. Functionality involving main.js event listeners will be tested for behaviourly.
+All aspects of the scripting are tested for with Jest, except for the following:
+- main.js event listener functionality
+- input.js ControlPad class addListeners method functionality
+- input.js ControlPad draw method - Whether buttons change 'fillStyle' depending on energy level
+- input.js Joystick class addListeners method functionality
+- UI.js UI class draw method - Whether attack indicators change 'fillStyle' depending on energy level
 
-Each javascript file has a corresponding test.js file. There are 11 test suites and 233 tests in total, which all pass.
+This functionality is covered by behavioural testing the following: 
+- Can one pause and restart the game on both keyboard and touchscreen? - Yes
+- Can one toggle Annotate Mode by pressing p on keyboard? - Yes
+- Can one enter Training Mode on both keyboard and touchscreen? - Yes
+- Does the background canvas automatically resize when the screen width is changed? - Yes
+- Can the game sense a touchscreen device? - Yes
+- Can the game be played with the joystick and control pad? - Yes
+- Do the buttons and indicators change colour depending on required energy level? - Yes
 
-#### Lighthouse
-
-#### WAVE
-
-
+Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 233 tests in total, which all pass.
 
 ## Deployment
 

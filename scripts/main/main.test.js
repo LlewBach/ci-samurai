@@ -147,22 +147,22 @@ describe('Game class', () => {
     game.gameOver = false;
     game.trainingMode = false;
     game.draw(mockContext);
-    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.1');
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.1)');
     game.isFreshGame = true;
     game.draw(mockContext);
-    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5)');
     game.isFreshGame = false;
     game.isPaused = true;
     game.draw(mockContext);
-    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5)');
     game.isPaused = false;
     game.gameOver = true;
     game.draw(mockContext);
-    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5)');
     game.gameOver = false;
     game.trainingMode = true;
     game.draw(mockContext);
-    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5');
+    expect(mockContext.fillStyle).toEqual('rgba(0, 0, 0, 0.5)');
   });
 
   test('.draw should call draw method on correct game properties', () => {

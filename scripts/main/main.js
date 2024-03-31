@@ -49,8 +49,8 @@ export class Game {
   }
   draw(context) {
     this.background.draw(context);
-    if (this.isFreshGame || this.isPaused || this.gameOver || this.trainingMode) context.fillStyle = 'rgba(0, 0, 0, 0.5';
-    else context.fillStyle = 'rgba(0, 0, 0, 0.1';
+    if (this.isFreshGame || this.isPaused || this.gameOver || this.trainingMode) context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    else context.fillStyle = 'rgba(0, 0, 0, 0.1)';
     context.fillRect(0, 0, this.width, this.height);
     this.player.draw(context);
     this.enemies.forEach(enemy => enemy.draw(context));
@@ -108,7 +108,7 @@ window.addEventListener('load', function () {
   loader.addEventListener('transitionend', () => {
     document.body.removeChild(loader);
   });
-  // Below is my code
+  // Below is back to my code
 
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
