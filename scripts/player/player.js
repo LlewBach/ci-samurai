@@ -124,12 +124,14 @@ export class Player {
         return (
           (enemy.jumpAttacking === true &&
             enemy.facingRight === -1 &&
-            enemy.x < this.x + this.width - this.hitMargin) &&
-          enemy.x + (enemy.width / 2) > this.x + (this.width / 2) ||
+            enemy.x < this.x + this.width - this.hitMargin &&
+            enemy.x + (enemy.width / 2) > this.x + (this.width / 2) &&
+            enemy.y + enemy.yContactMargin < this.y + this.height) ||
           (enemy.jumpAttacking === true &&
             enemy.facingRight === 1 &&
             enemy.x + enemy.width > this.x + this.hitMargin &&
-            enemy.x + (enemy.width / 2) < this.x + (this.width / 2))
+            enemy.x + (enemy.width / 2) < this.x + (this.width / 2) &&
+            enemy.y + enemy.yContactMargin < this.y + this.height)
         );
       })
     )
