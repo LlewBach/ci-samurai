@@ -213,7 +213,7 @@ window.addEventListener('load', function () {
       game.energy = 100;
       game.health = 50;
       animate();
-    } else if ((touchX - endTouchX) > swipeThreshold) {
+    } else if ((touchX - endTouchX) > swipeThreshold && (touchX - endTouchX) < swipeThreshold + 100) {
       game.restart();
     }
   });
