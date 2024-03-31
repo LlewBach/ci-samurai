@@ -280,38 +280,6 @@ HAVENT DONE YET!!!! NEED TO INCLUDE JS
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
-### Automated testing
-
-#### Jest installation
-
-Getting Jest set up so that it would work with VSC and modules actually proved to be quite difficult, but in the end I managed it by following these steps:
-
-- Console command: npm init
-- Console command: npm install --save-dev jest
-- Console command: npm install --save-dev @babel/preset-env babel-jest
-- Add to package.json: 
-"babel": {
-  "presets": ["@babel/preset-env"]
-},
-"type": "module"
-- Console command: npm install --save-dev jest-environment-jsdom
-- Add to package.json:
-"jest": {
-  "testEnvironment": "jsdom"
-}
-
-I also added the node_modules folder to the gitignore to not overload the git system.
-
-#### Jest tests
-
-All aspects of the scripting is tested with Jest. Functionality involving main.js event listeners will be tested for behaviourly.
-
-Each javascript file has a corresponding test.js file. There are 11 test suites and 233 tests in total, which all pass.
-
-#### Lighthouse
-
-#### WAVE
-
 ### User Stories Testing
 
 US1 - "As a site visitor, I want to know what the purpose of this site is and what kind of game it is so I can decide whether it's for me."
@@ -387,7 +355,96 @@ US6 - "As a user, I want the site to respond well to the dimensions of my screen
 
 AC6 - "The website will be made responsive to mobile screens (both portrait and landscape), tablets and desktops."
 
-CONTINUE HERE!
+This is my testing procedure:
+
+Setup
+
+> 1) Open website in the Chrome browser, stay on the Intro tab.
+> 2) Right click and click inspect.
+> 3) Click the toggle device toolbar.
+
+Testing function
+
+> 4) From the device menu select the one being tested.
+> 5) Check that both the title and tagline are visible.
+> 6) Check that all three tab buttons are visible.
+> 7) Check that the game initially displays the Intro tab pane.
+> 8) Check that the Intro text doesn't extend beyond the bottom of the page. If the text is cut off before the bottom, check that it is scrollable within its container.
+> 9) Try scrolling the whole page by swiping outside of the text box. The background should not scroll.
+> 10) Check that the matrix rain effect is working and covers the whole screen area.
+> 11) Click on the Controls tab.
+> 12) Check that the Controls text doesn't extend beyond the bottom of the page. If the text is cut off before the bottom, check that it is scrollable within its container.
+> 13) Try scrolling the whole page by swiping outside of the text box. The background should not scroll.
+> 14) Click on the Game tab.
+> 15) Check that the Tabs dropdown menu is visible in the top left corner.
+> 16) Check that the page does not scroll either horizontally or vertically.
+> 17) Check that the game does not extend beyond the viewport.
+
+Here are the devices I tested with Chrome Dev Tools and the outcomes. In each row, I have listed the min-height media query that controls the view for the device being tested, listed in the next column.
+
+<u>Touchscreen Devices</u>
+
+| Min-Height Media Query | Device | Orientation | Test Result |
+| :--------: | :-------: | :---------: | :---------: |
+| 740px | Galaxy S8 | Portrait | Pass |
+| 350px | Galaxy S8 | Landscape | Pass |
+| 820px | iPhone 12 Pro | Portrait | Pass |
+| 380px | iPhone 12 Pro | Landscape | Pass |
+| 900px |iPhone 14 Pro Max | Portrait | Pass |
+| 400px |iPhone 14 Pro Max | Landscape | Pass |
+| 900px |Galaxy S20 Ultra | Portrait | Pass |
+| 400px |Galaxy S20 Ultra | Landscape | Pass |
+| 1000px |iPad Mini | Portrait | Pass |
+| 740px |iPad Mini | Landscape | Pass |
+| 1300px |iPad Pro | Portrait | Pass |
+| 1000px |iPad Pro | Landscape | Pass |
+
+<u>Monitor Resolutions</u>
+
+| Min-Height Media Query | Screen Resolution | Test Result |
+| :--------: | :-------: | :---------: |
+| 540px | 1280 x 720 | Pass |
+| 900px | 1920 x 1080 | Pass |
+| 1300px | 2560 x 1440 | Pass |
+
+### Browser Testing
+
+To test the site on different browsers, I repeated the tests above, but without trying different resolutions.
+
+Chrome: Pass. Edge: X. Firefox: X.
+
+### Automated testing
+
+#### Jest installation
+
+Getting Jest set up so that it would work with VSC and modules actually proved to be quite difficult, but in the end I managed it by following these steps:
+
+- Console command: npm init
+- Console command: npm install --save-dev jest
+- Console command: npm install --save-dev @babel/preset-env babel-jest
+- Add to package.json: 
+"babel": {
+  "presets": ["@babel/preset-env"]
+},
+"type": "module"
+- Console command: npm install --save-dev jest-environment-jsdom
+- Add to package.json:
+"jest": {
+  "testEnvironment": "jsdom"
+}
+
+I also added the node_modules folder to the gitignore to not overload the git system.
+
+#### Jest tests
+
+All asXpects of the scripting is tested with Jest. Functionality involving main.js event listeners will be tested for behaviourly.
+
+Each javascript file has a corresponding test.js file. There are 11 test suites and 233 tests in total, which all pass.
+
+#### Lighthouse
+
+#### WAVE
+
 
 
 ## Deployment

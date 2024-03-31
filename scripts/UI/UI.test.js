@@ -214,7 +214,7 @@ describe('UI class', () => {
     game.score = game.winningScore;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Your code is cleansed!');
-    expect(ui.text2).toEqual('You are the Chosen One');
+    expect(ui.text2).toEqual('You are the One');
   });
 
   test('.draw method should set text3 messages if gameOver is true and according to .isTouchScreen status', () => {

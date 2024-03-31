@@ -300,11 +300,11 @@ p {
 
   .tab-pane {
     margin-top: 5px;
-    max-height: none;
+    max-height: 500px;
   }
 }
 
-/* Samsung Galaxy S20 Ultra, iPhone 14 Pro Max */
+/* Samsung Galaxy S20 Ultra, iPhone 14 Pro Max Portrait */
 @media (min-height: 900px) {
   h1 {
     color: blue;
@@ -358,6 +358,17 @@ p {
 
   #canvas1 {
     top: 58%;
+    max-height: none;
+  }
+}
+
+/* iPad Pro Portrait */
+@media (min-height: 1300px) {
+  h1 {
+    color: white;
+  }
+
+  .tab-pane {
     max-height: none;
   }
 }
