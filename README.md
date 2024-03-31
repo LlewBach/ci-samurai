@@ -409,11 +409,19 @@ Here are the devices I tested with Chrome Dev Tools and the outcomes. In each ro
 
 ### Browser Testing
 
-To test the site on different browsers, I repeated the tests above, but without trying different resolutions.
+To test the site on different browsers, I repeated the tests above, but without trying different resolutions. I then tested training mode, pausing/restarting the game, gameplay.
 
-Chrome: Pass. Edge: X. Firefox: X.
+Chrome: Pass. Edge: Pass. Firefox: Pass.
 
 ### Automated testing
+
+#### HTML Validator
+
+https://validator.w3.org/
+
+#### CSS Validator
+
+https://jigsaw.w3.org/css-validator/
 
 #### Jest installation
 
