@@ -1,6 +1,8 @@
+// The architecture for this user interface was inspired by the JavaScript Game Dev course by Frank's Laboratory, credited in the README. This is my own implementation of that architecture.
 export class UI {
   constructor(game) {
     this.game = game;
+    // The x, y, r and spacing properties affect the attack option indicators.
     this.x = 315;
     this.y = 450;
     this.r = 12;
@@ -8,7 +10,6 @@ export class UI {
     this.fontSize = 30;
     this.fontFamily1 = 'Kaushan Script';
     this.fontFamily2 = 'Open Sans';
-    this.fontColour = 'black';
     this.text1 = '';
     this.text2 = '';
     this.text3 = '';
@@ -16,7 +17,7 @@ export class UI {
   draw(context) {
     context.font = this.fontSize + 'px ' + this.fontFamily1;
     context.textAlign = 'left';
-    context.fillStyle = this.fontColour;
+    context.fillStyle = 'black';
     // Score
     context.fillText('Score: ' + this.game.score, 20, 50);
     // Health Bar
@@ -52,28 +53,28 @@ export class UI {
     context.beginPath();
     context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 1) {
-      context.fillStyle = 'pink';
+      context.fillStyle = 'red';
     } else context.fillStyle = 'lightgray';
     context.fill();
     // Indicator 2
     context.beginPath();
     context.arc(this.x + this.spacing, this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 5) {
-      context.fillStyle = 'lightgreen';
+      context.fillStyle = '#0AFF0A';
     } else context.fillStyle = 'lightgray';
     context.fill();
     // Indicator 3
     context.beginPath();
     context.arc(this.x + (2 * this.spacing), this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 30) {
-      context.fillStyle = 'lightblue';
+      context.fillStyle = '2DE1FC';
     } else context.fillStyle = 'lightgray';
     context.fill();
     // Indicator 4
     context.beginPath();
     context.arc(this.x + (3 * this.spacing), this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 50) {
-      context.fillStyle = 'lightyellow';
+      context.fillStyle = 'yellow';
     } else context.fillStyle = 'lightgray';
     context.fill();
 
@@ -96,7 +97,7 @@ export class UI {
       this.text2 = 'Press spacebar or swipe up to start/pause';
       this.text3 = 'Press t or swipe left for Training Mode';
     }
-    // Training Mode Messages
+    // Training Mode Messages - Note message differentiation depending on isTouchScreen flag.
     else if (this.game.trainingMode) {
       if (this.game.score === 0) {
         this.text1 = "Jump";

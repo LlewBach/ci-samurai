@@ -249,7 +249,8 @@ export class Joystick {
   }
 }
 
-// This records relevant keyboard presses. The architecture for this object I learned from the JavaScript Game Dev tutorial by Franks Laboratory, credited in the README.
+// This records relevant keyboard presses. 
+// The architecture for this object I learned from the JavaScript Game Dev course by Franks Laboratory, credited in the README.
 export class InputHandler {
   constructor() {
     this.keys = [];

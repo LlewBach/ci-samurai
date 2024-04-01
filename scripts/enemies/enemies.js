@@ -1,11 +1,14 @@
 import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from '../enemyStates/enemyStates.js';
 
+// This implementation of game enemies is by me, and includes features such as enemy states, enemy bidirectionality, short and long-range detection and player-centric motion control.
+
 const zombie1 = document.getElementById('zombie1');
 const zombie2 = document.getElementById('zombie2');
 
 class Zombie {
   constructor(game, startingState) {
     this.game = game;
+    // Sprite sheet frame dimensions
     this.spriteWidth = 130;
     this.spriteHeight = 70;
     this.width = this.spriteWidth * 2;
@@ -14,10 +17,13 @@ class Zombie {
     this.y = this.game.height - this.game.groundMargin - this.height;
     this.hitMargin = 100;
     this.yContactMargin = 20;
+    // Setting this to either 1 or -1 controls the direction the enemy faces.
     this.facingRight = -1;
+    // The values for the range properties are set by player.js, as these are set relative to the player.
     this.inShortRange = 0;
     this.inLongRange = 0;
     this.attackChoice = Math.random();
+    // This flag allows adjustment of jump speed and attack range margin.
     this.jumpAttacking = false;
     this.markedForDeletion = false;
     this.speed = 0;
@@ -61,6 +67,7 @@ class Zombie {
       context.strokeRect(this.x + this.hitMargin, this.y + this.yContactMargin, this.width - (2 * this.hitMargin), this.height - this.yContactMargin);
     }
     // Sprite
+    // The facingRight property allows the context to flip the scale across the Y axis, thus enabling enemies to face both directions.
     context.scale(this.facingRight, 1);
     context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x * this.facingRight, this.y, this.width * this.facingRight, this.height);
     context.restore();

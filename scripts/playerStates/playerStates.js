@@ -1,6 +1,8 @@
 import { PlayerBlood } from '../particles/particles.js';
 import { FloatingText } from '../floatingText/floatingText.js';
 
+// I learned this state design patter from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is entirely my own.
+
 const states = {
   STANDING: 0,
   RUNNING: 1,
@@ -246,13 +248,6 @@ export class Attack3 extends State {
       this.game.score++;
       this.game.energy = 50;
     }
-    // for (let i = 0; i < this.game.enemies.length; i++) {
-    //   if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
-    //     this.game.enemies[i].setState(2);
-    //   } else if (this.game.enemies[i].inShortRange === -1 && this.player.facingRight === -1) {
-    //     this.game.enemies[i].setState(2);
-    //   }
-    // }
   }
   handleInput(inputKeys) {
     if (this.player.frameX === this.player.maxFrame) {

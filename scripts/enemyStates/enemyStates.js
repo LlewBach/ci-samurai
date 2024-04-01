@@ -1,6 +1,8 @@
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
 import { FloatingText } from '../floatingText/floatingText.js';
 
+// This code in this file is completely my own.
+
 const states = {
   STANDING: 0,
   WALKING: 1,
@@ -28,6 +30,7 @@ export class Standing extends State {
     this.enemy.frameY = 2;
   }
   update() {
+    // This makes the character stationary relative to the floor
     this.enemy.speed = this.game.speed;
     if (this.enemy.x < this.game.width - this.enemy.width / 2) this.enemy.setState(states.WALKING);
   }
@@ -44,7 +47,7 @@ export class Walking extends State {
   }
   update() {
     this.enemy.speed = this.game.speed - (this.enemy.maxSpeed * this.enemy.facingRight);
-    // Attack2 transitions
+    // Attack2 transitions, dependent on distance from player, direction, and game over status.
     if (this.enemy.attackChoice < 0.2) {
       if (
         this.enemy.x < this.game.player.x + this.game.player.width - (this.game.player.attackMargin * 0.8) &&
@@ -59,7 +62,7 @@ export class Walking extends State {
         !this.game.gameOver
       ) this.enemy.setState(states.ATTACK2);
     }
-    // Turning transitions
+    // Turning transitions, dependent on distance from player, direction, and game over status.
     if (
       this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin &&
       this.enemy.facingRight === -1 &&
@@ -70,7 +73,7 @@ export class Walking extends State {
       this.enemy.facingRight === 1 &&
       !this.game.gameOver
     ) this.enemy.setState(states.TURNING);
-    // Attack1 transitions
+    // Attack1 transitions, if hit boxes touching and facing correct direction.
     else if (
       this.enemy.x + this.enemy.width - this.enemy.hitMargin > this.game.player.x + this.game.player.hitMargin &&
       this.enemy.x + (this.enemy.width / 2) < this.game.player.x + (this.game.player.width / 2) &&
@@ -102,6 +105,7 @@ export class Dying extends State {
         this.game.particles.unshift(new ZombieBlood(this.game, this.enemy.x + (this.enemy.width / 2), this.enemy.y + (this.enemy.height / 2)));
       }
     }
+    // This animation runs onto next line of spritesheet
     if (this.enemy.frameX === 11) {
       this.enemy.frameX = 0;
       this.enemy.frameY++;
@@ -149,6 +153,7 @@ export class Turning extends State {
       this.enemy.frameX = 0;
       this.enemy.frameY = 4;
     } else if (this.enemy.frameX === 4) {
+      // Once frame sequence finished, flip facingRight sign.
       this.enemy.facingRight *= -1;
       this.enemy.setState(states.WALKING);
     }
@@ -166,6 +171,7 @@ export class Attack1 extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
+    // For duration of one frame of attack sequence, player takes damage and blood spatters.
     if (this.enemy.frameX === 10 && this.game.player.onGround() && this.game.health > 0) {
       this.game.health -= 1;
       for (let i = 0; i < 10; i++) {

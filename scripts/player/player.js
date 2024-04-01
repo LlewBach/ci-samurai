@@ -1,5 +1,8 @@
 import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from '../playerStates/playerStates.js';
 
+// I learned the architecture of this object, the hitbox detection mechanism, the onGround function and the state design pattern from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is my own. 
+// My own innovations include multiple input handling, player bidirectionality, range checks, jumpAttackCheck, winCheck
+
 export class Player {
   constructor(game) {
     this.game = game;
@@ -56,7 +59,6 @@ export class Player {
     // Ground boundary
     if (this.onGround()) {
       this.vy = 0;
-      // this.y = this.game.height - this.game.groundMargin - this.height;
     }
     // Sprite animation
     if (this.frameTimer < this.frameInterval) this.frameTimer += deltaTime;
@@ -64,6 +66,7 @@ export class Player {
       this.frameTimer = 0;
       if (this.frameX < this.maxFrame) this.frameX++;
       else {
+        // Keeps animation frame from moving on at end of these two end states.
         if (this.currentState === this.states[9] || this.currentState === this.states[10]) {
           this.frameX = this.maxFrame;
         }
