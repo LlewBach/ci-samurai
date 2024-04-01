@@ -106,7 +106,7 @@ window.addEventListener('load', function () {
   const loader = document.querySelector('.loader');
   loader.classList.add('loader-hidden');
   loader.addEventListener('transitionend', () => {
-    document.body.removeChild(loader);
+    loader.remove();
   });
   // Below is back to my code
 

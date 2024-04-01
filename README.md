@@ -457,7 +457,7 @@ Getting Jest set up so that it would work with VSC and modules actually proved t
 
 I also added the node_modules folder to the gitignore to not overload the git system.
 
-#### Jest tests
+#### Jest tests and exceptions
 
 All aspects of the scripting are tested for with Jest, except for the following:
 - main.js event listener functionality
@@ -472,6 +472,7 @@ This functionality is covered by behavioural testing the following:
 - Can one enter Training Mode on both keyboard and touchscreen? - Yes
 - Does the background canvas automatically resize when the screen width is changed? - Yes
 - Can the game sense a touchscreen device? - Yes
+- Is the loader removed from the HTML once loaded? - Yes
 - Can the game be played with the joystick and control pad? - Yes
 - Do the buttons and indicators change colour depending on required energy level? - Yes
 
