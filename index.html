@@ -6,31 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Code Eye Samurai: 2d side scrolling fighting game for coders">
   <title>CI Samurai</title>
+  <!-- Bootstrap link -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- FontAwesome script -->
   <script src="https://kit.fontawesome.com/3aeb5c4f62.js" crossorigin="anonymous"></script>
+  <!-- Favicon links -->
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="manifest" href="assets/favicon/site.webmanifest">
-
+  <!-- Google Fonts links -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
     rel="stylesheet">
-
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
+  <!-- The spinning loader div -->
   <div class="loader"></div>
-
+  <!-- The canvas for the 'matrix rain' background -->
   <canvas id="canvas2"></canvas>
-
+  <!-- Title and tagline -->
   <h1>Code Eye Samurai</h1>
-  <p>2D side scroll fighting game</p>
-
+  <p>2D side scroll fighting game for coders</p>
+  <!-- Bootstrap tab menu -->
   <ul class="nav nav-pills justify-content-center mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="pills-intro-tab" data-bs-toggle="pill" data-bs-target="#pills-intro"
@@ -45,7 +49,9 @@
         role="tab" aria-controls="pills-game" aria-selected="false">Game</button>
     </li>
   </ul>
+  <!-- Bootstrap tab pane content -->
   <div class="tab-content" id="pills-tabContent">
+    <!-- Intro tab content -->
     <div class="tab-pane fade show active" id="pills-intro" role="tabpanel" aria-labelledby="pills-intro-tab">
       <p>In 2024...</p>
       <p>The Shogun of Code Institute Dojo, had set an assignment
@@ -61,18 +67,8 @@
       <p>of a debugging sesh,</p>
       <p>of revenge.</p>
       <p>The Code Eye Samurai</p>
-
-      <!-- <h2>classHopper, do you hear the bugs which are at your feet?</h2>
-      <p>In ancient times, maybe the eighties, computers were first discovered. At first their power promised to free
-        the
-        masses from menial labour and the burden of thinking.</p>
-      <p>As time passed however, the coder guardians of this new
-        technology began to fall sick, deranged. We realised that this technology was not a panacea,
-        but rather a Pandora's Box,
-        and we had released a plague of bugs into the world.</p>
-      <p>To respond to this threat, we the Code Eye Samurai have fought to release these lost comrades from their hell,
-        and now, young Samurai, your time has come.</p> -->
     </div>
+    <!-- Controls tab content -->
     <div class="tab-pane fade" id="pills-controls" role="tabpanel" aria-labelledby="pills-controls-tab">
       <h2>Keyboard</h2>
       <div class="container">
@@ -89,7 +85,6 @@
         </div>
         <div class="row">
           <div class="col-3">
-            <!-- <i class="fa-solid fa-square-caret-left"></i> -->
             <p><i class="fa-solid fa-j"></i> - Run Left</p>
           </div>
           <div class="col-3">
@@ -137,8 +132,9 @@
         </div>
       </div>
     </div>
+    <!-- Game tab content -->
     <div class="tab-pane fade" id="pills-game" role="tabpanel" aria-labelledby="pills-game-tab">
-      <!-- <button id='fullScreenButton'>Toggle fullscreen</button> -->
+      <!-- Bootstrap dropdown menu. Necessary because on some screen sizes the game canvas covers the main tab buttons -->
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Tabs
@@ -148,6 +144,7 @@
           <li><a class="dropdown-item" href="#pills-controls">Controls</a></li>
         </ul>
       </div>
+      <!-- Game canvas -->
       <canvas id="canvas1"></canvas>
     </div>
   </div>
@@ -174,7 +171,7 @@
       });
     });
   </script>
-  <!-- The script above is from GPT-4 -->
+  <!-- The script below links all my script files -->
   <script type="module" src="scripts/main/main.js"></script>
 </body>
 

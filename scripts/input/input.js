@@ -1,3 +1,4 @@
+// The controlpad provices a means for touchscreen players to use attacks. This is completely my idea.
 export class ControlPad {
   constructor(x, y, canvas, game) {
     this.keys = [];
@@ -9,18 +10,20 @@ export class ControlPad {
     this.game = game;
     this.addListeners(canvas);
   }
-  // Manually test addListeners method
+  // Adds event listeners upon instantiation and pushes keys to keys array depending on touch coordinates
   addListeners(canvas) {
+    // This function translates real screen coordinates into game canvas coordinates. This maintains functionality if the game canvas is reduced in size due to screen size limitations.
     const translateCoords = (e) => {
+      // Gets coords of game canvas, which has a 5px border.
       const rect = canvas.getBoundingClientRect();
-      // Canvas border has width 5px
+      // Compares actual width with given width to calculate scale.
       const scale = (rect.width - 10) / canvas.width;
       const actualX = e.changedTouches[0].clientX - rect.left - 5;
       const actualY = e.changedTouches[0].clientY - rect.top - 5;
       this.scaledX = actualX / scale;
       this.scaledY = actualY / scale;
     }
-
+    // Determines which button pressed
     const checkWhichButton = (scaledX, scaledY) => {
       if (
         scaledX > (this.x - this.r) &&
@@ -55,7 +58,7 @@ export class ControlPad {
         return 'button4';
       }
     };
-
+    // Pushes key corresponding to attack option to array
     canvas.addEventListener('touchstart', e => {
       translateCoords(e);
       let button = checkWhichButton(this.scaledX, this.scaledY);
@@ -63,9 +66,8 @@ export class ControlPad {
       else if (button === 'button2' && this.keys.indexOf('s') === -1) this.keys.push('s');
       else if (button === 'button3' && this.keys.indexOf('d') === -1) this.keys.push('d');
       else if (button === 'button4' && this.keys.indexOf('f') === -1) this.keys.push('f');
-      // console.log(this.keys);
     });
-
+    // Splices out attack keys if button released.
     canvas.addEventListener('touchend', e => {
       translateCoords(e);
       let button = checkWhichButton(this.scaledX, this.scaledY);
@@ -73,7 +75,6 @@ export class ControlPad {
       else if (button === 'button2') this.keys.splice(this.keys.indexOf('s'));
       else if (button === 'button3') this.keys.splice(this.keys.indexOf('d'));
       else if (button === 'button4') this.keys.splice(this.keys.indexOf('f'));
-      // console.log(this.keys);
     });
   }
   draw(context) {
@@ -96,7 +97,7 @@ export class ControlPad {
     context.arc(this.x - 90, this.y, this.r + 1, 0, Math.PI * 2);
     context.stroke();
 
-    // Button 1
+    // Button 1 - Note that fill colours depend on game object's energy status.
     context.beginPath();
     context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 1) context.fillStyle = 'red';
@@ -105,13 +106,13 @@ export class ControlPad {
     // Button 2
     context.beginPath();
     context.arc(this.x, this.y - 80, this.r, 0, Math.PI * 2);
-    if (this.game.energy >= 5) context.fillStyle = 'green';
+    if (this.game.energy >= 5) context.fillStyle = '#0AFF0A';
     else context.fillStyle = 'lightgray';
     context.fill();
     // Button 3
     context.beginPath();
     context.arc(this.x, this.y + 80, this.r, 0, Math.PI * 2);
-    if (this.game.energy >= 30) context.fillStyle = 'blue';
+    if (this.game.energy >= 30) context.fillStyle = '#2DE1FC';
     else context.fillStyle = 'lightgray';
     context.fill();
     // Button 4
@@ -136,6 +137,7 @@ export class ControlPad {
   }
 }
 
+// The joystick provides touchscreen players with a convenient means of moving character. This was initially inspired by a tutorial credited in the README credits section. However, this was heavily modified to account for canvas scaling like the ControlPad above, joystick snapping behaviour, making simple press equivalent to holding 'Shift', and connecting with player states.
 export class Joystick {
   constructor(x, y, canvas) {
     this.keys = [];
@@ -151,7 +153,6 @@ export class Joystick {
     this.angleRadians = 0;
     this.addListeners(canvas);
   }
-  // Manually test addListeners method
   addListeners(canvas) {
     const translateCoords = (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -161,13 +162,8 @@ export class Joystick {
       const actualY = e.changedTouches[0].clientY - rect.top - 5;
       this.scaledX = actualX / scale;
       this.scaledY = actualY / scale;
-
-      // console.log('actualX: ' + actualX, 'actualY: ' + actualY);
-      // console.log('scale: ' + scale);
-      // console.log('scaledX: ' + this.scaledX);
-      // console.log('scaledY: ' + this.scaledY);
     };
-
+    // Detects joystick press and intitially sets coords where joystick should be draw.
     canvas.addEventListener('touchstart', e => {
       translateCoords(e);
       if (
@@ -181,7 +177,7 @@ export class Joystick {
         this.y = this.scaledY;
       }
     });
-
+    // Makes joystick want to follow touch coords.
     canvas.addEventListener('touchmove', e => {
       if (this.pressed) {
         translateCoords(e);
@@ -189,6 +185,7 @@ export class Joystick {
         this.y = this.scaledY;
       }
     });
+    // Makes joystick snap back to center when released
     canvas.addEventListener('touchend', () => {
       this.pressed = false;
       this.x = this.X;
@@ -196,13 +193,14 @@ export class Joystick {
     });
   }
   update() {
+    // First calculates whether joystick moved beyond threshold to trigger move and the angle.
     const xDistance = this.x - this.X;
     const yDistance = this.y - this.Y;
     const mouseDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
     this.angleRadians = Math.atan2(yDistance, xDistance);
-    // console.log('angleRadians: ' + this.angleRadians);
+    // Constantly emptying keys array.
     this.keys = [];
-
+    // Adds joystick snapping behaviour and pushes selected keys to keys array.
     if (mouseDistance >= this.R) {
       if (this.angleRadians > -Math.PI / 8 && this.angleRadians <= Math.PI / 8) {
         this.angleRadians = 0;
@@ -232,10 +230,11 @@ export class Joystick {
 
       this.x = this.X + Math.cos(this.angleRadians) * this.R;
       this.y = this.Y + Math.sin(this.angleRadians) * this.R;
+      // Simply holding joystick button acts as 'Shift' which allows standing player to attack left.
     } else if (this.pressed) this.keys.push('Shift');
   }
   draw(context) {
-    // Outer circle
+    // Outer threshold circle
     context.beginPath();
     context.arc(this.X, this.Y, this.R, 0, Math.PI * 2);
     context.strokeStyle = 'black';
@@ -250,6 +249,7 @@ export class Joystick {
   }
 }
 
+// This records relevant keyboard presses. The architecture for this object I learned from the JavaScript Game Dev tutorial by Franks Laboratory, credited in the README.
 export class InputHandler {
   constructor() {
     this.keys = [];
@@ -267,6 +267,7 @@ export class InputHandler {
         e.key === 'Shift')
         && this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
+        // I changed motion controls after integrating them with player states, and it was easier to push the same keywords to the keys array.
       } else if ((e.key === 'j' || e.key === 'J') && this.keys.indexOf('ArrowLeft') === -1) {
         this.keys.push('ArrowLeft');
       } else if ((e.key === 'l' || e.key === 'L') && this.keys.indexOf('ArrowRight') === -1) {
@@ -276,15 +277,10 @@ export class InputHandler {
       } else if ((e.key === 'k' || e.key === 'K') && this.keys.indexOf('ArrowDown') === -1) {
         this.keys.push('ArrowDown');
       }
-      // console.log('Before: ', this.keys);
     });
 
     window.addEventListener('keyup', e => {
       if (
-        // e.key === 'ArrowLeft' ||
-        // e.key === 'ArrowRight' ||
-        // e.key === 'ArrowUp' ||
-        // e.key === 'ArrowDown' ||
         e.key === 'a' ||
         e.key === 'A' ||
         e.key === 's' ||
@@ -305,7 +301,6 @@ export class InputHandler {
       } else if (e.key === 'k' || e.key === 'K') {
         this.keys.splice(this.keys.indexOf('ArrowDown'), 1);
       }
-      // console.log('After: ', this.keys);
     });
   }
 }
