@@ -461,6 +461,7 @@ I also added the node_modules folder to the gitignore to not overload the git sy
 
 All aspects of the scripting are tested for with Jest, except for the following:
 - main.js event listener functionality
+- main.js Game.addEnemies method
 - input.js ControlPad class addListeners method functionality
 - input.js ControlPad draw method - Whether buttons change 'fillStyle' depending on energy level
 - input.js Joystick class addListeners method functionality
@@ -476,7 +477,9 @@ This functionality is covered by behavioural testing the following:
 - Can the game be played with the joystick and control pad? - Yes
 - Do the buttons and indicators change colour depending on required energy level? - Yes
 
-Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 233 tests in total, which all pass.
+Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 235 tests in total, which all pass. See the following image for a coverage report.
+
+![jest coverage report](assets/captures/capture-17.PNG)
 
 ## Deployment
 
