@@ -1,7 +1,7 @@
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
 import { FloatingText } from '../floatingText/floatingText.js';
 
-// This code in this file is completely my own.
+// The code in this file is completely my own.
 
 const states = {
   STANDING: 0,

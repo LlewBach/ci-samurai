@@ -8,6 +8,7 @@ import { MatrixRain } from '../matrix/matrix.js';
 // This is the central nervous system of the game.
 
 // The architecture for this object was inspired by the JavaScript Game Dev course by Franks Laboratory, credited in the README. This is my own implementation of that architecture.
+
 // I also learned to use deltaTime from the same course.
 export class Game {
   constructor(width, height, canvas) {
@@ -78,13 +79,13 @@ export class Game {
     else {
       this.enemyTimer = 0;
       if (Math.random() < this.enemyRandomFactor) {
-        // Intantiates one of two Zombie classes with a starting state of Standing.
+        // Instantiates one of two Zombie classes with a starting state of Standing.
         this.enemies.push(new type(this, 0));
         // Increasing the enemyRandomFactor makes it more likely an enemy will be added next time, making game difficulty increase over time.
         this.enemyRandomFactor += 0.02;
       }
       if (Math.random() < this.enemyRandomFactor) {
-        // Intantiates one of two Zombie classes with a starting state of Spawning.
+        // Instantiates one of two Zombie classes with a starting state of Spawning.
         this.enemies.push(new type(this, 3));
         this.enemyRandomFactor += 0.02;
       }
@@ -98,7 +99,9 @@ export class Game {
   }
   // Resets game properties and flags.
   restart() {
+
     this.speed = 0;
+    this.player = new Player(this);
     this.particles = [];
     this.floatingText = [];
     this.enemies = [];
@@ -115,7 +118,7 @@ export class Game {
 }
 
 window.addEventListener('load', function () {
-  // The code relating to the loader is 99% directly from a tutorial
+  // The code relating to the loader is 90% directly from a tutorial
   const loader = document.querySelector('.loader');
   loader.classList.add('loader-hidden');
   loader.addEventListener('transitionend', () => {

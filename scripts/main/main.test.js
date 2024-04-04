@@ -196,21 +196,6 @@ describe('Game class', () => {
     expect(game.controlPad.draw).toHaveBeenCalledWith(mockContext);
   });
 
-  // test('.addEnemy should add a Zombie instance to enemies at certain intervals with 50% chance if deltaTime > 20', () => {
-  // jest.spyOn(Math, 'random').mockReturnValue(0.4);
-  // game.enemyTimer = 1000;
-  // game.enemyInterval = 1000;
-  // game.enemies = [];
-  // game.addEnemy(25);
-  // expect(Zombie1).toHaveBeenCalled();
-  // expect(Zombie2).toHaveBeenCalled();
-  // jest.clearAllMocks();
-  // jest.spyOn(Math, 'random').mockReturnValue(0.7);
-  // game.addEnemy(16);
-  // expect(Zombie1).not.toHaveBeenCalled();
-  // expect(Zombie2).not.toHaveBeenCalled();
-  // });
-
   test('.healthCheck should set gameOver to true at zero health', () => {
     game.health = 10;
     game.healthCheck();
@@ -246,5 +231,3 @@ describe('Game class', () => {
     expect(game.isPaused).toBe(true);
   });
 });
-
-// Manually test event listener code

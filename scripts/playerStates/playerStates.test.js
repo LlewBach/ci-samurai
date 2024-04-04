@@ -38,18 +38,6 @@ beforeEach(() => {
   };
 });
 
-// afterEach(() => {
-//   player = {
-//     frameX: undefined,
-//     maxFrame: undefined,
-//     frameY: undefined,
-//     speed: undefined,
-//     maxSpeed: 7,
-//     setState: jest.fn(),
-//     onGround: jest.fn(),
-//   };
-// });
-
 describe('Standing State', () => {
   let standingState;
 
@@ -369,7 +357,6 @@ describe('Jumping State', () => {
   });
 
   test('should configure some player properties on .enter()', () => {
-    // jumpingState.enter();
     expect(player.maxFrame).toBe(2);
     expect(player.frameY).toBe(2);
     expect(player.vy).toBe(-24);
@@ -386,7 +373,6 @@ describe('Jumping State', () => {
   });
 
   test('should transition to FALLING state at jump peak', () => {
-    // jumpingState.enter();
     player.vy = -1;
     jumpingState.handleInput();
     expect(player.setState).not.toHaveBeenCalledWith(states.FALLING);
@@ -740,16 +726,6 @@ describe('Attack3 State', () => {
     attack3State.enter();
     expect(game.score).toBe(10);
   });
-
-  // test('.enter should set change multiple enemies states based on enemy.inShortRange status and player.facingRight', () => {
-  //   expect(game.enemies[0].setState).not.toHaveBeenCalled();
-  //   expect(game.enemies[1].setState).toHaveBeenCalled();
-  //   expect(game.enemies[2].setState).not.toHaveBeenCalled();
-  //   expect(game.enemies[3].setState).toHaveBeenCalled();
-  //   player.facingRight = -1;
-  //   attack3State.enter();
-  //   expect(game.enemies[2].setState).toHaveBeenCalled();
-  // });
 
   test('.handleInput should set change multiple enemies states based on enemy.inLongRange status, player.facingRight and frameX', () => {
     player.frameX = player.maxFrame;

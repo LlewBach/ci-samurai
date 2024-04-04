@@ -1,3 +1,4 @@
+// This code is basically straight from the JS Game Dev course, credited in the README. I don't take credit for this.
 export class FloatingText {
   constructor(value, x, y, targetX, targetY) {
     this.value = value;
@@ -22,5 +23,3 @@ export class FloatingText {
     context.fillText(this.value, this.x + 2, this.y + 2);
   }
 }
-
-// This is directly from the JS game dev course, see credits for more info

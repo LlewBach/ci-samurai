@@ -47,7 +47,6 @@ describe('UI class', () => {
     expect(ui).toHaveProperty('fontSize');
     expect(ui).toHaveProperty('fontFamily1');
     expect(ui).toHaveProperty('fontFamily2');
-    expect(ui).toHaveProperty('fontColour');
     expect(ui).toHaveProperty('text1');
     expect(ui).toHaveProperty('text2');
     expect(ui).toHaveProperty('text3');

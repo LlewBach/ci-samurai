@@ -25,8 +25,6 @@ describe('ControlPad class', () => {
     expect(controlPad).toHaveProperty('game');
   });
 
-  // Manually test .addListeners method
-
   test('.draw should correctly call context methods', () => {
     controlPad.draw(mockContext);
     expect(mockContext.beginPath).toHaveBeenCalledTimes(8);
@@ -35,8 +33,6 @@ describe('ControlPad class', () => {
     expect(mockContext.fill).toHaveBeenCalledTimes(4);
     expect(mockContext.fillText).toHaveBeenCalledTimes(4);
   });
-
-  // Manually test that the button light up/go out according to energy
 });
 
 describe('Joystick class', () => {
@@ -96,27 +92,6 @@ describe('Joystick class', () => {
     expect(scaledX).toBe(90);
     expect(scaledY).toBe(170);
   });
-
-  // Testing eventListeners is an absolute fucking nightmare. Going to do behavioural instead
-
-  // test('.addListeners should attach event listeners to canvas', () => {
-  //   const canvas1 = { addEventListener: jest.fn() };
-  //   expect(canvas1.addEventListener).toHaveBeenCalledTimes(3);
-  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchstart', expect.any(Function));
-  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchmove', expect.any(Function));
-  //   expect(canvas1.addEventListener).toHaveBeenCalledWith('touchend', expect.any(Function));
-  // });
-
-  // test('if acceptable coords touched, set this.pressed to true', () => {
-  //   const simulateTouchEvent = (type, clientX, clientY) => {
-  //     const event = new TouchEvent(type, {
-  //       changedTouches: [{ clientX: clientX, clientY: clientY }]
-  //     });
-  //     canvas1.dispatchEvent(event);
-  //   };
-  //   simulateTouchEvent('touchstart', '60', '100');
-  //   expect(joystick.pressed).toBe(true);
-  // });
 
   test('.update should snap joystick to set increments if mouseDistance beyond joystick perimeter', () => {
     joystick.x = joystick.X + 20;
@@ -235,13 +210,6 @@ describe('InputHandler class', () => {
     window.dispatchEvent(event);
   }
 
-  // const simulateTouchEvent = (type, pageY) => {
-  //   const event = new TouchEvent(type, {
-  //     changedTouches: [{ pageY: pageY }]
-  //   });
-  //   window.dispatchEvent(event);
-  // };
-
   test('should have correct key', () => {
     expect(inputHandler).toHaveProperty('keys');
   });
@@ -267,32 +235,4 @@ describe('InputHandler class', () => {
     simulateEvent('keydown', 't');
     expect(inputHandler.keys).toEqual([]);
   });
-
-  // test('touching screen updates touchY value', () => {
-  //   simulateTouchEvent('touchstart', '50');
-  //   expect(inputHandler.touchY).toBe('50');
-  // });
-
-  // test('swiping further than threshold should push "swipe down" to keys array', () => {
-  //   simulateTouchEvent('touchstart', '50');
-  //   simulateTouchEvent('touchmove', '79');
-  //   expect(inputHandler.keys).not.toContain('swipe down');
-  //   simulateTouchEvent('touchmove', '81');
-  //   expect(inputHandler.keys).toContain('swipe down');
-  // });
-
-  // test('swiping further than threshold should push "swipe up" to keys array', () => {
-  //   simulateTouchEvent('touchstart', '50');
-  //   simulateTouchEvent('touchmove', '21');
-  //   expect(inputHandler.keys).not.toContain('swipe up');
-  //   simulateTouchEvent('touchmove', '19');
-  //   expect(inputHandler.keys).toContain('swipe up');
-  // });
-
-  // test('touchend event should remove touch values from keys array', () => {
-  //   simulateTouchEvent('touchstart', '50');
-  //   simulateTouchEvent('touchmove', '81');
-  //   simulateTouchEvent('touchend', 0);
-  //   expect(inputHandler.keys).not.toContain('swipe down');
-  // });
 });

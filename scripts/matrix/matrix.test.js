@@ -13,10 +13,6 @@ describe('Symbol class', () => {
     };
   });
 
-  // afterEach(() => {
-  //   Math.random.mockRestore();
-  // });
-
   test('should be an instance of Symbol', () => {
     expect(symbol).toBeInstanceOf(Symbol);
   });

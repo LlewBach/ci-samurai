@@ -79,9 +79,11 @@ export class Player {
     this.currentState.enter();
   }
   onGround() {
+    // Reports whether or not player on ground
     return this.y >= this.game.height - this.game.groundMargin - this.height;
   }
   shortRangeCheck() {
+    // Gives each enemy a value of 1, -1 or 0 depending on within short-range status and left/right side.
     this.game.enemies.forEach(enemy => {
       if (enemy.jumpAttacking) enemy.hitMargin = 0;
       else enemy.hitMargin = 100;
@@ -97,6 +99,7 @@ export class Player {
     });
   }
   longRangeCheck() {
+    // Gives each enemy a value of 1, -1 or 0 depending on within long-range status and left/right side.
     this.game.enemies.forEach(enemy => {
       if (
         enemy.x + enemy.hitMargin < this.x + this.width &&
@@ -110,6 +113,7 @@ export class Player {
     });
   }
   hitCheck() {
+    // Checks whether or not player is currently being 'touched'
     return (
       this.game.enemies.some(enemy => {
         return (
@@ -122,6 +126,7 @@ export class Player {
     );
   }
   jumpAttackCheck() {
+    // This is a special hit check for enemies that are currently jumping. This is necessary as the contact box needs adjustment due to how sprite is drawn.
     return (
       this.game.enemies.some(enemy => {
         return (
@@ -140,6 +145,7 @@ export class Player {
     )
   }
   winCheck() {
+    // Checks if winning score reached
     if (this.game.score >= this.game.winningScore && !this.game.gameOver) {
       this.setState(12);
       this.game.gameOver = true;

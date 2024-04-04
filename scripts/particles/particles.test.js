@@ -20,7 +20,7 @@ describe('ZombieBlood class', () => {
       beginPath: jest.fn(),
       arc: jest.fn(),
       fillStyle: '',
-      fill: jest.fn() // might need to delete
+      fill: jest.fn()
     };
     jest.spyOn(Math, 'random').mockReturnValue(0.5);
   });
@@ -56,7 +56,7 @@ describe('ZombieBlood class', () => {
     zombieBloodDrop.draw(mockContext);
     expect(mockContext.beginPath).toHaveBeenCalled();
     expect(mockContext.arc).toHaveBeenCalledWith(10, 10, 6.5, 0, Math.PI * 2);
-    expect(mockContext.fillStyle).toBe('darkgreen');
+    expect(mockContext.fillStyle).toBe('#0aff0a');
     expect(mockContext.fill).toHaveBeenCalled();
   });
 });
