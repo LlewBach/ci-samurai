@@ -142,7 +142,7 @@ export class Player {
             enemy.y + enemy.yContactMargin < this.y + this.height)
         );
       })
-    )
+    );
   }
   winCheck() {
     // Checks if winning score reached

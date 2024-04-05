@@ -188,7 +188,7 @@ export class UI {
         this.text2 = 'Join them, Coder-san';
       }
       if (!this.game.isTouchScreen) this.text3 = 'Press r key to restart';
-      else this.text3 = 'Swipe up to restart'
+      else this.text3 = 'Swipe up to restart';
     } else {
       this.text1 = '';
       this.text2 = '';

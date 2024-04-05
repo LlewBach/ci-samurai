@@ -1,0 +1,6 @@
+{
+  "esversion": 6,
+  "module": true,
+  "browser": true,
+  "node": true
+}

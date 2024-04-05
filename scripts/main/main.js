@@ -70,7 +70,6 @@ export class Game {
     if (this.isTouchScreen) this.joystick.draw(context);
     if (this.isTouchScreen) this.controlPad.draw(context);
   }
-  // 
   addEnemy(deltaTime) {
     const randomEnemyType = () => Math.random() < 0.5 ? Zombie1 : Zombie2;
     let type = randomEnemyType();
@@ -99,7 +98,6 @@ export class Game {
   }
   // Resets game properties and flags.
   restart() {
-
     this.speed = 0;
     this.player = new Player(this);
     this.particles = [];

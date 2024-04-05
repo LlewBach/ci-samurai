@@ -16,8 +16,8 @@ const states = {
   SEPPAKU: 9,
   TRANSCENDING: 10,
   ATTACK4: 11,
-  DEMON: 12,
-}
+  DEMON: 12
+};
 
 class State {
   constructor(player) {

@@ -22,7 +22,7 @@ export class ControlPad {
       const actualY = e.changedTouches[0].clientY - rect.top - 5;
       this.scaledX = actualX / scale;
       this.scaledY = actualY / scale;
-    }
+    };
     // Determines which button pressed
     const checkWhichButton = (scaledX, scaledY) => {
       if (
@@ -265,8 +265,8 @@ export class InputHandler {
         e.key === 'D' ||
         e.key === 'f' ||
         e.key === 'F' ||
-        e.key === 'Shift')
-        && this.keys.indexOf(e.key) === -1) {
+        e.key === 'Shift') &&
+        this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
         // I changed motion controls after integrating them with player states, and it was easier to push the same keywords to the keys array.
       } else if ((e.key === 'j' || e.key === 'J') && this.keys.indexOf('ArrowLeft') === -1) {

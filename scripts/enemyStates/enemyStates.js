@@ -11,7 +11,7 @@ const states = {
   TURNING: 4,
   ATTACK1: 5,
   ATTACK2: 6,
-}
+};
 
 class State {
   constructor(game, enemy) {
