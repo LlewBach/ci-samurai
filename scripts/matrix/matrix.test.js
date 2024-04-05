@@ -19,8 +19,8 @@ describe('Symbol class', () => {
 
   test('should have necessary keys', () => {
     expect(symbol).toHaveProperty('characters');
-    expect(symbol).toHaveProperty('x');
-    expect(symbol).toHaveProperty('y');
+    expect(symbol).toHaveProperty('xPosition');
+    expect(symbol).toHaveProperty('yPosition');
     expect(symbol).toHaveProperty('fontSize');
     expect(symbol).toHaveProperty('text');
     expect(symbol).toHaveProperty('canvasHeight');
@@ -44,13 +44,13 @@ describe('Symbol class', () => {
 
   test('.update should increment or reset y value once past screen height and depending on random number threshold', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0.5);
-    symbol.y = 21;
+    symbol.yPosition = 21;
     symbol.update();
-    expect(symbol.y).toBe(22);
+    expect(symbol.yPosition).toBe(22);
     jest.spyOn(Math, 'random').mockReturnValue(0.99);
-    symbol.y = 21;
+    symbol.yPosition = 21;
     symbol.update();
-    expect(symbol.y).toBe(0);
+    expect(symbol.yPosition).toBe(0);
   });
 
   test('.draw should call context function correctly', () => {

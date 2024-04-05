@@ -1,4 +1,4 @@
-import { FloatingText } from "./floatingText";
+import { FloatingText } from "./floating-text";
 
 let floatingMessage;
 let mockContext;

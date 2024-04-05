@@ -1,5 +1,5 @@
 import { Player } from './player.js';
-import { Standing, Running } from '../playerStates/playerStates.js';
+import { Standing, Running } from '../player-states/player-states.js';
 
 describe('Player class', () => {
   let game;

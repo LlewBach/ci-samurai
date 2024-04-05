@@ -1,5 +1,5 @@
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
-import { FloatingText } from '../floatingText/floatingText.js';
+import { FloatingText } from '../floating-text/floating-text.js';
 
 // The code in this file is completely my own.
 

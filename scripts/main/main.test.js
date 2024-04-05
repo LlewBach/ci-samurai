@@ -1,14 +1,14 @@
 import { Game } from './main.js';
 import { Background } from '../background/background.js';
 import { Joystick, ControlPad, InputHandler } from '../input/input.js';
-import { UI } from '../UI/UI.js';
+import { UI } from '../user-interface/user-interface.js';
 import { Player } from '../player/player.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 
 // Mock dependencies
 jest.mock('../background/background.js');
 jest.mock('../input/input.js');
-jest.mock('../UI/UI.js');
+jest.mock('../user-interface/user-interface.js');
 jest.mock('../player/player.js');
 jest.mock('../enemies/enemies.js');
 

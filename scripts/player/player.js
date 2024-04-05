@@ -1,4 +1,4 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from '../playerStates/playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from '../player-states/player-states.js';
 
 // I learned the architecture of this object, the hitbox detection mechanism, the onGround function and the state design pattern from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is my own. 
 // My own innovations include multiple input handling, player bidirectionality, range checks, jumpAttackCheck, winCheck

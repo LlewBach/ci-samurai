@@ -1,6 +1,6 @@
-import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from './playerStates.js';
+import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from './player-states.js';
 import { PlayerBlood } from '../particles/particles.js';
-import { FloatingText } from '../floatingText/floatingText.js';
+import { FloatingText } from '../floating-text/floating-text.js';
 
 
 const states = {

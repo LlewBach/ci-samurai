@@ -1,4 +1,4 @@
-import { UI } from './UI.js';
+import { UI } from './user-interface.js';
 
 describe('UI class', () => {
   let ui;

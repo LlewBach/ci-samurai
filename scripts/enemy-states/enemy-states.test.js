@@ -1,6 +1,6 @@
-import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from './enemy-states.js';
 import { ZombieBlood, PlayerBlood } from '../particles/particles.js';
-import { FloatingText } from '../floatingText/floatingText.js';
+import { FloatingText } from '../floating-text/floating-text.js';
 
 const states = {
   STANDING: 0,

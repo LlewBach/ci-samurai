@@ -1,4 +1,4 @@
-import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from '../enemyStates/enemyStates.js';
+import { Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2 } from '../enemy-states/enemy-states.js';
 
 // This implementation of game enemies is by me, and includes features such as enemy states, enemy bidirectionality, short and long-range detection and player-centric motion control.
 

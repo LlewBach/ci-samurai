@@ -1,5 +1,5 @@
 import { PlayerBlood } from '../particles/particles.js';
-import { FloatingText } from '../floatingText/floatingText.js';
+import { FloatingText } from '../floating-text/floating-text.js';
 
 // I learned this state design patter from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is entirely my own.
 

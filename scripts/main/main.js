@@ -2,7 +2,7 @@ import { Background } from '../background/background.js';
 import { Joystick, ControlPad, InputHandler } from '../input/input.js';
 import { Zombie1, Zombie2 } from '../enemies/enemies.js';
 import { Player } from '../player/player.js';
-import { UI } from '../UI/UI.js';
+import { UI } from '../user-interface/user-interface.js';
 import { MatrixRain } from '../matrix/matrix.js';
 
 // This is the central nervous system of the game.

@@ -1,5 +1,5 @@
 import { Zombie1, Zombie2 } from './enemies.js';
-import { Walking } from '../enemyStates/enemyStates.js';
+import { Walking } from '../enemy-states/enemy-states.js';
 
 describe('Zombie class', () => {
   let game;
