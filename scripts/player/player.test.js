@@ -130,7 +130,6 @@ describe('Player class', () => {
   });
 
   test('.update should detract from health if player being stunned and health > 3', () => {
-    const setStateSpy = jest.spyOn(player, 'setState');
     jest.spyOn(player, 'hitCheck').mockReturnValue(true);
     player.game.health = 4;
     player.update();
@@ -138,7 +137,6 @@ describe('Player class', () => {
   });
 
   test('.update should detract from health if player being stunned and health >= 3', () => {
-    const setStateSpy = jest.spyOn(player, 'setState');
     jest.spyOn(player, 'hitCheck').mockReturnValue(true);
     player.game.health = 1;
     player.update();
