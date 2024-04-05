@@ -1,4 +1,4 @@
-import { Symbol, MatrixRain } from './matrix.js';
+import { Char, MatrixRain } from './matrix.js';
 
 describe('Symbol class', () => {
   let symbol, mockContext, game;
@@ -7,14 +7,14 @@ describe('Symbol class', () => {
     game = {
       gameOver: false
     };
-    symbol = new Symbol(5, 5, 25, 500, game);
+    symbol = new Char(5, 5, 25, 500, game);
     mockContext = {
       fillText: jest.fn()
     };
   });
 
   test('should be an instance of Symbol', () => {
-    expect(symbol).toBeInstanceOf(Symbol);
+    expect(symbol).toBeInstanceOf(Char);
   });
 
   test('should have necessary keys', () => {
@@ -110,7 +110,7 @@ describe('MatrixRain Class', () => {
   test('.initialize should set up each column with a symbol instance', () => {
     matrix.initialize();
     expect(matrix.symbols.length).toBe(matrix.columns);
-    expect(matrix.symbols[0]).toBeInstanceOf(Symbol);
+    expect(matrix.symbols[0]).toBeInstanceOf(Char);
   });
 
   test('.colourState should update matrix colour depending on gameOver status, player state', () => {

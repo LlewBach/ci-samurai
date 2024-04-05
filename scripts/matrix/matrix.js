@@ -1,12 +1,12 @@
 // The majority of the code for this Matrix Rain effect came from a YouTube tutorial by Franks Laboratory. See README credits section for link. The only addition I made was to add colour interactivity and tune 'rain intensity' depending on game over status.
 
 // This class codes the symbol that will be drawn in each column, and Symbols are instantiated in the MatrixRain class below.
-export class Symbol {
-  constructor(x, y, fontSize, canvasHeight, game) {
+export class Char {
+  constructor(xPosition, yPosition, fontSize, canvasHeight, game) {
     // The range of symbols used
     this.characters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン1234567890';
-    this.x = x;
-    this.y = y;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
     this.fontSize = fontSize;
     this.text = '';
     this.canvasHeight = canvasHeight;
@@ -21,12 +21,12 @@ export class Symbol {
     // The next symbol to be shown in the column
     this.text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
     // Increments symbol y position and resets once moved offscreen and threshold crossed
-    if (this.y * this.fontSize > this.canvasHeight && Math.random() > this.threshold) this.y = 0;
-    else this.y++;
+    if (this.yPosition * this.fontSize > this.canvasHeight && Math.random() > this.threshold) this.yPosition = 0;
+    else this.yPosition++;
   }
   draw(context) {
     // Draws symbol
-    context.fillText(this.text, this.x * this.fontSize, this.y * this.fontSize);
+    context.fillText(this.text, this.xPosition * this.fontSize, this.yPosition * this.fontSize);
   }
 }
 
@@ -41,7 +41,7 @@ export class MatrixRain {
     // Holds Symbol class objects
     this.symbols = [];
     // Frame rate control variables
-    this.fps = 30;
+    this.fps = 30; // 'fps' is 'frames per second'
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
     this.colour = '#0aff0a';
@@ -50,7 +50,7 @@ export class MatrixRain {
   // Instantiates Symbol objects for each column.
   initialize() {
     for (let i = 0; i < this.columns; i++) {
-      this.symbols[i] = new Symbol(i, this.canvasHeight, this.fontSize, this.canvasHeight, this.game);
+      this.symbols[i] = new Char(i, this.canvasHeight, this.fontSize, this.canvasHeight, this.game);
     }
   }
   // Sets symbol colour depending on game status. Called in update method.

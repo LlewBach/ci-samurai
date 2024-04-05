@@ -427,6 +427,18 @@ https://jigsaw.w3.org/css-validator/
 
 Result: Passed.
 
+#### JSHint
+
+I downloaded JSHint as a dev dependency and tested each .js file, excluding test.js files, with the linter. Here were some issues raised:
+- Missing semi-colons
+- Symbol class name confused for primitive built-in data type
+- Uninitialized properties in player.js and enemies.js
+
+Solutions:
+- Add missing semi-colons
+- Change name of 'Symbol' class in matrix.js to 'Char'
+- I initialized the properties with values such as '0'
+
 #### WAVE
 
 I've had a look on WAVE (Web Accessibility Evaluation Tool) and the only issue that catches my eye is that is says low colour contrast, but I don't think the software can take the colour of the canvas background into account and assumes that the background colour of the page is white.
