@@ -17,6 +17,10 @@ describe('UI class', () => {
       trainingMode: false,
       isFreshGame: true,
       isTouchScreen: false,
+      player: {
+        states: ['state0', 'state1', 'state2', 'state3', 'state4', 'state5'],
+        currentState: 'state0',
+      }
     };
 
     mockContext = {
@@ -181,6 +185,25 @@ describe('UI class', () => {
     game.energy = 0;
     ui.draw(mockContext);
     expect(ui.text1).toEqual('Jump for energy!');
+  });
+
+  test('.draw method should set text1 if being hit at start of new game', () => {
+    game.isFreshGame = false;
+    game.score = 2;
+    game.player.currentState = 'state5';
+    ui.draw(mockContext);
+    expect(ui.text1).toEqual('Roll to escape attacks!');
+  });
+
+  test('.draw method should set text2 if being hit at start of new game, depending on isTouchScreen status', () => {
+    game.isFreshGame = false;
+    game.score = 2;
+    game.player.currentState = 'state5';
+    ui.draw(mockContext);
+    expect(ui.text2).toEqual('Press K');
+    game.isTouchScreen = true;
+    ui.draw(mockContext);
+    expect(ui.text2).toEqual('Pull joystick down');
   });
 
   test('.draw method should set text1 and text2 if game.isPaused is true, game.isFreshGame is false and game.trainingMode is false', () => {

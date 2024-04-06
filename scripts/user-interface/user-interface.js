@@ -163,6 +163,15 @@ export class UI {
       // Zero energy message
     } else if (!this.game.trainingMode && this.game.energy === 0) {
       this.text1 = "Jump for energy!";
+      // Being hit message for new players
+    } else if (this.game.player.currentState === this.game.player.states[5] && this.game.score <= 5) {
+      this.text1 = "Roll to escape attacks!";
+      if (!this.game.isTouchScreen) {
+        this.text2 = "Press K";
+      }
+      else {
+        this.text2 = "Pull joystick down";
+      }
       // Game paused message
     } else if (!this.game.trainingMode && !this.game.isFreshGame && this.game.isPaused) {
       this.text1 = "Game Paused";
