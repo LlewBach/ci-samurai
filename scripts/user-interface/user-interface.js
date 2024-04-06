@@ -67,7 +67,7 @@ export class UI {
     context.beginPath();
     context.arc(this.x + (2 * this.spacing), this.y, this.r, 0, Math.PI * 2);
     if (this.game.energy >= 30) {
-      context.fillStyle = '2DE1FC';
+      context.fillStyle = '#2DE1FC';
     } else context.fillStyle = 'lightgray';
     context.fill();
     // Indicator 4
