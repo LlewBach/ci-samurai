@@ -877,10 +877,10 @@ describe('Demon state', () => {
     expect(player.frameY).toBe(17);
   });
 
-  test('should set enemies state if in long range', () => {
+  test('should set all enemies states to Dying', () => {
     player.frameX = 10;
     demonState.handleInput();
-    expect(game.enemies[0].setState).not.toHaveBeenCalled();
+    expect(game.enemies[0].setState).toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalledWith(2);
     expect(game.enemies[2].setState).toHaveBeenCalledWith(2);
     expect(game.enemies[3].setState).toHaveBeenCalledWith(2);

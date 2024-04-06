@@ -389,9 +389,7 @@ export class Demon extends State {
   handleInput(inputKeys) {
     if (this.player.frameY === 17) {
       for (let i = 0; i < this.game.enemies.length; i++) {
-        if (this.game.enemies[i].inLongRange === 1 || this.game.enemies[i].inLongRange === -1) {
-          this.game.enemies[i].setState(2);
-        }
+        this.game.enemies[i].setState(2);
       }
     }
     // Moves sprite sheet animation to next line

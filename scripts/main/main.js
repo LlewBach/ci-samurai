@@ -25,8 +25,10 @@ export class Game {
     this.particles = [];
     this.floatingText = [];
     this.enemies = [];
+    // The next three are for addEnemies method
     this.enemyTimer = 0;
     this.enemyInterval = 5000;
+    // This affects how often new enemies added
     this.enemyRandomFactor = 0.3;
     this.score = 0;
     this.winningScore = 333;
