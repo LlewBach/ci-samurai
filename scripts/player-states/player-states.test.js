@@ -701,9 +701,12 @@ describe('Attack3 State', () => {
     expect(player.frameY).toBe(11);
   });
 
-  test('.enter should update game.energy and game.health', () => {
+  test('.enter should update game.energy and game.health, but with limit on health', () => {
     expect(game.energy).toBe(0);
     expect(game.health).toBe(15);
+    game.health = 99;
+    attack3State.enter();
+    expect(game.health).toBe(100);
   });
 
   test('.enter should push one floating message', () => {
@@ -817,10 +820,13 @@ describe('Attack4 State', () => {
     expect(player.frameY).toBe(12);
   });
 
-  test('.enter should update game.energy and game.health', () => {
+  test('.enter should update game.energy and game.health, but limit health', () => {
 
     expect(game.energy).toBe(0);
     expect(game.health).toBe(50);
+    game.health = 98;
+    attack4State.enter();
+    expect(game.health).toBe(100);
   });
 
   test('.enter should push one floating message', () => {

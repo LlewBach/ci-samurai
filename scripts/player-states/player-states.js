@@ -277,10 +277,16 @@ export class Attack3 extends State {
     this.player.speed = 0;
     // Energy cost
     this.game.energy -= 30;
-    // Health reward
-    this.game.health += 5;
-    // Initiates floating message
-    this.game.floatingText.push(new FloatingText('+5', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+    // Health reward - with limit
+    if (this.game.health <= 95) {
+      this.game.health += 5;
+      // Initiates floating message
+      this.game.floatingText.push(new FloatingText('+5', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+    } else {
+      const healthWon = 100 - this.game.health;
+      this.game.floatingText.push(new FloatingText('+' + healthWon, (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+      this.game.health = 100;
+    }
     // Training mode level tests
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 8) this.game.score++;
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) {
@@ -354,10 +360,16 @@ export class Attack4 extends State {
     this.player.speed = 0;
     // Energy cost
     this.game.energy -= 50;
-    // Health reward
-    this.game.health += 25;
-    // Initiates floating message
-    this.game.floatingText.push(new FloatingText('+25', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+    // Health reward - with limit
+    if (this.game.health <= 75) {
+      this.game.health += 25;
+      // Initiates +25 floating message
+      this.game.floatingText.push(new FloatingText('+25', (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+    } else {
+      const healthWon = 100 - this.game.health;
+      this.game.floatingText.push(new FloatingText('+' + healthWon, (this.player.x + this.player.width) / 2, this.player.y + this.player.height, 650, 50));
+      this.game.health = 100;
+    }
     // Training mode level test
     if (this.game.trainingMode && this.game.score === 10) this.game.score++;
   }
