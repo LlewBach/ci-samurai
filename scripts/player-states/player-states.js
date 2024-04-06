@@ -296,8 +296,8 @@ export class Attack3 extends State {
     }
   }
   handleInput(inputKeys) {
-    // Kills all enemies in long-range on correct side, once attack sequence done
-    if (this.player.frameX === this.player.maxFrame) {
+    // Kills all enemies in long-range on correct side, once attack sequence almost done
+    if (this.player.frameX === this.player.maxFrame - 3) {
       for (let i = 0; i < this.game.enemies.length; i++) {
         if (this.game.enemies[i].inLongRange === 1 && this.player.facingRight === 1) {
           this.game.enemies[i].setState(2);
@@ -306,8 +306,7 @@ export class Attack3 extends State {
         }
       }
       // Transition to Standing once attack done.
-      this.player.setState(states.STANDING);
-    }
+    } else if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);
   }
 }
 
@@ -374,16 +373,15 @@ export class Attack4 extends State {
     if (this.game.trainingMode && this.game.score === 10) this.game.score++;
   }
   handleInput(inputKeys) {
-    // Kills all enemies in long-range on both sides, once attack sequence done.
-    if (this.player.frameX === this.player.maxFrame) {
+    // Kills all enemies in long-range on both sides, once attack sequence almost done.
+    if (this.player.frameX === this.player.maxFrame - 3) {
       for (let i = 0; i < this.game.enemies.length; i++) {
         if (this.game.enemies[i].inLongRange === 1 || this.game.enemies[i].inLongRange === -1) {
           this.game.enemies[i].setState(2);
         }
       }
       // Transition to Standing
-      this.player.setState(states.STANDING);
-    }
+    } else if (this.player.frameX === this.player.maxFrame) this.player.setState(states.STANDING);
   }
 }
 

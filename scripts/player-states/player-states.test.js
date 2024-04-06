@@ -731,7 +731,7 @@ describe('Attack3 State', () => {
   });
 
   test('.handleInput should set change multiple enemies states based on enemy.inLongRange status, player.facingRight and frameX', () => {
-    player.frameX = player.maxFrame;
+    player.frameX = player.maxFrame - 3;
     attack3State.handleInput();
     expect(game.enemies[0].setState).not.toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalled();
@@ -843,7 +843,7 @@ describe('Attack4 State', () => {
   });
 
   test('.handleInput should set change multiple enemies states based on enemy.inLongRange status and frameX', () => {
-    player.frameX = player.maxFrame;
+    player.frameX = player.maxFrame - 3;
     attack4State.handleInput();
     expect(game.enemies[0].setState).not.toHaveBeenCalled();
     expect(game.enemies[1].setState).toHaveBeenCalled();
