@@ -189,8 +189,16 @@ describe('Game class', () => {
     expect(game.controlPad.draw).not.toHaveBeenCalledWith(mockContext);
   });
 
-  test('.draw should call joystick and controlPad draw methods if game.isTouchScreen is true', () => {
+  test('.draw should call joystick and controlPad draw methods if game.isTouchScreen is true, and if game.gameOver and game.isPaused are false', () => {
     game.isTouchScreen = true;
+    game.draw(mockContext);
+    expect(game.joystick.draw).not.toHaveBeenCalledWith(mockContext);
+    expect(game.controlPad.draw).not.toHaveBeenCalledWith(mockContext);
+    game.gameOver = false;
+    game.draw(mockContext);
+    expect(game.joystick.draw).not.toHaveBeenCalledWith(mockContext);
+    expect(game.controlPad.draw).not.toHaveBeenCalledWith(mockContext);
+    game.isPaused = false;
     game.draw(mockContext);
     expect(game.joystick.draw).toHaveBeenCalledWith(mockContext);
     expect(game.controlPad.draw).toHaveBeenCalledWith(mockContext);

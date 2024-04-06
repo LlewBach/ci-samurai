@@ -9,7 +9,10 @@ describe('Zombie class', () => {
 
   beforeEach(() => {
     game = {
-      annotateMode: false
+      annotateMode: false,
+      player: {
+        x: 800
+      }
     };
     zombie1 = new Zombie1(game, 0);
     zombie2 = new Zombie2(game, 3);
@@ -100,7 +103,8 @@ describe('Zombie class', () => {
     expect(zombie1.frameX).toBe(1);
   });
 
-  test('.update should reset frameX when maxFrame reached', () => {
+  test('.update should reset frameX when maxFrame reached if not in Standing state', () => {
+    zombie1.setState(1);
     zombie1.frameX = zombie1.maxFrame;
     zombie1.frameTimer = zombie1.frameInterval;
     zombie1.update(16);

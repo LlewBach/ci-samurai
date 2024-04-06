@@ -96,6 +96,17 @@ describe('Standing state', () => {
     standingState.update();
     expect(enemy.setState).toHaveBeenCalled();
   });
+
+  test('should transition to WALKING based if frameX === maxFrame', () => {
+    enemy.x = 800;
+    standingState.enter();
+    enemy.frameX = enemy.maxFrame - 1;
+    standingState.update();
+    expect(enemy.setState).not.toHaveBeenCalled();
+    enemy.frameX = enemy.maxFrame;
+    standingState.update();
+    expect(enemy.setState).toHaveBeenCalled();
+  });
 });
 
 describe('Walking state', () => {

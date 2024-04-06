@@ -32,7 +32,7 @@ export class Standing extends State {
   update() {
     // This makes the character stationary relative to the floor
     this.enemy.speed = this.game.speed;
-    if (this.enemy.x < this.game.width - this.enemy.width / 2) this.enemy.setState(states.WALKING);
+    if ((this.enemy.x < this.game.width - this.enemy.width / 2) || this.enemy.frameX === this.enemy.maxFrame) this.enemy.setState(states.WALKING);
   }
 }
 
