@@ -65,10 +65,10 @@ export class Game {
     this.enemies.forEach(enemy => enemy.draw(context));
     this.particles.forEach(particle => particle.draw(context));
     this.floatingText.forEach(message => message.draw(context));
-    this.UI.draw(context);
     // Joystick and ControlPad only drawn if a touch event detected.
-    if (this.isTouchScreen) this.joystick.draw(context);
-    if (this.isTouchScreen) this.controlPad.draw(context);
+    if (this.isTouchScreen && !this.gameOver && !this.isPaused) this.joystick.draw(context);
+    if (this.isTouchScreen && !this.gameOver && !this.isPaused) this.controlPad.draw(context);
+    this.UI.draw(context);
   }
   addEnemy(deltaTime) {
     const randomEnemyType = () => Math.random() < 0.5 ? Zombie1 : Zombie2;
