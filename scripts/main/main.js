@@ -131,14 +131,14 @@ window.addEventListener('load', function () {
 
   const game = new Game(canvas1.width, canvas1.height, canvas1);
 
-  let lastTime1 = 0;
+  let lastTimeAnimate = 0;
 
   function animate(timestamp) {
     // Wipes canvas clean every frame.
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
     // Using deltaTime helps the game run at the same speed no matter the device's refresh rate.
-    const deltaTime = timestamp - lastTime1;
-    lastTime1 = timestamp;
+    const deltaTime = timestamp - lastTimeAnimate;
+    lastTimeAnimate = timestamp;
     game.update(deltaTime);
     game.draw(ctx1);
     if (!game.isPaused) requestAnimationFrame(animate);
@@ -152,11 +152,11 @@ window.addEventListener('load', function () {
 
   const matrix = new MatrixRain(game, canvas2.width, canvas2.height);
 
-  let lastTime2 = 0;
+  let lastTimeAnimateMatrix = 0;
 
   function animateMatrix(timestamp) {
-    const deltaTime = timestamp - lastTime2;
-    lastTime2 = timestamp;
+    const deltaTime = timestamp - lastTimeAnimateMatrix;
+    lastTimeAnimateMatrix = timestamp;
     matrix.update(deltaTime);
     matrix.draw(ctx2);
     requestAnimationFrame(animateMatrix);
