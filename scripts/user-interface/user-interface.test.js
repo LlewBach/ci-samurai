@@ -235,7 +235,7 @@ describe('UI class', () => {
     expect(ui.text2).toEqual('Redemption is within reach');
     game.score = game.winningScore;
     ui.draw(mockContext);
-    expect(ui.text1).toEqual('Your code is cleansed!');
+    expect(ui.text1).toEqual('Debugging complete!');
     expect(ui.text2).toEqual('You are the One');
   });
 

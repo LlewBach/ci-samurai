@@ -189,7 +189,7 @@ export class UI {
     } else if (this.game.gameOver) {
       context.textAlign = 'center';
       if (this.game.score >= this.game.winningScore) {
-        this.text1 = 'Your code is cleansed!';
+        this.text1 = 'Debugging complete!';
         this.text2 = 'You are the One';
       } else if (this.game.score >= 150) {
         this.text1 = 'Your rage is strong';
