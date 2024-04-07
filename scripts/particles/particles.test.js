@@ -85,4 +85,3 @@ describe('PlayerBlood class', () => {
     expect(playerBloodDrop.size).toBe(4.5 * 0.9);
   });
 });
-

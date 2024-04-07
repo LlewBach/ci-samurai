@@ -172,7 +172,6 @@ describe('Game class', () => {
     game.joystick.draw = jest.fn();
     game.controlPad.draw = jest.fn();
     game.draw(mockContext);
-
     expect(game.background.draw).toHaveBeenCalledWith(mockContext);
     expect(game.player.draw).toHaveBeenCalledWith(mockContext);
     game.enemies.forEach(enemy => {

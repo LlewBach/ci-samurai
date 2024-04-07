@@ -1,7 +1,10 @@
-// I learned how to create a parallax background effect from the JavaScript Game Dev course, credited in the README. I have added to what I've learned by making all elements of the game move in a player-centric manner. In this way the player always remains in the center while all other components move around it to create the illusion of motion.
-// I have also given the background the ability to scroll seemlessly in both directions.
+/* 
+I learned how to create a parallax background effect from the JavaScript Game Dev course, credited in the README. 
+I have added to what I've learned by making all elements of the game move in a player-centric manner. In this way the player always remains in the center while all other components move around it to create the illusion of motion.
+I have also given the background the ability to scroll seemlessly in both directions. 
+*/
 
-// Each layer object controls one of four layers of the parallax background, called in the Background class.
+// Each layer object controls one of four layers of the parallax background.
 export class Layer {
   constructor(game, width, height, image, speedModifier) {
     this.game = game;

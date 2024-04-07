@@ -64,7 +64,6 @@ describe('Layer class', () => {
   });
 });
 
-
 describe('Background class', () => {
   let game;
   let background;

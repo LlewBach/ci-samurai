@@ -1,4 +1,6 @@
-// I learned this means of particle manipulation from the JavaScript Game Dev course, credited in the README. My main innovation was to set direction of particle travel based on attacking characters' facing direction
+// I learned this means of particle manipulation from the JavaScript Game Dev course,
+// credited in the README. 
+// My innovation was to set particle direction based on attacker's facing direction
 class Blood {
   constructor(game, x, y) {
     this.game = game;

@@ -47,7 +47,7 @@ export class Walking extends State {
   }
   update() {
     this.enemy.speed = this.game.speed - (this.enemy.maxSpeed * this.enemy.facingRight);
-    // Attack2 transitions, dependent on distance from player, direction, and game over status.
+    // Attack2 transitions, dependent on distance from player, direction, and gameOver
     if (this.enemy.attackChoice < 0.2) {
       if (
         this.enemy.x < this.game.player.x + this.game.player.width - (this.game.player.attackMargin * 0.8) &&
@@ -62,7 +62,7 @@ export class Walking extends State {
         !this.game.gameOver
       ) this.enemy.setState(states.ATTACK2);
     }
-    // Turning transitions, dependent on distance from player, direction, and game over status.
+    // Turning transitions, dependent on distance from player, direction, and gameOver
     if (
       this.enemy.x + this.enemy.width - this.enemy.hitMargin < this.game.player.x + this.game.player.attackMargin &&
       this.enemy.facingRight === -1 &&
@@ -171,7 +171,7 @@ export class Attack1 extends State {
   }
   update() {
     this.enemy.speed = this.game.speed;
-    // For duration of one frame of attack sequence, player takes damage and blood spatters.
+    // For duration of one frame, player takes damage and blood spatters.
     if (this.enemy.frameX === 10 && this.game.player.onGround() && this.game.health > 0) {
       this.game.health -= 1;
       for (let i = 0; i < 10; i++) {

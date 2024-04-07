@@ -41,7 +41,6 @@ describe('Symbol class', () => {
     expect(symbol.text).toBe('ヘ');
   });
 
-
   test('.update should increment or reset y value once past screen height and depending on random number threshold', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0.5);
     symbol.yPosition = 21;

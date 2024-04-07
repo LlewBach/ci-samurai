@@ -1,4 +1,6 @@
-// The controlpad provices a means for touchscreen players to use attacks. This is completely my idea.
+// The controlpad provices a means for touchscreen players to use attacks. 
+// This is completely my idea.
+
 export class ControlPad {
   constructor(x, y, canvas, game) {
     this.keys = [];
@@ -10,9 +12,10 @@ export class ControlPad {
     this.game = game;
     this.addListeners(canvas);
   }
-  // Adds event listeners upon instantiation and pushes keys to keys array depending on touch coordinates
+  // Adds listeners and pushes keys to keys array depending on touch coordinates
   addListeners(canvas) {
-    // This function translates real screen coordinates into game canvas coordinates. This maintains functionality if the game canvas is reduced in size due to screen size limitations.
+    // This function translates real screen coordinates into game canvas coordinates
+    // This maintains functionality if the game canvas is scaled down.
     const translateCoords = (e) => {
       // Gets coords of game canvas, which has a 5px border.
       const rect = canvas.getBoundingClientRect();
@@ -137,7 +140,12 @@ export class ControlPad {
   }
 }
 
-// The joystick provides touchscreen players with a convenient means of moving character. This was initially inspired by a tutorial credited in the README credits section. However, this was heavily modified to account for canvas scaling like the ControlPad above, joystick snapping behaviour, making simple press equivalent to holding 'Shift', and connecting with player states.
+/* 
+The joystick provides touchscreen players with a convenient means of moving character.
+This was initially inspired by a tutorial credited in the README credits section. 
+However, this was heavily modified to account for canvas scaling like the ControlPad above, joystick snapping behaviour, making simple press equivalent to holding 'Shift', and connecting with player states.
+*/
+
 export class Joystick {
   constructor(x, y, canvas) {
     this.keys = [];
@@ -163,7 +171,7 @@ export class Joystick {
       this.scaledX = actualX / scale;
       this.scaledY = actualY / scale;
     };
-    // Detects joystick press and intitially sets coords where joystick should be draw.
+    // Detects joystick press and intitially sets coords where joystick should be draw
     canvas.addEventListener('touchstart', e => {
       translateCoords(e);
       if (
@@ -193,7 +201,7 @@ export class Joystick {
     });
   }
   update() {
-    // First calculates whether joystick moved beyond threshold to trigger move and the angle.
+    // First calculates whether joystick moved beyond threshold.
     const xDistance = this.x - this.X;
     const yDistance = this.y - this.Y;
     const mouseDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
@@ -230,7 +238,7 @@ export class Joystick {
 
       this.x = this.X + Math.cos(this.angleRadians) * this.R;
       this.y = this.Y + Math.sin(this.angleRadians) * this.R;
-      // Simply holding joystick button acts as 'Shift' which allows standing player to attack left.
+      // Holding joystick button acts as 'Shift' - allows standing player to attack left
     } else if (this.pressed) this.keys.push('Shift');
   }
   draw(context) {
@@ -250,7 +258,9 @@ export class Joystick {
 }
 
 // This records relevant keyboard presses. 
-// The architecture for this object I learned from the JavaScript Game Dev course by Franks Laboratory, credited in the README.
+// The architecture for this object I learned from the JS Game Dev course by Franks Laboratory.
+// Credited in the README.
+
 export class InputHandler {
   constructor() {
     this.keys = [];
@@ -268,7 +278,8 @@ export class InputHandler {
         e.key === 'Shift') &&
         this.keys.indexOf(e.key) === -1) {
         this.keys.push(e.key);
-        // I changed motion controls after integrating them with player states, and it was easier to push the same keywords to the keys array.
+        // I changed motion controls after integrating them with player states.
+        // It was easier to push the same keywords to the keys array.
       } else if ((e.key === 'j' || e.key === 'J') && this.keys.indexOf('ArrowLeft') === -1) {
         this.keys.push('ArrowLeft');
       } else if ((e.key === 'l' || e.key === 'L') && this.keys.indexOf('ArrowRight') === -1) {

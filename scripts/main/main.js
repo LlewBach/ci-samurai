@@ -7,7 +7,9 @@ import { MatrixRain } from '../matrix/matrix.js';
 
 // This is the central nervous system of the game.
 
-// The architecture for this object was inspired by the JavaScript Game Dev course by Franks Laboratory, credited in the README. This is my own implementation of that architecture.
+// The architecture for this object was inspired by the JS Game Dev course,
+// credited in the README. 
+// This is my own implementation of that architecture.
 
 // I also learned to use deltaTime from the same course.
 export class Game {
@@ -59,7 +61,7 @@ export class Game {
   }
   draw(context) {
     this.background.draw(context);
-    // Adds opacity layer over background when game not running, making UI text more legible.
+    // Adds opacity layer over background when game still, making UI text more legible
     if (this.isFreshGame || this.isPaused || this.gameOver || this.trainingMode) context.fillStyle = 'rgba(0, 0, 0, 0.5)';
     else context.fillStyle = 'rgba(0, 0, 0, 0.1)';
     context.fillRect(0, 0, this.width, this.height);
@@ -82,7 +84,7 @@ export class Game {
       if (Math.random() < this.enemyRandomFactor) {
         // Instantiates one of two Zombie classes with a starting state of Standing.
         this.enemies.push(new type(this, 0));
-        // Increasing the enemyRandomFactor makes it more likely an enemy will be added next time, making game difficulty increase over time.
+        // Increasing the enemyRandomFactor makes game difficulty increase.
         this.enemyRandomFactor += 0.02;
       }
       if (Math.random() < this.enemyRandomFactor) {
@@ -118,14 +120,13 @@ export class Game {
 }
 
 window.addEventListener('load', function () {
-  // The code relating to the loader is 90% directly from a tutorial
+  // The code relating to the loader is 90% from a tutorial
   const loader = document.querySelector('.loader');
   loader.classList.add('loader-hidden');
   loader.addEventListener('transitionend', () => {
     loader.remove();
   });
   // Below is back to my code
-
   const canvas1 = document.getElementById('canvas1');
   const ctx1 = canvas1.getContext('2d');
   canvas1.width = 800;
@@ -138,7 +139,7 @@ window.addEventListener('load', function () {
   function animate(timestamp) {
     // Wipes canvas clean every frame.
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-    // Using deltaTime helps the game run at the same speed no matter the device's refresh rate.
+    // deltaTime helps the game run at the same speed no matter the refresh rate
     const deltaTime = timestamp - lastTimeAnimate;
     lastTimeAnimate = timestamp;
     game.update(deltaTime);
@@ -146,7 +147,7 @@ window.addEventListener('load', function () {
     if (!game.isPaused) requestAnimationFrame(animate);
   }
 
-  // Instantiating the MatrixRain class and giving it its own animate function allows the effect to work when the game is paused.
+  // Separate animate functions allow matrix effect to work when the game is still
   const canvas2 = document.getElementById('canvas2');
   const ctx2 = canvas2.getContext('2d');
   canvas2.width = window.innerWidth;
@@ -226,8 +227,8 @@ window.addEventListener('load', function () {
       } else {
         game.restart();
       }
-      // Swipe left gesture detection - allows Training Mode choice and mid-game restart.
-      // Setting upper limit stops game from resetting when touching joystick and control pad simultaneously.
+      // Swipe left gesture detection - allows Training Mode choice and mid-game restart
+      // Upper limit stops game resetting when touching both joystick and control pad
     } else if ((touchX - endTouchX) > swipeThreshold && touchX - endTouchX < swipeThreshold + 100 && game.isFreshGame) {
       game.isFreshGame = false;
       game.trainingMode = true;
@@ -240,4 +241,3 @@ window.addEventListener('load', function () {
     }
   });
 });
-

@@ -1,7 +1,11 @@
 import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4, Demon } from '../player-states/player-states.js';
 
-// I learned the architecture of this object, the hitbox detection mechanism, the onGround function and the state design pattern from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is my own. 
-// My own innovations include multiple input handling, player bidirectionality, range checks, jumpAttackCheck, winCheck
+// I learned the architecture of this object, the hitbox detection mechanism,
+// the onGround function and the state design pattern from the JS Game Dev course
+// by Franks Laboratory, credited in the README.
+// The implementation is my own.
+// My own innovations include multiple input handling, player bidirectionality,
+// range checks, jumpAttackCheck, winCheck
 
 export class Player {
   constructor(game) {
@@ -83,7 +87,7 @@ export class Player {
     return this.y >= this.game.height - this.game.groundMargin - this.height;
   }
   shortRangeCheck() {
-    // Gives each enemy a value of 1, -1 or 0 depending on within short-range status and left/right side.
+    // Gives each enemy a value of 1, -1 or 0
     this.game.enemies.forEach(enemy => {
       if (enemy.jumpAttacking) enemy.hitMargin = 0;
       else enemy.hitMargin = 100;
@@ -99,7 +103,7 @@ export class Player {
     });
   }
   longRangeCheck() {
-    // Gives each enemy a value of 1, -1 or 0 depending on within long-range status and left/right side.
+    // Gives each enemy a value of 1, -1 or 0
     this.game.enemies.forEach(enemy => {
       if (
         enemy.x + enemy.hitMargin < this.x + this.width &&
@@ -126,7 +130,8 @@ export class Player {
     );
   }
   jumpAttackCheck() {
-    // This is a special hit check for enemies that are currently jumping. This is necessary as the contact box needs adjustment due to how sprite is drawn.
+    // This is a special hit check for enemies that are currently jumping.
+    // Necessary as the contact box needs adjustment due to how sprite is drawn.
     return (
       this.game.enemies.some(enemy => {
         return (
@@ -171,4 +176,3 @@ export class Player {
 }
 
 const playerImage = document.getElementById('player');
-

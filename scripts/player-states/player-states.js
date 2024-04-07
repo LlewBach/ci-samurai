@@ -1,7 +1,9 @@
 import { PlayerBlood } from '../particles/particles.js';
 import { FloatingText } from '../floating-text/floating-text.js';
 
-// I learned this state design patter from the JavaScript Game Dev course by Franks Laboratory, credited in the README. The implementation is entirely my own.
+// I learned this state design pattern from the JS Game Dev course, 
+// credited in the README.
+// This implementation is my own.
 
 const states = {
   STANDING: 0,
@@ -217,7 +219,8 @@ export class Attack1 extends State {
     // Training mode level tests
     if (this.player.facingRight === 1 && this.game.trainingMode && this.game.score === 4) this.game.score++;
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 5) this.game.score++;
-    // Checks which enemies currently have an inShortRange value that corresponds with players current facing direction.
+    // Checks which enemies currently have an inShortRange value
+    // that corresponds with players current facing direction.
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].inShortRange === 1 && this.player.facingRight === 1) {
         // Transitions qualifying enemies to Dying state
@@ -341,10 +344,9 @@ export class Transcending extends State {
     this.player.frameY = 16;
     this.player.speed = 0;
   }
-  // Even though it's empty, this function is necessary because the player object expects every state to have a handleInput method.
-  handleInput() {
-
-  }
+  // Even though it's empty, this function is necessary because
+  // the player object expects every state to have a handleInput method.
+  handleInput() { }
 }
 
 export class Attack4 extends State {

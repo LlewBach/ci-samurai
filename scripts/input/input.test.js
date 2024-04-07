@@ -196,7 +196,6 @@ describe('InputHandler class', () => {
   let inputHandler;
 
   beforeEach(() => {
-    // Mocking window.addEventListener to prevent actual event listeners from being added
     jest.spyOn(window, 'addEventListener');
     inputHandler = new InputHandler();
   });

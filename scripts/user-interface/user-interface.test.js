@@ -249,4 +249,3 @@ describe('UI class', () => {
     expect(ui.text3).toEqual('Swipe up to restart');
   });
 });
-

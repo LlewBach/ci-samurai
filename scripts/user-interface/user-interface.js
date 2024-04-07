@@ -1,4 +1,6 @@
-// The architecture for this user interface was inspired by the JavaScript Game Dev course by Frank's Laboratory, credited in the README. This is my own implementation of that architecture.
+// The architecture for this UI was inspired by the JS Game Dev course
+// by Frank's Laboratory, credited in the README. 
+// This is my own implementation of that architecture.
 export class UI {
   constructor(game) {
     this.game = game;

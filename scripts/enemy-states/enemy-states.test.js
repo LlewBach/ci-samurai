@@ -12,7 +12,6 @@ const states = {
   ATTACK2: 6,
 }
 
-
 let game, enemy;
 
 beforeEach(() => {

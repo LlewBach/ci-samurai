@@ -2,7 +2,6 @@ import { Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, A
 import { PlayerBlood } from '../particles/particles.js';
 import { FloatingText } from '../floating-text/floating-text.js';
 
-
 const states = {
   STANDING: 0,
   RUNNING: 1,
@@ -547,7 +546,6 @@ describe('Stun State', () => {
     stunState.handleInput([], ['ArrowDown']);
     expect(player.setState).toHaveBeenCalledWith(states.ROLLING);
   });
-
 });
 
 describe('Attack1 State', () => {
@@ -821,7 +819,6 @@ describe('Attack4 State', () => {
   });
 
   test('.enter should update game.energy and game.health, but limit health', () => {
-
     expect(game.energy).toBe(0);
     expect(game.health).toBe(50);
     game.health = 98;

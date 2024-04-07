@@ -1,6 +1,9 @@
-// The majority of the code for this Matrix Rain effect came from a YouTube tutorial by Franks Laboratory. See README credits section for link. The only addition I made was to add colour interactivity and tune 'rain intensity' depending on game over status.
+// The majority of the code for this effect came from a tutorial.
+// See README credits section for link. 
+// I added colour interactivity and variable 'rain intensity'.
 
-// This class codes the symbol that will be drawn in each column, and Symbols are instantiated in the MatrixRain class below.
+// This class codes the symbol that will be drawn in each column.
+// Char objects are instantiated in the MatrixRain class below.
 export class Char {
   constructor(xPosition, yPosition, fontSize, canvasHeight, game) {
     // The range of symbols used
@@ -11,7 +14,7 @@ export class Char {
     this.text = '';
     this.canvasHeight = canvasHeight;
     this.game = game;
-    // The 'threshold' property controls 'rain intensity' by tuning how often each column's symbol will reset to the top of the screen.
+    // 'threshold' tunes how often each column's char will reset to the top
     this.threshold = 0.98;
   }
   update() {
@@ -20,7 +23,8 @@ export class Char {
     else this.threshold = 0.98;
     // The next symbol to be shown in the column
     this.text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
-    // Increments symbol y position and resets once moved offscreen and threshold crossed
+    // Increments symbol y position
+    // and resets once moved offscreen and threshold crossed
     if (this.yPosition * this.fontSize > this.canvasHeight && Math.random() > this.threshold) this.yPosition = 0;
     else this.yPosition++;
   }
@@ -70,7 +74,8 @@ export class MatrixRain {
     }
   }
   draw(context) {
-    // Every time MatrixRain draws to canvas, it covers previous drawing with semi-transparent rectangle. This has the effect of making 'raindrop' trails fade as they fall.
+    // Every draw to canvas covers previous drawing with semi-transparent rectangle.
+    // This has the effect of making 'raindrop' trails fade as they fall
     context.fillStyle = 'rgba(0, 0, 0, 0.05)';
     context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     context.fillStyle = this.colour;

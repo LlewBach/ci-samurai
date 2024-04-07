@@ -21,7 +21,7 @@ describe('Zombie class', () => {
       save: jest.fn(),
       scale: jest.fn(),
       restore: jest.fn(),
-      strokeRect: jest.fn() // might need to delete
+      strokeRect: jest.fn()
     };
   });
 
