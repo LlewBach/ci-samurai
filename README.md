@@ -489,9 +489,9 @@ This functionality is covered by behavioural testing the following:
 - Can the game be played with the joystick and control pad? - Yes
 - Do the buttons and indicators change colour depending on required energy level? - Yes
 
-Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 235 tests in total, which all pass. See the following image for a coverage report.
+Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 238 tests in total, which all pass. See the following image for a coverage report.
 
-![jest coverage report](assets/captures/capture-17.PNG)
+![jest coverage report](assets/captures/capture-18.PNG)
 
 ## Deployment
 
