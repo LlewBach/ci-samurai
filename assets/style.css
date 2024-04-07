@@ -184,7 +184,6 @@ p {
 /* Galaxy S8 landscape*/
 @media (min-height: 350px) {
   h1 {
-    color: gold;
     margin-top: 5px;
   }
 
@@ -195,10 +194,6 @@ p {
 
 /* iPhone 12 Pro landscape */
 @media (min-height: 380px) {
-  h1 {
-    color: orangered;
-  }
-
   .nav-link {
     margin: 0 15px;
     font-size: 15px;
@@ -212,7 +207,6 @@ p {
 /* Samsung Galaxy S20, iPhone 14 Pro Max landscape */
 @media (min-height: 400px) {
   h1 {
-    color: green;
     font-size: 28px;
   }
 
@@ -233,7 +227,6 @@ p {
 /* PC 1280 x 720px */
 @media (min-height: 540px) {
   h1 {
-    color: lightsalmon;
     margin-top: 10px;
   }
 
@@ -256,7 +249,6 @@ p {
 /* Redmi 10 portrait */
 @media (min-height: 700px) {
   h1 {
-    color: lightblue;
     margin-top: 10px;
   }
 
@@ -273,17 +265,12 @@ p {
 /* Galaxy S8 portrait */
 @media (min-height: 740px) {
   h1 {
-    color: gold;
     margin-top: 40px;
   }
 }
 
 /* iPhone 12 Pro portrait */
 @media (min-height: 820px) {
-  h1 {
-    color: aquamarine;
-  }
-
   .tab-pane {
     margin-top: 5px;
     max-height: 500px;
@@ -292,10 +279,6 @@ p {
 
 /* Samsung Galaxy S20 Ultra, iPhone 14 Pro Max Portrait */
 @media (min-height: 900px) {
-  h1 {
-    color: blue;
-  }
-
   .tab-pane {
     margin-top: 80px;
   }
@@ -308,7 +291,6 @@ p {
 /* iPad Mini portrait */
 @media (min-height: 1000px) {
   h1 {
-    color: pink;
     font-size: 36px;
   }
 
@@ -324,7 +306,6 @@ p {
 /* iPad Pro landscape */
 @media (min-height: 1000px) {
   h1 {
-    color: gray;
     margin-bottom: 20px;
     font-size: 48px;
   }
@@ -350,10 +331,6 @@ p {
 
 /* iPad Pro Portrait */
 @media (min-height: 1300px) {
-  h1 {
-    color: white;
-  }
-
   .tab-pane {
     max-height: none;
   }
