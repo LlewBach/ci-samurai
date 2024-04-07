@@ -3,6 +3,8 @@ By Gareth Llewelyn
 
 [View website on GitHub Pages](https://llewbach.github.io/ci-samurai/)
 
+![Am I Responsive](assets/captures/capture-19.PNG)
+
 ## Table of contents
 
 > 1. [Overview](#overview)
