@@ -62,6 +62,8 @@ Unique selling proposition
 
 US1 - "As a site visitor, I want to know what the purpose of this site is and what kind of game it is so I can decide whether it's for me."
 
+AC1 - "Users can immediately identify the game name, theme and type. Users are initially directed to the intro tab, where they can learn more about the game's lore".
+
 US2 - "As an interested player, I want to be able to navigate intuitively through the site."
 
 AC2 - "Users can navigate to any tab from any tab."
@@ -84,9 +86,13 @@ AC6 - "The website will be made responsive to mobile screens (both portrait and 
 
 #### Information and features scope
 
-This site will include information about the game, the game lore, game controls and game play. 
+This site will include information about the game, the game lore, game controls and game play.
 
-In terms of the game's features, it will be limited to a 2d canvas, with only horizontal 'exploration'. The number of player states will allow convincing movement (standing, running, jumping, rolling), four modes of attack, a stun state and three end states. There will be two enemy types, with states that allow for more complex and exciting game play. These include two modes of appearance, two distinct forms of attack, hunting behaviour via the turning state and a death state. Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth. The game will also display information relevant to gameplay.
+In terms of the game's features, it will be limited to a 2d canvas, with only horizontal 'exploration'. The number of player states will allow convincing movement (standing, running, jumping, rolling), four modes of attack, a stun state and three end states. 
+
+There will be two enemy types, with states that allow for more complex and exciting game play. These include two modes of appearance, two distinct forms of attack, hunting behaviour via the turning state and a death state. 
+
+Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth. The game will also display information relevant to gameplay.
 
 ### Structure
 
@@ -94,7 +100,7 @@ In terms of the game's features, it will be limited to a 2d canvas, with only ho
 
 The information will be structured by three tabs, namely 'Intro', 'Controls' and 'Game'. This order makes sense as the player will want to know whether this is the sort of thing they want to play, how to use it, then use it.
 
-Information relevant to game play will be visible in the game, including stats such as 'score', 'energy' and 'health', floating stat messages, and UI messages as well. There will be attack option indicators at the bottom of the screen to quickly show which attack options are available based on current energy status.
+Information relevant to game play will be visible in the game, including stats such as 'score', 'energy' and 'health', floating stat messages, and user interface (UI) messages as well. There will be attack option indicators at the bottom of the screen to quickly show which attack options are available based on current energy status.
 
 ### Skeleton
 
@@ -114,7 +120,7 @@ Here are some wireframes of the site.
 
 #### Background
 
-The background is a canvas element that creates a dynamic 'matrix rain' effect, that responds to the gameplay. This is reminiscent of 'hacker' and 'The One' vibes from the Matrix films, which add to the 'coder' theme and feel of the game.
+The site background is a canvas element that creates a dynamic 'matrix rain' effect, that responds to the gameplay. This is reminiscent of 'hacker' and 'The One' vibes from the Matrix films, which add to the 'coder' theme and feel of the game.
 
 ![Background capture](assets/captures/capture-1.PNG)
 
@@ -148,11 +154,11 @@ While the site is loading, a 'loader' animation will be shown and disappear once
 
 ### HTML and website structure
 
-The website is one page with a Bootstrap tab menu, containing three tabs, 'Intro', 'Controls' and 'Game'. One advantage of this is that the game can be paused whilst the player navigates away, then returned to, thus avoiding page refreshes.
+The website is one page with a Bootstrap tab menu, containing three tabs, 'Intro', 'Controls' and 'Game'. One advantage of this is that the player can pause the game, switch tab to refer to the controls and return to the game, thus avoiding page refreshes.
 
 The Intro and Controls tab panes have limited heights which means the user has to scroll through the content within a static box. This works better with the background effect.
 
-The 'Intro' tab pane - introduces the game 'lore'.
+The 'Intro' tab pane - introduces the game's 'lore'.
 
 The 'Controls' tab pane - introduces controls for keyboard players and touchscreen players as well as a section on gameplay.
 
@@ -170,7 +176,7 @@ This is made up of a single canvas element, with an interactive 'matrix rain' ef
 
 ### Game background
 
-This consists of 4 overlaid background images which move at different relative speeds in order to create a parallax effect. The endless effect is simulated by drawing one image after the first and resetting the initial position of the images once the starting point of the second image reaches the starting point of the first image.
+This consists of 4 overlaid background images which move at different relative speeds in order to create a parallax effect. The endless effect is simulated by drawing one image before and after the central image and resetting the initial position of the images once the starting point of the central image reaches the starting point of the first or third image.
 
 ### Game
 
@@ -186,17 +192,17 @@ The User Interface features a score count, an energy level bar and a health leve
 
 Spacebar / Swiping up will toggle pause. When the game is paused a paused screen message will appear.
 
-R / NEED TO SET will reset the game.
+Pressing R / Swiping left will reset the game.
 
 ### Player
 
-The player always remains in the center of the canvas, meaning that the illusion of motion is conveyed by setting the game speed to move in the opposite direction when 'in motion'.
+The player always remains in the center of the canvas, meaning that the illusion of motion is conveyed by setting the game speed to move in the opposite direction when the player is 'in motion'.
 
 The player has the following possible states: Standing, Running, Jumping, Falling, Rolling, Stun, Attack1, Attack2, Attack3, Seppaku, Transcending, Attack4 and 'Demon'.
 
 The player sprite is made bidirectional by setting a 'facingRight' property to either 1 or -1, which is then used to affect the canvas context's scale to flip it horizontally, and also to affect background motion and attack success.
 
-P will toggle 'annotate mode' which will display the game's hit boxes, which may be of help in understanding how the game works.
+Toggling the P keys will toggle 'annotate mode' which will display the game's hit boxes, which may be of help in understanding how the game works.
 
 ![Annotate mode capture](assets/captures/capture-10.PNG)
 
@@ -204,13 +210,18 @@ The blue boxes are 'hit' boxes. Red is the player's short-range attack box and b
 
 You can see that the zombie's blue hitbox is currently outside of the player's short-range, but within the player's long-range. The player is currently outside of the zombie's attack range.
 
-Attack1 kills one enemy only within short-range. Attack2 kills all enemies within short-range. Attack3 fries all enemies within long-range in one direction and provides +5 health. Attack4 fries all enemies in long-range and provides +25 health.
+- Attack1 kills one enemy only within short-range.
+- Attack2 kills all enemies within short-range. 
+- Attack3 fries all enemies within long-range in one direction and provides +5 health. 
+- Attack4 fries all enemies in long-range and provides +25 health.
 
 The player has three stats, namely score, energy and health. 
 
 ### Enemies
 
-There are two enemies that behave very similarly, but for differences in spawning modes and attack choice. Enemies have the following possible states: Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2. The fact that zombies can turn via the Turning state allows for more 'realistic' hunting behaviour. On average around a fifth of zombies will use Attack2 (jumping).
+There are two enemy drawings, as well as two modes of appearance.
+
+Enemies have the following possible states: Standing, Walking, Dying, Spawning, Turning, Attack1, Attack2. The fact that zombies can turn via the Turning state allows for more 'realistic' hunting behaviour. On average around a fifth of zombies will use Attack2 (jumping).
 
 ![Enemy Attack2 capture](assets/captures/capture-11.PNG)
 
@@ -259,6 +270,7 @@ This page catches users who try to navigate to a non-existant page. The user can
 - Bootstrap framework
 - Vanilla JavaScript
 - Jest
+- JSHint
 - GPT-4 for help with debugging and looking things up
 - VSC development environment
 - Windows PowerShell terminal
@@ -285,7 +297,7 @@ US1 - "As a site visitor, I want to know what the purpose of this site is and wh
 AC1 - "Users can immediately identify the game name, theme and type. Users are initially directed to the intro tab, where they can learn more about the game's lore".
 
 > 1) Navigate to the website in Chrome browser.
-> 2) Check that the game name, (Code Eye Samurai) and descriptive tag (2D side scroll fighting game) are immediately visible.
+> 2) Check that the game name, (Code Eye Samurai) and descriptive tag (2D side scroll fighting game for coders) are immediately visible.
 > 3) Check that the navigation tabs are visible.
 > 4) Check that the dynamic matrix rain background effect is working.
 > 5) Check that the Intro tab content is visible and scrollable.
@@ -343,9 +355,10 @@ US5 - "As a touchscreen player, I want to be able to play the game on my touchsc
 AC5 - "A Joystick and Control Pad should be available for touchscreen players."
 
 > 1) Navigate to the website in Chrome browser.
-> 2) Open the Game tab. 
-> 3) Start a new game.
-> 4) Check that the Joystick and Control Pad are visible.
+> 2) Open the Game tab.
+> 3) Complete Training Mode.
+> 4) Start a new game.
+> 5) Check that the Joystick and Control Pad are visible and working.
 
 Test result: Pass.
 
@@ -411,6 +424,8 @@ To test the site on different browsers, I repeated the tests above, but without 
 
 Chrome: Pass. Edge: Pass. Firefox: Pass.
 
+I don't own a Safari device.
+
 ### Automated testing
 
 #### HTML Validator
@@ -430,6 +445,7 @@ Result: Passed.
 #### JSHint
 
 I downloaded JSHint as a dev dependency and tested each .js file, excluding test.js files, with the linter. Here were some issues raised:
+
 - Missing semi-colons
 - Symbol class name confused for primitive built-in data type
 - Uninitialized properties in player.js and enemies.js
@@ -438,6 +454,8 @@ Solutions:
 - Add missing semi-colons
 - Change name of 'Symbol' class in matrix.js to 'Char'
 - I initialized the properties with values such as '0'
+
+All now pass without issue.
 
 #### WAVE
 
@@ -481,7 +499,7 @@ All aspects of the scripting are tested for with Jest, except for the following:
 
 This functionality is covered by behavioural testing the following: 
 - Can one pause and restart the game on both keyboard and touchscreen? - Yes
-- Can one toggle Annotate Mode by pressing p on keyboard? - Yes
+- Can one toggle Annotate Mode by pressing P key on keyboard? - Yes
 - Can one enter Training Mode on both keyboard and touchscreen? - Yes
 - Does the background canvas automatically resize when the screen width is changed? - Yes
 - Can the game sense a touchscreen device? - Yes
@@ -542,7 +560,7 @@ A second tutorial by Frank that I followed was [Matrix Rain Experiments in JavaS
 
 Thirdly, I would like to credit this tutorial on [Creating Analog Controller](https://www.youtube.com/watch?v=Wcml7OF6DNI) which got me started on creating the mobile joystick. I ended up redesigning this to work in a way I understood and added snapping behaviour. I also had to figure out myself how to make the touch coordinates translate into canvas coordinates if the canvas had been scaled down due to screen size.
 
-Fourthly, I directly took what I learned from this tutorial, [How to Create and Display a Loading Spinner on Page Load](https://www.youtube.com/watch?v=q76TexbMXJg) and used it to create my spinner, making only minute changes.
+Fourthly, I directly took what I learned from this tutorial, [How to Create and Display a Loading Spinner on Page Load](https://www.youtube.com/watch?v=q76TexbMXJg) and used it to create my spinner, making only minute changes, such as colours.
 
 Finally, I would like to credit GPT-4 for teaching me most of what I know about Jest testing, and for the HTML script element that provides the dropdown menu link functionality.
 
@@ -560,4 +578,4 @@ The 404 page background image was created my GPT-4.
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
-I'd like to thank my mentor Ben Kavanagh for this support and advice.
+I'd like to thank my mentor Ben Kavanagh for his amazing support, based advice and epic pep talks.
