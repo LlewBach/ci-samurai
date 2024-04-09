@@ -50,7 +50,7 @@ describe('Joystick class', () => {
       arc: jest.fn(),
       stroke: jest.fn(),
       fill: jest.fn()
-    }
+    };
   });
 
   test('should have correct keys', () => {
@@ -207,7 +207,7 @@ describe('InputHandler class', () => {
   const simulateEvent = (type, key) => {
     const event = new KeyboardEvent(type, { key });
     window.dispatchEvent(event);
-  }
+  };
 
   test('should have correct key', () => {
     expect(inputHandler).toHaveProperty('keys');

@@ -446,16 +446,18 @@ Result: Passed.
 
 #### JSHint
 
-I downloaded JSHint as a dev dependency and tested each .js file, excluding test.js files, with the linter. Here were some issues raised:
+I downloaded JSHint as a dev dependency and tested each .js file, including test.js files, with the linter. Here were some issues raised:
 
 - Missing semi-colons
 - Symbol class name confused for primitive built-in data type
 - Uninitialized properties in player.js and enemies.js
+- Unrecognized global variables in Jest tests
 
 Solutions:
 - Add missing semi-colons
 - Change name of 'Symbol' class in matrix.js to 'Char'
 - I initialized the properties with values such as '0'
+- Warn JSHint to ignore Jest variables in .jshintrc file
 
 All now pass without issue.
 

@@ -16,7 +16,7 @@ const states = {
   TRANSCENDING: 10,
   ATTACK4: 11,
   DEMON: 12,
-}
+};
 let player;
 
 beforeEach(() => {
@@ -124,7 +124,7 @@ describe('Standing State', () => {
     player.game.energy = 4;
     standingState.handleInput([], [], ['s']);
     expect(player.setState).not.toHaveBeenCalledWith(states.ATTACK2);
-    player.game.energy = 5
+    player.game.energy = 5;
     standingState.handleInput([], [], ['s']);
     expect(player.setState).toHaveBeenCalledWith(states.ATTACK2);
     standingState.handleInput([], ['Shift'], ['s']);
@@ -386,7 +386,7 @@ describe('Falling State', () => {
   let fallingState, game;
 
   beforeEach(() => {
-    game = { floatingText: [] }
+    game = { floatingText: [] };
     fallingState = new Falling(player, game);
     fallingState.enter();
   });

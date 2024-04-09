@@ -67,7 +67,6 @@ describe('MatrixRain Class', () => {
     mockContext = {
       fillStyle: '',
       fillRect: jest.fn(),
-      fillStyle: '',
       font: '',
       fillText: jest.fn()
     };

@@ -15,7 +15,6 @@ describe('UI class', () => {
       isFreshGame: true,
       winningScore: 333,
       trainingMode: false,
-      isFreshGame: true,
       isTouchScreen: false,
       player: {
         states: ['state0', 'state1', 'state2', 'state3', 'state4', 'state5'],
