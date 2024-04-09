@@ -580,4 +580,4 @@ The 404 page background image was created my GPT-4.
 
 [Back to top](#milestone-2-project---code-eye-samurai)
 
-I'd like to thank my mentor Ben Kavanagh for his amazing support, based advice and epic pep talks.
+I'd like to thank my mentor Ben Kavanagh, a veritable Ode to Code, for his support.
