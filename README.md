@@ -134,11 +134,11 @@ The player spritesheet pack that I bought came with an image of the player's hea
 
 #### Fonts
 
-From Google Fonts, I chose two fonts; "Kaushan Script" for larger text and "Open Sans" for smaller text. The Kaushan Script conveys more 'Japanese caligraphy' vibes in-line with the samurai theme. Open Sans helps legibility for smaller text.
+From [Google Fonts](https://fonts.google.com/), I chose two fonts; [Kaushan Script](https://fonts.google.com/specimen/Kaushan+Script?query=kaushan+script) for larger text and [Open Sans](https://fonts.google.com/specimen/Open+Sans?query=open+sans) for smaller text. The Kaushan Script conveys more 'Japanese caligraphy' vibes in-line with the samurai theme. Open Sans helps legibility for smaller text.
 
 #### Colour palette
 
-I used Coolors.co to consider different colour palettes, and despite your probable protests, I settled on the following.
+I used [Coolors.co](https://coolors.co/) to consider different colour palettes, and despite your probable protests, I settled on the following.
 
 ![Colour palette](assets/captures/capture-2.PNG)
 
@@ -269,24 +269,26 @@ This page catches users who try to navigate to a non-existant page. The user can
 
 - HTML5
 - CSS3
-- Bootstrap framework
+- [Bootstrap](https://getbootstrap.com/) framework
 - Vanilla JavaScript
-- Jest
-- JSHint
-- GPT-4 for help with debugging and looking things up
-- VSC development environment
+- [Jest](https://jestjs.io/)
+- [GPT-4](https://chat.openai.com/) for help with debugging and looking things up
+- [VSC](https://code.visualstudio.com/) development environment
 - Windows PowerShell terminal
 - Git for version control
-- GitHub for the online repository
-- GitHub Pages to deploy the site
+- [GitHub](https://github.com/LlewBach/ci-samurai) for the online repository
+- [GitHub Pages](llewbach.github.io/ci-samurai/) to deploy the site
 - Balsamiq for wireframes
-- FontAwesome for icons
-- Google fonts for fonts
-- Coolors.co was used to consider different colour palettes
+- [favicon.io](https://favicon.io/favicon-converter/) - Logo to Favicon converter
+- [FontAwesome](https://fontawesome.com/) for icons
+- [Google Fonts](https://fonts.google.com/)
+- [Coolors.co](https://coolors.co/) was used to consider different colour palettes
+- [Image Resizer.com](https://imageresizer.com/image-compressor) was used to compress images
 - [The W3C Markup Validation Service](https://validator.w3.org/) was used to check HTML syntax
 - [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to check CSS syntax
 - [WebAIM](https://wave.webaim.org/) was used to examine accessibility
 - Chrome Dev Tools [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) was used to test performance, accessibility, SEO and best practices
+- [JSHint](https://jshint.com/)
 
 ## Testing
 
@@ -463,7 +465,7 @@ All now pass without issue.
 
 #### WAVE
 
-I've had a look on WAVE (Web Accessibility Evaluation Tool) and the only issue that catches my eye is that is says low colour contrast, but I don't think the software can take the colour of the canvas background into account and assumes that the background colour of the page is white.
+I've had a look on [WAVE](https://wave.webaim.org/) (Web Accessibility Evaluation Tool) and the only issue that catches my eye is that is says low colour contrast, but I don't think the software can take the colour of the canvas background into account and assumes that the background colour of the page is white.
 
 #### Lighthouse 
 
@@ -473,7 +475,7 @@ From my discussion with my mentor, a poorer Lighthouse Performance score is to b
 
 #### Jest installation
 
-Getting Jest set up so that it would work with VSC and modules actually proved to be quite difficult, but in the end I managed it by following these steps:
+Getting [Jest](https://jestjs.io/) set up so that it would work with VSC and modules actually proved to be quite difficult, but in the end I managed it by following these steps:
 
 - Console command: npm init
 - Console command: npm install --save-dev jest
