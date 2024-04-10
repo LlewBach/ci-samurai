@@ -263,6 +263,26 @@ This page catches users who try to navigate to a non-existant page. The user can
 
 ![404 page capture](assets/captures/capture-15.PNG)
 
+### Future features
+
+#### A global high score board
+
+This would allow players to permanently record their high score and compete with other players around the world.
+
+#### Vertical exploration
+
+This could be done by integrating features of platform games to create more of a map.
+
+#### Full use of possible sprite sheet animations
+
+This could mean adding player states such as Defend, Dash, Aerial attack and all the Demon states, each with their own implications for gameplay. The enemy spritesheets also provide more possible enemy states such as Stun, and a second Dying state.
+
+#### A Konami Code cheat
+
+A Konami code is a classic cheat code for more retro games. Here is a Wikipedia description of it
+
+> ...simply press ↑↑↓↓←→←→BA (sometimes followed by START and/or SELECT).[1] The code has also found a place in popular culture as a reference to the third generation of video game consoles[2] and is present as an Easter egg on several websites.
+
 ## Technologies used
 
 [Back to top](#milestone-2-project---code-eye-samurai)
@@ -516,6 +536,12 @@ This functionality is covered by behavioural testing the following:
 Each javascript file has a corresponding 'test.js' file. There are 11 test suites and 238 tests in total, which all pass. See the following image for a coverage report.
 
 ![jest coverage report](assets/captures/capture-18.PNG)
+
+### Significant bugs
+
+- When the screen size is changed dynamically, for example in Chrome Developer Tools - Device: Responsive, sometimes a small X and Y overflow appear. Upon page refresh however, these will disappear. Thus this bug should only affect a small number of edge cases.
+- On the mobile version, swiping down (for example when moving joystick down with too long a swipe) really wants to make the page refresh.
+
 
 ## Deployment
 
