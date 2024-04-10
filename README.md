@@ -540,7 +540,7 @@ Each javascript file has a corresponding 'test.js' file. There are 11 test suite
 ### Significant bugs
 
 - When the screen size is changed dynamically, for example in Chrome Developer Tools - Device: Responsive, sometimes a small X and Y overflow appear. Upon page refresh however, these will disappear. Thus this bug should only affect a small number of edge cases.
-- On the mobile version, swiping down (for example when moving joystick down with too long a swipe) really wants to make the page refresh.
+- On the mobile version, swiping down (for example, when moving joystick down with too long a swipe) really wants to make the page refresh. After considering trying to prevent this behaviour, I realized that I don't want to block the ability to refresh the page because sometimes when switching between portrait and landscape views, a refresh is sometimes needed to resize the page contents properly.
 
 
 ## Deployment
