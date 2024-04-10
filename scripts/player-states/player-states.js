@@ -295,7 +295,7 @@ export class Attack3 extends State {
     else if (this.player.facingRight === -1 && this.game.trainingMode && this.game.score === 9) {
       this.game.score++;
       // Ensures that the next training mode level has the requisite energy.
-      this.game.energy = 50;
+      this.game.energy = 100;
     }
   }
   handleInput(inputKeys) {
