@@ -86,15 +86,21 @@ AC6 - "The website will be made responsive to mobile screens (both portrait and 
 2) What the customer actually needs - a morale boost for debugging
 3) What the customer doesn't know they need - an urgent psychological decompression, and probably therapy
 
-#### Information and features scope
+#### Information requirements
 
-This site will include information about the game, the game lore, game controls and game play.
+This site will include information about the game, the game lore, game controls and game play in their corresponding tabs.
+
+The game itself will have a user interface that will display game related information such as stats or instructions.
+
+#### Content requirements
 
 In terms of the game's features, it will be limited to a 2d canvas, with only horizontal 'exploration'. The number of player states will allow convincing movement (standing, running, jumping, rolling), four modes of attack, a stun state and three end states. 
 
 There will be two enemy types, with states that allow for more complex and exciting game play. These include two modes of appearance, two distinct forms of attack, hunting behaviour via the turning state and a death state. 
 
-Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth. The game will also display information relevant to gameplay.
+Both the player and enemy characters will be bidirectional. The background will have a parallax effect for a perception of depth.
+
+In order to help new players to learn the game controls, a training mode will be available.
 
 ### Structure
 
