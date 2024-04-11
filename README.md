@@ -255,6 +255,8 @@ There are also attack option indicators at the bottom of the screen that light u
 
 The UI will also feature messaging for the new game screen, a paused game, and different game endings. The UI messaging will also guide the player through the training mode. The messaging describing game controls will be relevant to keyboard players or touchscreen users. Note the image above instructs the touchscreen player to swipe up to continue, rather than press spacebar.
 
+To help new players, who frequently find themselves paralysed by enemy attacks, a message will appear telling them to roll out of the enemy attack. This message will only appear if the score is less than five, to avoid annoying veteran players who have understood this point.
+
 ![Attack option indicators capture](assets/captures/capture-13.PNG)
 
 ### 404 Page
