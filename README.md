@@ -52,14 +52,6 @@ Target audience...
 Unique selling proposition
 - Game made specifically for the benefit of coders, and the CI community.
 
-### Scope
-
-[Back to top](#milestone-2-project---code-eye-samurai)
-
-1) What the customer says they need - a fun game
-2) What the customer actually needs - a morale boost for debugging
-3) What the customer doesn't know they need - an urgent psychological decompression, and probably therapy
-
 #### User Stories (US) and Acceptance Criteria (AC)
 
 US1 - "As a site visitor, I want to know what the purpose of this site is and what kind of game it is so I can decide whether it's for me."
@@ -85,6 +77,14 @@ AC5 - "Controls are set up to accomodate touchscreen users and the game's UI wil
 US6 - "As a user, I want the site to respond well to the dimensions of my screen."
 
 AC6 - "The website will be made responsive to mobile screens (both portrait and landscape), tablets and desktops."
+
+### Scope
+
+[Back to top](#milestone-2-project---code-eye-samurai)
+
+1) What the customer says they need - a fun game
+2) What the customer actually needs - a morale boost for debugging
+3) What the customer doesn't know they need - an urgent psychological decompression, and probably therapy
 
 #### Information and features scope
 
@@ -267,15 +267,15 @@ This page catches users who try to navigate to a non-existant page. The user can
 
 #### A global high score board
 
-This would allow players to permanently record their high score and compete with other players around the world.
-
-#### Vertical exploration
-
-This could be done by integrating features of platform games to create more of a map.
+This would allow players to permanently record their high score and compete with other players around the world, as well as a Hall of Fame for those who have completed the game.
 
 #### Full use of possible sprite sheet animations
 
 This could mean adding player states such as Defend, Dash, Aerial attack and all the Demon states, each with their own implications for gameplay. The enemy spritesheets also provide more possible enemy states such as Stun, and a second Dying state.
+
+#### Sound effects
+
+The atmosphere of the game could be substantially augmented by sound effects. After initially trying it, I realised it would take a long time to find sounds that work in specific contexts, and beyond that, to find sound clips that go together.
 
 #### A Konami Code cheat
 
